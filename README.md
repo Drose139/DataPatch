@@ -4,6 +4,10 @@ DataPatch 用 DeepSeek 修复能够执行却算错结果的 dbt SQL。输入一�
 
 典型故障包括多表关联放大金额、订单状态过滤遗漏退款，以及 UTC 和业务时区的日界偏移。
 
+![36 秒退款工单真实回放，展示原 SQL、只读查询、补丁、数据对比和独立验收](docs/screenshots/refund-reconciliation-demo.gif)
+
+退款对账工单的 36 秒真实回放。[本次运行记录](examples/recorded_runs/42fdb20f-0177-4f84-a529-f29b5b6803da.json)
+
 ## 实现
 
 1. **工具调用循环。** 通过 JSON Schema 暴露 8 个工具，覆盖文件浏览与读取、模型写入、只读 SQL、dbt 执行、schema 检索、血缘查询和业务检查。执行器按调用 ID 回传构建错误和违规记录，模型可在同一工单内继续修复。[工具定义](src/datapatch/workspace.py) · [循环与反馈](src/datapatch/agent.py)
@@ -20,8 +24,6 @@ DataPatch 用 DeepSeek 修复能够执行却算错结果的 dbt SQL。输入一�
 八题按各自协议验收。时区题通过原模型物化和上游 pytest，额外的 dbt 键质量检查失败也保留在报告中。历史对照、失败和重试见[完整评测](docs/RESULTS.md)。
 
 合成退款工单的回放展示了过滤条件修正后补回的 5 条退款，以及零分母处理修正的 3 条记录。工作台可查看前后数据、SQL diff、工具调用和独立验收。[回放说明](docs/DEMO.md)
-
-![DataPatch 工作台中的退款修复回放](docs/screenshots/workbench-evidence.png)
 
 ## 本地运行
 
