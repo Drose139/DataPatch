@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "server_pid": 117380,
+  "source_core_sha256": "49f2808e761b575163949c57e09a3b29be75a1b7aca39134269336990dad4beb",
+  "read_only_requests": 2,
+  "model_api_calls": 0,
+  "retry_run_id": "daeb2927-c9f8-59bb-a3ac-07d3b4c7bf3a",
+  "retry_original_pytest": {
+    "passed": 24,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "configured_model": "deepseek-flash",
+  "persisted_run_files": 101
+}

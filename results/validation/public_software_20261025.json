@@ -1,0 +1,9 @@
+{
+  "tested_at": "2026-10-25T15:18:26.116863+00:00",
+  "command": ".venv/Scripts/python.exe -m pytest -q --ignore=tests/test_fixtures.py",
+  "result": "124 passed, 1 warning in 14.23s",
+  "warning": "Starlette TestClient httpx deprecation",
+  "model_api_calls": 0,
+  "fixture_tests": "14 real dbt fixture tests passed in previous delivery; not rerun because fixture/oracle unchanged",
+  "core_source_sha256": "df0c56762edfb370f01d231e0c4b4393bfed6fa981ee33d2c7300702c8892b13"
+}

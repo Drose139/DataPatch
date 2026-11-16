@@ -1,0 +1,183 @@
+{
+  "tested_at": "2026-10-25T15:19:02.224Z",
+  "source": "Live local service and archived actual public v4 failures; original verdicts retained; no API mocks or model calls",
+  "base_url": "http://127.0.0.1:8000",
+  "browser": "Microsoft Edge headless via Playwright",
+  "source_report": "artifacts/evaluations/public_native_v4_20261025.json",
+  "generation_requests": 0,
+  "checks": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "397ce8ec-3312-5e07-94f6-7778a0e278b1",
+      "source_run_id": "refund-v4-01-verified",
+      "title": "公开项目 · Fix Return Processing Analytics Model",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": null,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "803bf4f5-2496-5853-8b84-f18c10dd4ef5",
+      "source_run_id": "division-v4-01-verified",
+      "title": "公开项目 · Fix and Enhance Customer Metrics Model",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": null,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "d57cbb0e-4630-5f68-8b4f-972a482f8f54",
+      "source_run_id": "inventory-v4-01-verified",
+      "title": "公开项目 · Fix and Enhance Product Inventory Metrics Model",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": null,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "aad0ccff-643b-5a6d-8e6b-91142711b46d",
+      "source_run_id": "product-v4-01-verified",
+      "title": "公开项目 · Product Performance Metrics",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": {
+        "passed": 0,
+        "failed": 11,
+        "errors": 0,
+        "skipped": 0
+      },
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "397ce8ec-3312-5e07-94f6-7778a0e278b1",
+      "source_run_id": "refund-v4-01-verified",
+      "title": "公开项目 · Fix Return Processing Analytics Model",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": null,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "803bf4f5-2496-5853-8b84-f18c10dd4ef5",
+      "source_run_id": "division-v4-01-verified",
+      "title": "公开项目 · Fix and Enhance Customer Metrics Model",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": null,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "d57cbb0e-4630-5f68-8b4f-972a482f8f54",
+      "source_run_id": "inventory-v4-01-verified",
+      "title": "公开项目 · Fix and Enhance Product Inventory Metrics Model",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": null,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "aad0ccff-643b-5a6d-8e6b-91142711b46d",
+      "source_run_id": "product-v4-01-verified",
+      "title": "公开项目 · Product Performance Metrics",
+      "instruction_matches_source": true,
+      "execution_status": "failed",
+      "overall_passed": false,
+      "account_error_in_details": true,
+      "snapshots_not_invented": true,
+      "public_replay_start_disabled": true,
+      "pytest_counts": {
+        "passed": 0,
+        "failed": 11,
+        "errors": 0,
+        "skipped": 0
+      },
+      "horizontal_overflow": false,
+      "status": "passed"
+    }
+  ],
+  "javascript_errors": [],
+  "console_errors": [],
+  "non_get_api_requests": [],
+  "screenshots": [
+    "docs/screenshots/public-failure.png"
+  ],
+  "import_verification": {
+    "newly_imported_public_runs": 4,
+    "previous_local_runs": 77,
+    "overwritten_previous_runs": 0
+  },
+  "status": "passed",
+  "configuration": {
+    "model": "deepseek-flash",
+    "thinking_enabled": true,
+    "reasoning_effort": "high",
+    "default_max_steps": 12,
+    "estimated_run_budget_usd": 0.125
+  }
+}

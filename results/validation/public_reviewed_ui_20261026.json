@@ -1,0 +1,254 @@
+{
+  "tested_at": "2026-10-26T06:10:38.611Z",
+  "source": "Live local service; saved actual operator-reviewed dbt and original pytest evidence; no mocks",
+  "source_report": "results/acceptance/public_fixes_20261026.json",
+  "source_report_sha256": "931b1390ddccf9e2a9028c29c62b929642dca88bc6785d5cec20d9f665b992f8",
+  "base_url": "http://127.0.0.1:8000",
+  "generation_requests": 0,
+  "acceptance_result": {
+    "accepted": 4,
+    "tasks": 4,
+    "patch_origin": "operator_reviewed",
+    "autonomous_agent_score": false
+  },
+  "checks": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "bfd1ddf6-c4a0-56bd-9435-4003b3f1d570",
+      "source_run_id": "public_fixes_20261026:dbt-fix-product-metrics",
+      "task_id": "dbt-fix-product-metrics",
+      "title": "公开项目 · 已审阅成品 · Product Performance Metrics",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": {
+        "passed": 11,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "original_components_passed": 0,
+      "independently_accepted": true,
+      "checks": 7,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "18f8a616-d9f0-5850-a49a-73ab4d271eae",
+      "source_run_id": "public_fixes_20261026:dbt-fix-refund-reconciliation",
+      "task_id": "dbt-fix-refund-reconciliation",
+      "title": "公开项目 · 已审阅成品 · Fix Return Processing Analytics Model",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": null,
+      "original_components_passed": 13,
+      "independently_accepted": true,
+      "checks": 15,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "68a0d40b-3dd3-5527-bc14-8b873756ebdc",
+      "source_run_id": "public_fixes_20261026:dbt-fix-division-by-zero",
+      "task_id": "dbt-fix-division-by-zero",
+      "title": "公开项目 · 已审阅成品 · Fix and Enhance Customer Metrics Model",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": null,
+      "original_components_passed": 15,
+      "independently_accepted": true,
+      "checks": 17,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "5c5d03b4-d9e8-5051-ad30-f29b178645ef",
+      "source_run_id": "public_fixes_20261026:dbt-fix-inventory-model",
+      "task_id": "dbt-fix-inventory-model",
+      "title": "公开项目 · 已审阅成品 · Fix and Enhance Product Inventory Metrics Model",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": null,
+      "original_components_passed": 12,
+      "independently_accepted": true,
+      "checks": 14,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "acceptance_report_not_mixed_into_agent_evaluations": true,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "bfd1ddf6-c4a0-56bd-9435-4003b3f1d570",
+      "source_run_id": "public_fixes_20261026:dbt-fix-product-metrics",
+      "task_id": "dbt-fix-product-metrics",
+      "title": "公开项目 · 已审阅成品 · Product Performance Metrics",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": {
+        "passed": 11,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "original_components_passed": 0,
+      "independently_accepted": true,
+      "checks": 7,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "18f8a616-d9f0-5850-a49a-73ab4d271eae",
+      "source_run_id": "public_fixes_20261026:dbt-fix-refund-reconciliation",
+      "task_id": "dbt-fix-refund-reconciliation",
+      "title": "公开项目 · 已审阅成品 · Fix Return Processing Analytics Model",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": null,
+      "original_components_passed": 13,
+      "independently_accepted": true,
+      "checks": 15,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "68a0d40b-3dd3-5527-bc14-8b873756ebdc",
+      "source_run_id": "public_fixes_20261026:dbt-fix-division-by-zero",
+      "task_id": "dbt-fix-division-by-zero",
+      "title": "公开项目 · 已审阅成品 · Fix and Enhance Customer Metrics Model",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": null,
+      "original_components_passed": 15,
+      "independently_accepted": true,
+      "checks": 17,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "5c5d03b4-d9e8-5051-ad30-f29b178645ef",
+      "source_run_id": "public_fixes_20261026:dbt-fix-inventory-model",
+      "task_id": "dbt-fix-inventory-model",
+      "title": "公开项目 · 已审阅成品 · Fix and Enhance Product Inventory Metrics Model",
+      "provider": "operator_reviewed",
+      "model": "未调用模型",
+      "mode": "reviewed_patch",
+      "replay_label": "已审阅补丁验收回放 · 未调用模型",
+      "selected_mode": "已审阅成品 · 原始测试验收",
+      "displayed_status": "验证通过",
+      "original_pytest_counts": null,
+      "original_components_passed": 12,
+      "independently_accepted": true,
+      "checks": 14,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "zero_model_metrics": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "acceptance_report_not_mixed_into_agent_evaluations": true,
+      "status": "passed"
+    }
+  ],
+  "javascript_errors": [],
+  "console_errors": [],
+  "non_get_api_requests": [],
+  "screenshots": [
+    "docs/screenshots/public-reviewed.png"
+  ],
+  "status": "passed",
+  "configuration": {
+    "model": "deepseek-flash",
+    "thinking_enabled": true
+  },
+  "screenshot_run_id": "bfd1ddf6-c4a0-56bd-9435-4003b3f1d570"
+}

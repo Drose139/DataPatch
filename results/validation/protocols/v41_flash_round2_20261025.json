@@ -1,0 +1,30 @@
+{
+  "name": "v41_flash_round2_20261025",
+  "created_at": "2026-10-25T15:43:17.248133+00:00",
+  "round": 2,
+  "task_ids": [
+    "dbt-fix-product-metrics"
+  ],
+  "mode": "verified",
+  "repeats": 1,
+  "model": "deepseek-flash",
+  "max_steps": 12,
+  "run_budget_usd": 0.125,
+  "round_budget_usd": 0.125,
+  "maximum_two_round_budget_usd": 1.0,
+  "thinking_enabled": true,
+  "reasoning_effort": "high",
+  "max_output_tokens": 8192,
+  "input_rate": 0.3,
+  "output_rate": 1.2,
+  "source_sha256": "c645e44f1b2d31482928f703cd1fae78cd9d6cc29c37f0169e39de9074d18837",
+  "source_snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round2_20261025_source.zip",
+  "source_snapshot_sha256": "d928f1dfea8a80e3d99cc968153e989066bf40e3267cd30c6e1160caa3d84a44",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "automatic_retries": false,
+  "automatic_next_round": false,
+  "verifier_feedback_to_solver": false,
+  "case_directories": {
+    "dbt-fix-product-metrics": "$PROJECT\\external\\native-cases\\product-v41-flash-r2"
+  }
+}

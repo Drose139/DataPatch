@@ -1,0 +1,36 @@
+{
+  "name": "v41_flash_round1_20261025",
+  "created_at": "2026-10-25T15:15:20.427811+00:00",
+  "round": 1,
+  "task_ids": [
+    "dbt-fix-refund-reconciliation",
+    "dbt-fix-division-by-zero",
+    "dbt-fix-inventory-model",
+    "dbt-fix-product-metrics"
+  ],
+  "mode": "verified",
+  "repeats": 1,
+  "model": "deepseek-flash",
+  "max_steps": 12,
+  "run_budget_usd": 0.125,
+  "round_budget_usd": 0.5,
+  "maximum_two_round_budget_usd": 1.0,
+  "thinking_enabled": true,
+  "reasoning_effort": "high",
+  "max_output_tokens": 8192,
+  "input_rate": 0.3,
+  "output_rate": 1.2,
+  "source_sha256": "df0c56762edfb370f01d231e0c4b4393bfed6fa981ee33d2c7300702c8892b13",
+  "source_snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+  "source_snapshot_sha256": "8a183d50a38eb8f4ad8818c4bf6a4a91f8f8ca4dc5d3ec56755ac3f1e81f4c39",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "automatic_retries": false,
+  "automatic_next_round": false,
+  "verifier_feedback_to_solver": false,
+  "case_directories": {
+    "dbt-fix-refund-reconciliation": "$PROJECT\\external\\native-cases\\refund-v41-flash-r1",
+    "dbt-fix-division-by-zero": "$PROJECT\\external\\native-cases\\division-v41-flash-r1",
+    "dbt-fix-inventory-model": "$PROJECT\\external\\native-cases\\inventory-v41-flash-r1",
+    "dbt-fix-product-metrics": "$PROJECT\\external\\native-cases\\product-v41-flash-r1"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "task_id": "dbt-fix-daily-revenue",
+  "mode": "native-path-adapted-upstream-verifier",
+  "official_harbor_result": false,
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-daily-revenue/tests/test_outputs.py",
+  "original_sha256": "a78ee0e26db67a79ab8717a72b4ff52da5200b5590f348e26c9a69d9814f96e8",
+  "adapted_sha256": "3c3f1c903ce59d91b3ca26870517806162f805e0f9106eaab6d1bbfee9671b39",
+  "path_translation_only": true,
+  "returncode": 0,
+  "reward": 1.0,
+  "components_passed": [],
+  "components_failed": [],
+  "grading_protocol": "pytest_exit_status",
+  "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-daily-revenue/tests/test.sh",
+  "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+  "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+  "pytest_counts": {
+    "passed": 13,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pytest_returncode": 0,
+  "runtime_settings": {
+    "duckdb_timezone": "UTC"
+  },
+  "runtime_launcher": {
+    "source_path": "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\integrations\\run_public_pytest.py",
+    "archive_path": "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\run_public_pytest.py",
+    "sha256": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+    "scope": "Declared DuckDB connection session setting; pytest assertions and exit status unchanged"
+  },
+  "command": [
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\python.exe",
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\run_public_pytest.py",
+    "--duckdb-timezone",
+    "UTC",
+    "-v",
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\test_outputs_daily.py"
+  ],
+  "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 13 items\n\ntest_outputs_daily.py::test_no_missing_dates PASSED                      [  7%]\ntest_outputs_daily.py::test_zero_revenue_dates_exist PASSED              [ 15%]\ntest_outputs_daily.py::test_cumulative_revenue_matches_total PASSED      [ 23%]\ntest_outputs_daily.py::test_cumulative_revenue_monotonic_increasing PASSED [ 30%]\ntest_outputs_daily.py::test_cumulative_revenue_accuracy_sample_dates PASSED [ 38%]\ntest_outputs_daily.py::test_date_sequence_continuous PASSED              [ 46%]\ntest_outputs_daily.py::test_no_null_revenue_values PASSED                [ 53%]\ntest_outputs_daily.py::test_zero_revenue_days_have_zero_orders PASSED    [ 61%]\ntest_outputs_daily.py::test_revenue_sum_matches_orders PASSED            [ 69%]\ntest_outputs_daily.py::test_cumulative_starts_with_first_day_revenue PASSED [ 76%]\ntest_outputs_daily.py::test_model_structure_preserved PASSED             [ 84%]\ntest_outputs_daily.py::test_no_duplicate_dates PASSED                    [ 92%]\ntest_outputs_daily.py::test_cumulative_never_zero_after_first_revenue PASSED [100%]\n\n============================= 13 passed in 2.28s ==============================\n",
+  "stderr": ""
+}

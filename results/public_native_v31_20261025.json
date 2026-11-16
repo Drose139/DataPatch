@@ -1,0 +1,360 @@
+{
+  "name": "public_native_v31_20261025",
+  "title": "R2b 任务口径与审阅修订：公开开发题同题重测（Windows native，非官方成绩）",
+  "created_at": "2026-10-25T13:21:25.041252+00:00",
+  "dataset": "snowflake-data-eng-bench/native-public-development-subset",
+  "provenance": "Snowflake-Labs/data-eng-bench 固定公开开发题；原始数据、dbt项目和任务说明，Windows native路径适配；非官方Docker/Harbor成绩，非未知保留集。",
+  "upstream_repository": "https://github.com/Snowflake-Labs/data-eng-bench",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "official_harbor_result": false,
+  "protocol": {
+    "task_ids": [
+      "dbt-fix-refund-reconciliation",
+      "dbt-fix-division-by-zero"
+    ],
+    "planned_task_ids": [
+      "dbt-fix-refund-reconciliation",
+      "dbt-fix-division-by-zero"
+    ],
+    "modes": [
+      "verified"
+    ],
+    "repeats": 1,
+    "model": "deepseek-flash",
+    "max_steps_by_task": {
+      "dbt-fix-refund-reconciliation": 24,
+      "dbt-fix-division-by-zero": 16
+    },
+    "budget_usd": 0.25,
+    "hidden_feedback_to_agent": false,
+    "source_sha256_by_trial": {
+      "refund-v31-01-verified": "bccbba0a695842aae5fa48c4b48322445eccc578da2ff7bb1915c10650f8b5be",
+      "division-v31-01-verified": "bccbba0a695842aae5fa48c4b48322445eccc578da2ff7bb1915c10650f8b5be"
+    },
+    "agent_revision_by_trial": {
+      "refund-v31-01-verified": "v3.1-contract-grounded-review-delivery-stage",
+      "division-v31-01-verified": "v3.1-contract-grounded-review-delivery-stage"
+    },
+    "cost_is_estimate": true,
+    "path_translation_only_in_verifier": true,
+    "base_build": "selected model and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0"
+    },
+    "initial_adapter_issue": "A direct Python invocation only defined test functions; it was not counted as a score. This report uses the subsequent actual pytest execution.",
+    "iteration": "round2b-contract-review; public same-task development retest",
+    "candidate_review_is_advisory": true
+  },
+  "limitations": [
+    "Only 2 public development trial(s), one per task; no performance/generalization claim.",
+    "Native Windows/dbt versions and selected-ancestor initialization differ from the official Linux Docker environment.",
+    "Task success requires every upstream component to pass; partial component credit is descriptive only.",
+    "No React comparison was run; these are development executions rather than an ablation experiment.",
+    "At least one execution reached the model step limit; inspect per-trial action logs before claiming completed delivery.",
+    "Both trials used one advisory review (verdict=revise), then changed the patch. patch_changed_since_review=true: the final patch was not separately reviewed or approved.",
+    "Reviews pointed to concrete concerns but did not establish correctness: both final task rewards remained zero. These same-task development retests are not a review ablation or a generalization result.",
+    "Posthoc verifier failures were used only to explain this frozen result, not to patch the submission or rerun the model."
+  ],
+  "status": "completed",
+  "planned_trials": 2,
+  "records": [
+    {
+      "run_id": "refund-v31-01-verified",
+      "task_id": "dbt-fix-refund-reconciliation",
+      "mode": "verified",
+      "repeat": 0,
+      "status": "completed",
+      "metrics": {
+        "model_calls": 24,
+        "tool_calls": 29,
+        "prompt_tokens": 291116,
+        "completion_tokens": 6834,
+        "total_tokens": 297950,
+        "estimated_cost_usd": 0.095536,
+        "stagnation_notices": 1,
+        "review_calls": 1,
+        "elapsed_seconds": 177.047
+      },
+      "model": "deepseek-flash",
+      "max_steps": 24,
+      "budget_usd": 0.25,
+      "source_sha256": "bccbba0a695842aae5fa48c4b48322445eccc578da2ff7bb1915c10650f8b5be",
+      "agent_revision": "v3.1-contract-grounded-review-delivery-stage",
+      "source_snapshot": "$PROJECT\\artifacts\\evaluations\\round2b_contract_review_20261025_source.zip",
+      "source_snapshot_sha256": "9dd0469e9dfbd78a4df2e019a24e623fabc50f9f170696d2d63899f7599aaae9",
+      "stop_reason": "step_limit",
+      "final_answer": "执行达到步数上限；补丁是否正确请查看独立验收，不能据此视为完成交付。",
+      "verification": {
+        "passed": false,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_required_columns",
+          "component_5_valid_tier_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_9_refund_completion_rate_formula",
+          "component_10_no_inf_nan_all_numeric_columns",
+          "component_11_tier_boundary_testing",
+          "component_12_days_non_negative",
+          "component_13_total_processing_days_consistency"
+        ],
+        "components_failed": [
+          "component_8_waterfall_tier_logic"
+        ],
+        "valid_pytest_execution": true
+      },
+      "final_build": {
+        "success": true
+      },
+      "agent_report": "$PROJECT\\external\\native-results\\refund-v31-01-verified.json",
+      "verifier_report": "$PROJECT\\external\\public-verifiers\\dbt-fix-refund-reconciliation\\refund-v31-01-evaluation.json",
+      "raw_verifier": {
+        "task_id": "dbt-fix-refund-reconciliation",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-refund-reconciliation/tests/test_outputs.py",
+        "original_sha256": "071dc4cf774ddd7c603eaa03744b3133f1dee664cf3425b3d5991724bdbf7502",
+        "adapted_sha256": "2e0d346abb13477ed007c2b452f133b5819db340c2a92adb2e46c014f026bd1a",
+        "path_translation_only": true,
+        "returncode": 1,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_required_columns",
+          "component_5_valid_tier_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_9_refund_completion_rate_formula",
+          "component_10_no_inf_nan_all_numeric_columns",
+          "component_11_tier_boundary_testing",
+          "component_12_days_non_negative",
+          "component_13_total_processing_days_consistency"
+        ],
+        "components_failed": [
+          "component_8_waterfall_tier_logic"
+        ],
+        "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m13:20:03  Running with dbt=1.12.6\n\u001b[0m13:20:08  Installing dbt-labs/dbt_utils\n\u001b[0m13:20:12  Installed from version 1.3.3\n\u001b[0m13:20:12  Updated version available: 1.4.1\n\u001b[0m13:20:12  \n\u001b[0m13:20:12  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_return_reconciliation\nSTDOUT: \u001b[0m13:20:20  Running with dbt=1.12.6\n\u001b[0m13:20:20  Registered adapter: duckdb=1.11.0\n\u001b[0m13:20:24  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.pos\n\u001b[0m13:20:26  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m13:20:27  \n\u001b[0m13:20:27  Concurrency: 4 threads (target='dev')\n\u001b[0m13:20:27  \n\u001b[0m13:20:28  1 of 1 START sql table model main.rpt_return_reconciliation .................... [RUN]\n\u001b[0m13:20:28  1 of 1 OK created sql table model main.rpt_return_reconciliation ............... [\u001b[32mOK\u001b[0m in 0.22s]\n\u001b[0m13:20:28  \n\u001b[0m13:20:28  Finished running 1 table model in 0 hours 0 minutes and 1.65 seconds (1.65s).\n\u001b[0m13:20:29  \n\u001b[0m13:20:29  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m13:20:29  \n\u001b[0m13:20:29  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_required_columns\nPASS: component_5_valid_tier_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nFAIL: component_8_waterfall_tier_logic: Tier logic errors:\nreturn 0b5c41ba-0d3d-416e-a354-904ebe30d27f: tier='critical_delay', expected='needs_improvement' (days=11.0, rate=5.32, slow_pct=0.30)\nreturn 16cd0e50-5303-4f95-8d48-b3614beab578: tier='needs_improvement', expected='acceptable' (days=9.0, rate=3.25, slow_pct=0.60)\nreturn 1a775a13-2d9c-41ac-b703-0677339195d0: tier='needs_improvement', expected='acceptable' (days=8.0, rate=5.42, slow_pct=0.74)\nreturn 1cbd3698-5d85-4629-8949-89e53f9f0569: tier='needs_improvement', expected='acceptable' (days=8.0, rate=3.05, slow_pct=0.74)\nreturn 23a9926d-a420-48d5-a831-a9ea0872cd0e: tier='needs_improvement', expected='acceptable' (days=7.0, rate=1.89, slow_pct=0.86)\nPASS: component_9_refund_completion_rate_formula\nPASS: component_10_no_inf_nan_all_numeric_columns\nPASS: component_11_tier_boundary_testing\nPASS: component_12_days_non_negative\nPASS: component_13_total_processing_days_consistency\n\nFinal Score: 0.0\nF\n================================== FAILURES ===================================\n________________________________ test_solution ________________________________\n\n    def test_solution():\n        scores = {}\n    \n        for component_name in WEIGHTS:\n            try:\n                component_func = globals()[component_name]\n                scores[component_name] = component_func()\n                print(f\"PASS: {component_name}\")\n            except Exception as e:\n                scores[component_name] = 0.0\n                print(f\"FAIL: {component_name}: {e}\")\n    \n        all_passed = all(scores.get(key, 0) == 1.0 for key in WEIGHTS)\n        final_score = 1.0 if all_passed else 0.0\n    \n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-refund-reconciliation/refund-v31-01-logs\").mkdir(parents=True, exist_ok=True)\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-refund-reconciliation/refund-v31-01-logs/reward.txt\").write_text(str(final_score))\n        # Harbor requires reward.json to be a single-key dict[str, float|int]\n        # (harbor.utils.pass_at_k rejects len(rewards) != 1; VerifierResult.rewards\n        # is dict[str, float|int]). Emit the overall score as {\"reward\": ...},\n        # matching reward.txt; per-component pass/fail is in the verifier stdout above.\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-refund-reconciliation/refund-v31-01-logs/reward.json\").write_text(json.dumps({\"reward\": final_score}))\n    \n        print(f\"\\nFinal Score: {final_score}\")\n>       assert final_score == 1.0, f\"Score: {final_score}\"\nE       AssertionError: Score: 0.0\nE       assert 0.0 == 1.0\n\ntest_outputs_native.py:672: AssertionError\n=========================== short test summary info ===========================\nFAILED test_outputs_native.py::test_solution - AssertionError: Score: 0.0\n1 failed in 41.11s\n",
+        "stderr": ""
+      },
+      "candidate_review": {
+        "verdict": "revise",
+        "summary": "The patch removes the status filter (authorized by the ticket's 'include ALL returns' requirement) and adds NULL-safe ratio handling plus the tier column. However, the refund_completion_rate NULL handling and the PERCENT_RANK NULL semantics need scrutiny: the ticket requires NULL completion rate to be treated as 0 for tiering (done via coalesce), but the model's refund_completion_rate column itself is set to NULL when total_return_amount is 0/NULL, which is acceptable. The main concrete concern is that PERCENT_RANK() over total_processing_days DESC includes NULL rows in the ranking, which the ticket explicitly says to exclude ('Calculate percentiles only for non-NULL processing days').",
+        "findings": [
+          {
+            "requirement_quote": "Calculate percentiles **only for non-NULL** processing days",
+            "concern": "The window function `percent_rank() over (order by total_processing_days desc)` is computed over all rows including those with NULL total_processing_days. DuckDB orders NULLs last by default in DESC, so NULL rows receive the highest rank values (near 1.0), which can incorrectly push NULL-processing-day returns into the 'efficient' branch (processing_percent_rank >= 0.75) when their refund_completion_rate >= 0.90. The ticket explicitly requires percentiles be calculated only for non-NULL processing days.",
+            "evidence": "with_rank CTE: `percent_rank() over (order by total_processing_days desc) as processing_percent_rank` has no `filter (where total_processing_days is not null)` or NULL exclusion; the tier logic then uses `processing_percent_rank >= 0.75` for 'efficient'.",
+            "validation": "Compare tier assignment for returns with NULL total_processing_days: verify none are classified 'efficient' solely due to NULL ranking. Either add `filter (where total_processing_days is not null)` to the window or confirm NULL rows never satisfy the efficient branch."
+          },
+          {
+            "requirement_quote": "NULL `refund_completion_rate` -> treat as 0 (worst case)",
+            "concern": "The model sets refund_completion_rate to NULL when total_return_amount is 0 or NULL, and the tier logic coalesces it to 0 — consistent with the ticket. However, the 'acceptable' branch uses `coalesce(refund_completion_rate, 0) >= 0.85`, so a NULL rate correctly fails; but the 'needs_improvement' branch `coalesce(refund_completion_rate, 0) < 0.80` will catch NULL rates as needs_improvement before reaching acceptable — this matches 'worst case' intent. No violation, but worth confirming the waterfall order matches the ticket's listed order (critical, needs_improvement, acceptable, efficient, default).",
+            "evidence": "Tier CASE order: critical_delay, needs_improvement, acceptable, efficient, else acceptable — matches ticket order.",
+            "validation": "Spot-check a return with NULL refund_completion_rate and low processing days: confirm it lands in needs_improvement (not acceptable/efficient)."
+          },
+          {
+            "requirement_quote": "No infinity or NaN values appear in any calculated columns",
+            "concern": "processing_efficiency is set to NULL when total_processing_days <= 0 or NULL, avoiding division by zero. But refund_completion_rate divides total_refund_amount_lines / total_return_amount; total_refund_amount_lines is coalesced to 0, and total_return_amount is guarded against 0/NULL. This appears safe. However, if total_return_amount is negative or total_refund_amount_lines is negative, no infinity arises. No concrete violation found here.",
+            "evidence": "`case when total_return_amount is null or total_return_amount = 0 then null else total_refund_amount_lines / total_return_amount end`",
+            "validation": "Query the model for `isinf`/`isnan` on refund_completion_rate and processing_efficiency; expect zero rows."
+          }
+        ],
+        "candidate_sha256": "bc63a17e3cab72387837ffba2ec6ce1e4e66f6292618860de3583a6f7ff01290",
+        "context_truncated": false,
+        "advisory_only": true,
+        "hidden_feedback_used": false,
+        "patch_changed_since_review": true
+      },
+      "action_trace_summary": {
+        "tools": {
+          "read_file": 3,
+          "query_sql": 20,
+          "write_model": 3,
+          "run_dbt": 2,
+          "check_contracts": 1
+        },
+        "write_model_steps": [
+          6,
+          21,
+          23
+        ]
+      },
+      "posthoc_failure_analysis": "The candidate changed output masking/sort keys but still included NULL processing-day rows in the PERCENT_RANK population. The upstream tier-logic component failed."
+    },
+    {
+      "run_id": "division-v31-01-verified",
+      "task_id": "dbt-fix-division-by-zero",
+      "mode": "verified",
+      "repeat": 0,
+      "status": "completed",
+      "metrics": {
+        "model_calls": 16,
+        "tool_calls": 20,
+        "prompt_tokens": 257935,
+        "completion_tokens": 8100,
+        "total_tokens": 266035,
+        "estimated_cost_usd": 0.0871,
+        "review_calls": 1,
+        "elapsed_seconds": 164.89
+      },
+      "model": "deepseek-flash",
+      "max_steps": 16,
+      "budget_usd": 0.25,
+      "source_sha256": "bccbba0a695842aae5fa48c4b48322445eccc578da2ff7bb1915c10650f8b5be",
+      "agent_revision": "v3.1-contract-grounded-review-delivery-stage",
+      "source_snapshot": "$PROJECT\\artifacts\\evaluations\\round2b_contract_review_20261025_source.zip",
+      "source_snapshot_sha256": "9dd0469e9dfbd78a4df2e019a24e623fabc50f9f170696d2d63899f7599aaae9",
+      "stop_reason": "step_limit",
+      "final_answer": "执行达到步数上限；补丁是否正确请查看独立验收，不能据此视为完成交付。",
+      "verification": {
+        "passed": false,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_4_ltv_tier_exists",
+          "component_5_ltv_tier_valid_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_8_new_columns_exist",
+          "component_9_engagement_score_formula",
+          "component_10_churn_risk_score_formula",
+          "component_11_engagement_score_bounds",
+          "component_12_churn_risk_score_bounds",
+          "component_13_customer_value_rank",
+          "component_14_above_median_revenue",
+          "component_15_ltv_tier_waterfall_logic"
+        ],
+        "components_failed": [
+          "component_3_row_count"
+        ],
+        "valid_pytest_execution": true
+      },
+      "final_build": {
+        "success": true
+      },
+      "agent_report": "$PROJECT\\external\\native-results\\division-v31-01-verified.json",
+      "verifier_report": "$PROJECT\\external\\public-verifiers\\dbt-fix-division-by-zero\\division-v31-01-evaluation.json",
+      "raw_verifier": {
+        "task_id": "dbt-fix-division-by-zero",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-division-by-zero/tests/test_outputs.py",
+        "original_sha256": "3e47cc9167605bde35138bfe57f33987fc63775d791c8d7c7518638b52e80418",
+        "adapted_sha256": "70304fe5aeb48c6669ac34c70aa52b24a01d3c25445ea75c17f097acac751c7f",
+        "path_translation_only": true,
+        "returncode": 1,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_4_ltv_tier_exists",
+          "component_5_ltv_tier_valid_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_8_new_columns_exist",
+          "component_9_engagement_score_formula",
+          "component_10_churn_risk_score_formula",
+          "component_11_engagement_score_bounds",
+          "component_12_churn_risk_score_bounds",
+          "component_13_customer_value_rank",
+          "component_14_above_median_revenue",
+          "component_15_ltv_tier_waterfall_logic"
+        ],
+        "components_failed": [
+          "component_3_row_count"
+        ],
+        "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m13:19:47  Running with dbt=1.12.6\n\u001b[0m13:19:51  Installing dbt-labs/dbt_utils\n\u001b[0m13:19:53  Installed from version 1.3.3\n\u001b[0m13:19:53  Updated version available: 1.4.1\n\u001b[0m13:19:53  \n\u001b[0m13:19:53  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_customer_metrics\nSTDOUT: \u001b[0m13:20:01  Running with dbt=1.12.6\n\u001b[0m13:20:01  Registered adapter: duckdb=1.11.0\n\u001b[0m13:20:05  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.intermediate\n\u001b[0m13:20:07  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m13:20:07  \n\u001b[0m13:20:07  Concurrency: 4 threads (target='dev')\n\u001b[0m13:20:07  \n\u001b[0m13:20:09  1 of 1 START sql table model main.rpt_customer_metrics ......................... [RUN]\n\u001b[0m13:20:09  1 of 1 OK created sql table model main.rpt_customer_metrics .................... [\u001b[32mOK\u001b[0m in 0.23s]\n\u001b[0m13:20:09  \n\u001b[0m13:20:09  Finished running 1 table model in 0 hours 0 minutes and 1.87 seconds (1.87s).\n\u001b[0m13:20:10  \n\u001b[0m13:20:10  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m13:20:10  \n\u001b[0m13:20:10  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nFAIL: component_3_row_count: Row count mismatch: 378 vs 382\nPASS: component_4_ltv_tier_exists\nPASS: component_5_ltv_tier_valid_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nPASS: component_8_new_columns_exist\nPASS: component_9_engagement_score_formula\nPASS: component_10_churn_risk_score_formula\nPASS: component_11_engagement_score_bounds\nPASS: component_12_churn_risk_score_bounds\nPASS: component_13_customer_value_rank\nPASS: component_14_above_median_revenue\nPASS: component_15_ltv_tier_waterfall_logic\n\nFinal Score: 0.0\nF\n================================== FAILURES ===================================\n________________________________ test_solution ________________________________\n\n    def test_solution():\n        \"\"\"Run all component tests and compute final score.\"\"\"\n        scores = {}\n    \n        for component_name in WEIGHTS:\n            try:\n                component_func = globals()[component_name]\n                scores[component_name] = component_func()\n                print(f\"PASS: {component_name}\")\n            except Exception as e:\n                scores[component_name] = 0.0\n                print(f\"FAIL: {component_name}: {e}\")\n    \n        all_passed = all(scores.get(key, 0) == 1.0 for key in WEIGHTS)\n        final_score = 1.0 if all_passed else 0.0\n    \n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-division-by-zero/division-v31-01-logs\").mkdir(parents=True, exist_ok=True)\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-division-by-zero/division-v31-01-logs/reward.txt\").write_text(str(final_score))\n        # Harbor requires reward.json to be a single-key dict[str, float|int]\n        # (harbor.utils.pass_at_k rejects len(rewards) != 1; VerifierResult.rewards\n        # is dict[str, float|int]). Emit the overall score as {\"reward\": ...},\n        # matching reward.txt; per-component pass/fail is in the verifier stdout above.\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-division-by-zero/division-v31-01-logs/reward.json\").write_text(json.dumps({\"reward\": final_score}))\n    \n        print(f\"\\nFinal Score: {final_score}\")\n>       assert final_score == 1.0, f\"Score: {final_score}\"\nE       AssertionError: Score: 0.0\nE       assert 0.0 == 1.0\n\ntest_outputs_native.py:645: AssertionError\n=========================== short test summary info ===========================\nFAILED test_outputs_native.py::test_solution - AssertionError: Score: 0.0\n1 failed in 39.29s\n",
+        "stderr": ""
+      },
+      "candidate_review": {
+        "verdict": "revise",
+        "summary": "The patch fixes the headline bugs (NULL customer_id exclusion, removal of the total_revenue>0 filter, NULLIF-guarded divisions, MAX(ordered_at) reference date) and adds the required columns. However, several metric definitions deviate from the ticket's explicit formulas: revenue_velocity_ratio and order_frequency_trend are redefined rather than merely guarded, and the engagement/churn formulas use the wrong inputs in ways that change the specified semantics. These are concrete, evidenced deviations from the ticket text.",
+        "findings": [
+          {
+            "requirement_quote": "revenue_velocity_ratio | decimal | Recent revenue vs historical revenue ratio",
+            "concern": "The patch redefines revenue_velocity_ratio as revenue_last_90d / (total_revenue - revenue_last_90d) (recent 90d vs prior 90d..365d), whereas the original SQL computed revenue_last_30d / revenue_last_90d. The ticket only authorizes fixing division-by-zero (NULLIF), not changing which windows feed the ratio.",
+            "evidence": "Original: `revenue_last_30d / revenue_last_90d as revenue_velocity_ratio`. Patch: `case when revenue_last_90d > 0 then revenue_last_90d / nullif(total_revenue - revenue_last_90d, 0) else 0 end as revenue_velocity_ratio`. The numerator/denominator windows changed from 30d/90d to 90d/(total-90d).",
+            "validation": "Confirm with the ticket owner which window definition is intended; if preserving original semantics, compute revenue_last_30d / NULLIF(revenue_last_90d,0) and verify no inf/nan and that values match the original ratio where denominators are nonzero."
+          },
+          {
+            "requirement_quote": "order_frequency_trend | decimal | Trend metric indicating increase/decrease in order frequency",
+            "concern": "The patch redefines order_frequency_trend as orders_last_30d / (orders_last_90d - orders_last_30d) instead of the original orders_last_30d / orders_last_90d. This is a semantic change beyond the authorized division-by-zero fix.",
+            "evidence": "Original: `orders_last_30d / orders_last_90d as order_frequency_trend`. Patch: `case when orders_last_90d > 0 then orders_last_30d / nullif(orders_last_90d - orders_last_30d, 0) else 0 end as order_frequency_trend`.",
+            "validation": "Compare order_frequency_trend values against the original formula (with NULLIF guard) for customers with nonzero orders_last_90d; confirm intended definition before accepting the redefinition."
+          },
+          {
+            "requirement_quote": "Monetary | 35% | Use PERCENT_RANK() on total_revenue",
+            "concern": "The engagement monetary factor uses revenue_percentile directly, which is correct, but the patch also feeds revenue_percentile into the churn/engagement via `coalesce(revenue_percentile,0)` — that part is fine. The real concern is that the engagement frequency factor uses orders_per_month, which the patch redefined (see orders_per_month finding), so the engagement score inherits an unauthorized change.",
+            "evidence": "Engagement: `least(1.0, greatest(0.0, coalesce(orders_per_month, 0) / 5.0)) * 0.35`. orders_per_month itself was changed from `total_orders / date_diff('month', first_order_date, current_date)` to `total_orders / nullif(greatest(date_diff('day', first_order_date, r.max_ordered_at)/30.0, 1.0),0)`.",
+            "validation": "Verify orders_per_month against the ticket's 'relative to the most recent order date' requirement and confirm the engagement frequency factor uses the intended orders_per_month; check engagement scores for customers whose orders_per_month changed materially."
+          },
+          {
+            "requirement_quote": "orders_per_month | decimal | Average number of orders per month (relative to the most recent order date in the data)",
+            "concern": "The patch changes orders_per_month from a month-based date_diff to a day/30.0 approximation with a floor of 1.0 month. The ticket requires using MAX(ordered_at) as reference (which the patch does) but does not authorize switching from month granularity to day/30 approximation or the 1.0 floor, which alters values for short-tenure customers.",
+            "evidence": "Original: `total_orders / date_diff('month', first_order_date, current_date)`. Patch: `total_orders / nullif(greatest(date_diff('day', first_order_date, r.max_ordered_at) / 30.0, 1.0), 0)`.",
+            "validation": "Compare orders_per_month for customers with tenure < 1 month and for month-boundary cases; confirm whether day/30 approximation and the 1.0 floor are intended or whether month-based date_diff with NULLIF should be retained."
+          },
+          {
+            "requirement_quote": "Declining orders | 30% | `1.0 - min(1.0, max(0, order_frequency_trend))`",
+            "concern": "Because order_frequency_trend was redefined (30d/(90d-30d)), the churn declining_orders_factor is computed from a non-specified input, so churn_risk_score deviates from the ticket formula even though the outer min/max/1.0- structure is correct.",
+            "evidence": "Churn: `(1.0 - least(1.0, greatest(0.0, coalesce(order_frequency_trend, 0)))) * 0.30` where order_frequency_trend = `orders_last_30d / nullif(orders_last_90d - orders_last_30d, 0)`.",
+            "validation": "Recompute churn_risk_score using the original order_frequency_trend definition (guarded) and compare; confirm which trend definition the ticket intends before accepting churn scores."
+          }
+        ],
+        "candidate_sha256": "b58f935f1b04ec27b818974a290c7d1b511af6a34a83b74944eac5f551d4091f",
+        "context_truncated": false,
+        "advisory_only": true,
+        "hidden_feedback_used": false,
+        "patch_changed_since_review": true
+      },
+      "action_trace_summary": {
+        "tools": {
+          "read_file": 2,
+          "query_sql": 11,
+          "write_model": 3,
+          "run_dbt": 3,
+          "check_contracts": 1
+        },
+        "write_model_steps": [
+          6,
+          11,
+          13
+        ]
+      },
+      "posthoc_failure_analysis": "The final patch expanded status != 'CANCELLED' to upper(status) NOT IN ('CANCELLED', 'C'); the upstream customer row-count check observed 378 instead of 382. Other 14 components passed."
+    }
+  ],
+  "summary": [
+    {
+      "mode": "verified",
+      "trials": 2,
+      "passed": 0,
+      "task_success_rate": 0.0,
+      "wilson_95_interval": [
+        0,
+        0.6576
+      ],
+      "all_repeats_success_rate": null,
+      "min_repeats_per_task": 1,
+      "final_build_success_rate": 1.0,
+      "model_calls": 40,
+      "tool_calls": 49,
+      "total_tokens": 563985,
+      "estimated_cost_usd": 0.182636,
+      "mean_elapsed_seconds": 170.97,
+      "infrastructure_failures": 0
+    }
+  ]
+}

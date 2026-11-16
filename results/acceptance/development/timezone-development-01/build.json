@@ -1,0 +1,36 @@
+{
+  "success": false,
+  "returncode": 1,
+  "stdout": "06:31:19  1 of 4 ERROR creating sql view model main.int_sales__orders_enriched ........... [ERROR in 0.23s]\n06:31:20  [ERROR]: in model int_sales__orders_enriched (models\\intermediate\\sales\\int_sales__orders_enriched.sql)\n06:31:20    Compilation Error in model int_sales__orders_enriched (models\\intermediate\\sales\\int_sales__orders_enriched.sql)\n  'parse_order_timestamp' is undefined. This can happen when calling a macro that does not exist. Check for typos and/or install package dependencies with \"dbt deps\".\n{\"success\": false, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 19.454,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.int_sales__orders_enriched",
+      "status": "error",
+      "message": "Compilation Error in model int_sales__orders_enriched (models\\intermediate\\sales\\int_sales__orders_enriched.sql)\n  'parse_order_timestamp' is undefined. This can happen when calling a macro that does not exist. Check for typos and/or install package dependencies with \"dbt deps\"."
+    },
+    {
+      "id": "test.retail_dw_master.not_null_int_sales__orders_enriched_order_id.b8d5c9c519",
+      "status": "skipped",
+      "message": "None"
+    },
+    {
+      "id": "test.retail_dw_master.unique_int_sales__orders_enriched_order_id.46af3607b7",
+      "status": "skipped",
+      "message": "None"
+    },
+    {
+      "id": "test.retail_dw_master.relationships_fct_sales_order_id__order_id__ref_int_sales__orders_enriched_.6c7ba54305",
+      "status": "skipped",
+      "message": "None"
+    }
+  ],
+  "process_success": false,
+  "target_model": "int_sales__orders_enriched",
+  "target_model_ids": [
+    "model.retail_dw_master.int_sales__orders_enriched"
+  ],
+  "target_model_success": false,
+  "target_verification_error": "No successful result for the requested target model; a missing/skipped target or zero-node dbt run is not a successful build"
+}

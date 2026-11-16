@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-10-26T07:25:47.612894+00:00",
+  "zero_model_api_calls": true,
+  "before_manifest": "$PROJECT\\artifacts\\audits\\public_cohort_retry_replay_before_20261026.json",
+  "before_manifest_sha256": "68d02e63e45929a92ce384d3d799d6aa628da2c9427cf97a50d16944dd2ffb1d",
+  "prior_run_count": 100,
+  "after_run_count": 101,
+  "prior_runs_unchanged": true,
+  "changed_prior_runs": [],
+  "retry_record": {
+    "run_id": "daeb2927-c9f8-59bb-a3ac-07d3b4c7bf3a",
+    "task_id": "cohort-retention-matrix",
+    "file": "$PROJECT\\examples\\recorded_runs\\daeb2927-c9f8-59bb-a3ac-07d3b4c7bf3a.json",
+    "sha256": "fc268dc1ffe6b4dd0f0780111c488298ccb50f71f2bf3548f477c113b3d101a6"
+  },
+  "unique_matrix": {
+    "path": "$PROJECT\\artifacts\\audits\\public_eight_unique_20261026.json",
+    "sha256": "c1749d1333172eddee38f5e83d1088bba008540558f6973eae7329252465ddab",
+    "attempts": 9,
+    "unique_tasks": 8,
+    "accepted_unique_tasks": 8,
+    "unexecuted_infra_failures": 1
+  }
+}

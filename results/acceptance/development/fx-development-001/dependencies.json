@@ -1,0 +1,59 @@
+{
+  "success": true,
+  "returncode": 0,
+  "stdout": "{\"success\": true, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 19.75,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.stg_orders__order_payments",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.stg_pos__trans_lines",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.stg_pos__transactions",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.dim_exchange_rates",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.stg_sap__vbak",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.stg_sap__vbap",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.int_sales__orders_enriched",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.int_sales__order_lines",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.fct_sales",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.fact_revenue",
+      "status": "success",
+      "message": "OK"
+    }
+  ]
+}

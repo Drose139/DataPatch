@@ -1,0 +1,11 @@
+{
+  "command": [
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\dbt.exe",
+    "deps",
+    "--profiles-dir",
+    "D:\\DataPatch-work\\public-cohort-infra-retry-20261026\\cohort\\project"
+  ],
+  "returncode": 0,
+  "stdout": "\u001b[0m07:21:01  Running with dbt=1.12.6\n\u001b[0m07:21:01  Updating lock file in file path: D:\\DataPatch-work\\public-cohort-infra-retry-20261026\\cohort\\project/package-lock.yml\n\u001b[0m07:21:01  Installing ../dbt_packages/dbt_utils\n\u001b[0m07:21:01  Installed from <local @ ../dbt_packages/dbt_utils>\n",
+  "stderr": ""
+}

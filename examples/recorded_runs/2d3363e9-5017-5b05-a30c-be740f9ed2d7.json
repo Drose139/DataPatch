@@ -1,0 +1,173 @@
+{
+  "run_id": "2d3363e9-5017-5b05-a30c-be740f9ed2d7",
+  "source_run_id": "public_expanded_fixes_20261026:cohort-retention-matrix",
+  "task_id": "cohort-retention-matrix",
+  "task": {
+    "id": "cohort-retention-matrix",
+    "title": "公开项目 · 准备失败 · Cohort Retention Matrix",
+    "description": "# Cohort Retention Matrix\n\nThe Marketing team needs a customer cohort retention analysis to understand how customers from different acquisition channels behave over time.\n\n## Task\n\nCreate a dbt model at `models/marts/marketing/cohort_retention_matrix.sql`. Configure it to use schema `marketing_analytics`.\n\n**Note**: The dbt project prefixes custom schemas with `main_`, so `marketing_analytics` becomes `main_marketing_analytics` in the database.\n\n## Files\n\n- DuckDB: `/app/dbt_models_duckdb/models/marts/marketing/cohort_retention_matrix.sql`\n- Snowflake: `/app/dbt_models_snowflake/models/marts/marketing/cohort_retention_matrix.sql`\n\nRun `dbt deps` before running models.\n\n## Database Backend\n\nThis task supports both DuckDB and Snowflake. **Run `echo $DB_TYPE` in a shell BEFORE you write any code or spawn any subagents — the live env determines which backend the verifier runs against.** Do NOT assume a default from this prose. Both `/app/dbt_models_duckdb/` and `/app/dbt_models_snowflake/` exist on disk; the verifier only checks the project matching the live `$DB_TYPE`.\n\n### DuckDB\n- Set `DB_TYPE=duckdb`\n- Database path: `$DUCKDB_PATH` (default: `/app/database/retail.duckdb`)\n\n### Snowflake\n- Set `DB_TYPE=snowflake`\n- Environment variables (pre-configured):\n  - `SNOWFLAKE_ACCOUNT`\n  - `SNOWFLAKE_USER`\n  - `SNOWFLAKE_PASSWORD`\n  - `SNOWFLAKE_DATABASE` - The clone database to use\n  - `SNOWFLAKE_SCHEMA`\n  - `SNOWFLAKE_WAREHOUSE`\n  - `SNOWFLAKE_ROLE` (optional)\n\n**Note**: For Snowflake, the entrypoint automatically creates a clone database and sets `SNOWFLAKE_DATABASE`. The clone is destroyed when the task completes.\n\n## dbt Profile Setup\n\nYou must configure dbt to connect to the database:\n- Create a `profiles.yml` in the dbt project directory with profile name `retail_dw_master`\n- Set `DBT_PROFILES_DIR` environment variable to the directory containing `profiles.yml`\n\n### DuckDB Profile\nConfigure with `type: duckdb` and the database path from `$DUCKDB_PATH`.\n\n### Snowflake Profile\nConfigure with `type: snowflake` using password authentication:\n- Use the environment variables for account, user, password, database, schema, warehouse, and role\n\n## Output Specification\n\nThe model must produce exactly these columns:\n\n| Column | Description |\n|--------|-------------|\n| cohort_month | Signup month in YYYY-MM format |\n| acquisition_source | Marketing channel, 'UNKNOWN' for missing values |\n| cohort_size | Count of customers who signed up (including those who never ordered) |\n| never_ordered_count | Count of customers who never placed any valid order |\n| m0_retained | Count of customers who ordered in month 0 (same calendar month as signup) |\n| m0_revenue | Total revenue from month 0 orders |\n| m0_rate | Percentage of cohort retained in month 0, rounded to 2 decimals (e.g., 45.23) |\n| m1_retained | Count of customers who ordered in month 1 |\n| m1_revenue | Total revenue from month 1 orders |\n| m1_rate | Percentage of cohort retained in month 1, rounded to 2 decimals |\n| m1_cumulative | Count of customers who ordered in month 0 OR month 1 (not double-counted) |\n| m2_retained | Count of customers who ordered in month 2 |\n| m2_revenue | Total revenue from month 2 orders |\n| m2_rate | Percentage of cohort retained in month 2, rounded to 2 decimals |\n| m2_cumulative | Count of customers who ordered in month 0, 1, OR 2 (not double-counted) |\n| m3_retained | Count of customers who ordered in month 3 |\n| m3_revenue | Total revenue from month 3 orders |\n| m3_rate | Percentage of cohort retained in month 3, rounded to 2 decimals |\n| m3_cumulative | Count of customers who ordered in months 0-3 (not double-counted) |\n| m6_retained | Count of customers who ordered in month 6 |\n| m6_revenue | Total revenue from month 6 orders |\n| m6_rate | Percentage of cohort retained in month 6, rounded to 2 decimals |\n| m6_cumulative | Count of customers who ordered in months 0-6 (not double-counted) |\n| m12_retained | Count of customers who ordered in month 12 |\n| m12_revenue | Total revenue from month 12 orders |\n| m12_rate | Percentage of cohort retained in month 12, rounded to 2 decimals |\n| m12_cumulative | Count of customers who ordered in months 0-12 (not double-counted) |\n| early_churned_count | Count of customers who ordered in month 0 but never ordered again after month 0 |\n| cohort_ltv | Total lifetime revenue divided by cohort_size, rounded to 2 decimals |\n| avg_days_to_second_purchase | Average days between 1st and 2nd order for customers with 2+ orders, NULL if none in cohort |\n\n## Business Rules\n\n1. **Cohort definition**: Group customers by their account creation month (from CUSTOMER.CUSTOMERS). This is NOT based on first order date.\n\n2. **Cohort size**: Includes ALL customers who signed up in that month, even if they never placed an order.\n\n3. **Month calculation**: Month N means exactly N calendar months after the signup month. A customer who signed up January 15th and ordered February 3rd counts as month 1 (not month 0).\n\n4. **Valid orders**: Only count orders with STATUS = 'COMPLETED'. Exclude orders where TEST_ORDER_FLAG, SAMPLE_ORDER_FLAG, or INTERNAL_ORDER_FLAG is true.\n\n5. **Channel filtering**: Exclude any acquisition_source that has fewer than 10 total customers across all cohorts.\n\n6. **Revenue column**: Use GRAND_TOTAL from the orders table. Default to 0 when no orders exist.\n\n7. **Retained count**: Count distinct customers with at least one valid order in that specific month offset.\n\n8. **Retention rate**: Calculate as (retained_count / cohort_size) * 100, rounded to 2 decimal places. Return 0.00 if cohort_size is 0.\n\n9. **Cumulative retention**: Count distinct customers who ordered in ANY month from 0 up to and including that month. A customer ordering in multiple months counts once.\n\n10. **Never ordered**: Count customers in the cohort who have zero valid orders ever.\n\n11. **Early churned**: Count customers who placed at least one order in month 0 but have no orders in any month after month 0.\n\n12. **Sorting**: Order by cohort_month ascending, then acquisition_source ascending.\n\n## Data Sources\n\n- Customer data: CUSTOMER.CUSTOMERS table (contains customer signup dates and acquisition source)\n- Order data: ORDERS.ORDERS table (contains order details and flags)\n\nFind the appropriate dbt source references by examining the existing source definitions in the project.\n",
+    "split": "public-development"
+  },
+  "provider": "operator_reviewed",
+  "model": "未调用模型",
+  "mode": "reviewed_patch",
+  "patch_origin": "operator_reviewed",
+  "report_type": "reviewed_patch_acceptance",
+  "status": "failed",
+  "archived": true,
+  "recording_source": "准备阶段失败，补丁尚未应用，目标物化和上游原 pytest 未执行；该记录不计为验收通过。未调用模型。",
+  "execution_backend": "native_trusted",
+  "metrics": {
+    "elapsed_seconds": 49.296,
+    "model_calls": 0,
+    "tool_calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "estimated_cost_usd": 0
+  },
+  "recorded_operations": [
+    "input preparation failed"
+  ],
+  "zero_model_api_calls": true,
+  "events": [
+    {
+      "seq": 1,
+      "type": "status",
+      "content": "准备阶段失败，补丁尚未应用，目标物化和上游原 pytest 未执行；该记录不计为验收通过。未调用模型。"
+    },
+    {
+      "seq": 2,
+      "type": "error",
+      "content": [
+        {
+          "stage": "prepare/apply",
+          "type": "RuntimeError",
+          "error": "Preparation command failed (2); see D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\deps.json"
+        },
+        {
+          "stage": "evaluate",
+          "type": "FileNotFoundError",
+          "error": "[Errno 2] No such file or directory: 'D:\\\\DataPatch-work\\\\public-expanded-acceptance-20261026\\\\cohort\\\\native-case.json'"
+        }
+      ]
+    },
+    {
+      "seq": 3,
+      "type": "final",
+      "content": "准备阶段失败，补丁尚未应用，目标物化和上游原 pytest 未执行；该记录不计为验收通过。未调用模型。"
+    }
+  ],
+  "diff": "",
+  "checks": [
+    {
+      "name": "prepare_success",
+      "passed": false,
+      "expected": true,
+      "actual": false
+    }
+  ],
+  "verification": {
+    "passed": false,
+    "checks": [
+      {
+        "name": "prepare_success",
+        "passed": false,
+        "expected": true,
+        "actual": false
+      }
+    ],
+    "unexecuted": true,
+    "original_tests_executed": false,
+    "target_materialization_executed": false
+  },
+  "preparation_failure": {
+    "errors": [
+      {
+        "stage": "prepare/apply",
+        "type": "RuntimeError",
+        "error": "Preparation command failed (2); see D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\deps.json"
+      },
+      {
+        "stage": "evaluate",
+        "type": "FileNotFoundError",
+        "error": "[Errno 2] No such file or directory: 'D:\\\\DataPatch-work\\\\public-expanded-acceptance-20261026\\\\cohort\\\\native-case.json'"
+      }
+    ],
+    "logs": [
+      {
+        "path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\deps.json",
+        "sha256": "2056d0813a5e2fbe13fb6f8bdfc4087f84f982755e060a3bc3dccb06f9377575"
+      },
+      {
+        "path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\fix_data.json",
+        "sha256": "e1b3b0eafa6466b3c25def5a972501dab51cb76ca403590d0c216a3085435bb3"
+      }
+    ]
+  },
+  "patch_sha256": "710afaf955d0bc5d71dd8c44cbf1d45ba7505e392339b5947cd5d1e2fe4184ca",
+  "source_integrity": {
+    "task_id": "cohort-retention-matrix",
+    "patch_sha256": "710afaf955d0bc5d71dd8c44cbf1d45ba7505e392339b5947cd5d1e2fe4184ca",
+    "accepted": false,
+    "unexecuted": true,
+    "preparation_logs": [
+      {
+        "path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\deps.json",
+        "sha256": "2056d0813a5e2fbe13fb6f8bdfc4087f84f982755e060a3bc3dccb06f9377575"
+      },
+      {
+        "path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\fix_data.json",
+        "sha256": "e1b3b0eafa6466b3c25def5a972501dab51cb76ca403590d0c216a3085435bb3"
+      }
+    ]
+  },
+  "input_snapshot": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "snapshot_lock": "$PROJECT\\external\\data-eng-bench-expanded\\snapshot-lock.json",
+    "snapshot_lock_sha256": "71a7ab40f08c89d01f401f5aa85663a050c3b017480c35dd46b9cf2037029bd0",
+    "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+    "database_bytes": 488910848
+  },
+  "input_files": [
+    {
+      "path": "tasks/cohort-retention-matrix/environment/Dockerfile",
+      "sha256": "25f19a8cc5c25f025c88d3c3a69ddb349f18a29386fd70b116125910b6599ffe",
+      "bytes": 124
+    },
+    {
+      "path": "tasks/cohort-retention-matrix/instruction.md",
+      "sha256": "314dcae1cce3389ed4fe7447c40713bf53dc9557d71780a9b7c8825814d62485",
+      "bytes": 6370
+    },
+    {
+      "path": "tasks/cohort-retention-matrix/task.toml",
+      "sha256": "2ef255c5e23882cf8d0c14306883edfc052d7633eec8af32469ab21c5064252a",
+      "bytes": 1205
+    }
+  ],
+  "public_benchmark": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "official_harbor_result": false,
+    "setting": "native-adapted-public-development-case"
+  },
+  "source_artifacts": {
+    "report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026.json",
+    "patch_source_not_applied": "$PROJECT\\examples\\public_fixes\\cohort-retention-matrix.sql",
+    "instruction": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\cohort-retention-matrix\\instruction.md",
+    "preparation_logs": [
+      {
+        "path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\deps.json",
+        "sha256": "2056d0813a5e2fbe13fb6f8bdfc4087f84f982755e060a3bc3dccb06f9377575"
+      },
+      {
+        "path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\fix_data.json",
+        "sha256": "e1b3b0eafa6466b3c25def5a972501dab51cb76ca403590d0c216a3085435bb3"
+      }
+    ]
+  },
+  "error": "Preparation command failed (2); see D:\\DataPatch-work\\public-expanded-acceptance-20261026\\cohort\\preparation\\deps.json; [Errno 2] No such file or directory: 'D:\\\\DataPatch-work\\\\public-expanded-acceptance-20261026\\\\cohort\\\\native-case.json'",
+  "final_answer": "准备阶段失败，补丁尚未应用，目标物化和上游原 pytest 未执行；该记录不计为验收通过。未调用模型。"
+}

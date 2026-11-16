@@ -1,0 +1,236 @@
+{
+  "name": "public_native_subset_20261025",
+  "title": "data-eng-bench 公开开发任务：本地适配实际结果（非官方成绩）",
+  "created_at": "2026-10-25T12:38:00.774317+00:00",
+  "dataset": "snowflake-data-eng-bench/native-public-development-subset",
+  "provenance": "Snowflake-Labs/data-eng-bench 固定公开开发题；原始数据、dbt项目和任务说明，Windows native路径适配；非官方Docker/Harbor成绩，非未知保留集。",
+  "upstream_repository": "https://github.com/Snowflake-Labs/data-eng-bench",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "official_harbor_result": false,
+  "protocol": {
+    "task_ids": [
+      "dbt-fix-refund-reconciliation",
+      "dbt-fix-division-by-zero"
+    ],
+    "planned_task_ids": [
+      "dbt-fix-refund-reconciliation",
+      "dbt-fix-division-by-zero"
+    ],
+    "modes": [
+      "verified"
+    ],
+    "repeats": 1,
+    "model": "deepseek-flash",
+    "max_steps_by_task": {
+      "dbt-fix-refund-reconciliation": 24,
+      "dbt-fix-division-by-zero": 16
+    },
+    "budget_usd": 0.5,
+    "hidden_feedback_to_agent": false,
+    "cost_is_estimate": true,
+    "path_translation_only_in_verifier": true,
+    "base_build": "selected model and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0"
+    },
+    "initial_adapter_issue": "A direct Python invocation only defined test functions; it was not counted as a score. This report uses the subsequent actual pytest execution."
+  },
+  "limitations": [
+    "Only 2 public development trial(s), one per task; no performance/generalization claim.",
+    "Native Windows/dbt versions and selected-ancestor initialization differ from the official Linux Docker environment.",
+    "Task success requires every upstream component to pass; partial component credit is descriptive only.",
+    "Repeated identical successful SQL queries continued to the model step limit; this behavior is retained.",
+    "No React comparison was run; these are development executions rather than an ablation experiment."
+  ],
+  "status": "completed",
+  "planned_trials": 2,
+  "records": [
+    {
+      "run_id": "refund-verified-02-verified",
+      "task_id": "dbt-fix-refund-reconciliation",
+      "mode": "verified",
+      "repeat": 0,
+      "status": "completed",
+      "metrics": {
+        "model_calls": 24,
+        "tool_calls": 34,
+        "prompt_tokens": 988244,
+        "completion_tokens": 4228,
+        "total_tokens": 992472,
+        "estimated_cost_usd": 0.301547,
+        "elapsed_seconds": 149.75
+      },
+      "model": "deepseek-flash",
+      "max_steps": 24,
+      "budget_usd": 0.5,
+      "stop_reason": "step_limit",
+      "final_answer": "",
+      "verification": {
+        "passed": false,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_required_columns",
+          "component_5_valid_tier_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_9_refund_completion_rate_formula",
+          "component_10_no_inf_nan_all_numeric_columns",
+          "component_11_tier_boundary_testing",
+          "component_12_days_non_negative",
+          "component_13_total_processing_days_consistency"
+        ],
+        "components_failed": [
+          "component_8_waterfall_tier_logic"
+        ],
+        "valid_pytest_execution": true
+      },
+      "final_build": {
+        "success": true
+      },
+      "agent_report": "$PROJECT\\external\\native-results\\refund-verified-02-verified.json",
+      "verifier_report": "$PROJECT\\external\\public-verifiers\\dbt-fix-refund-reconciliation\\refund-verified-02-evaluation.json",
+      "raw_verifier": {
+        "task_id": "dbt-fix-refund-reconciliation",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-refund-reconciliation/tests/test_outputs.py",
+        "original_sha256": "071dc4cf774ddd7c603eaa03744b3133f1dee664cf3425b3d5991724bdbf7502",
+        "adapted_sha256": "fe23e32243c58c4de262c299957b0c07b1803c6b7cb7cb8e7165c4d07385d027",
+        "path_translation_only": true,
+        "returncode": 1,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_required_columns",
+          "component_5_valid_tier_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_9_refund_completion_rate_formula",
+          "component_10_no_inf_nan_all_numeric_columns",
+          "component_11_tier_boundary_testing",
+          "component_12_days_non_negative",
+          "component_13_total_processing_days_consistency"
+        ],
+        "components_failed": [
+          "component_8_waterfall_tier_logic"
+        ],
+        "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m12:31:34  Running with dbt=1.12.6\n\u001b[0m12:31:40  Installing dbt-labs/dbt_utils\n\u001b[0m12:31:43  Installed from version 1.3.3\n\u001b[0m12:31:43  Updated version available: 1.4.1\n\u001b[0m12:31:43  \n\u001b[0m12:31:43  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_return_reconciliation\nSTDOUT: \u001b[0m12:31:51  Running with dbt=1.12.6\n\u001b[0m12:31:51  Registered adapter: duckdb=1.11.0\n\u001b[0m12:31:55  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.sfdc\n\u001b[0m12:31:58  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m12:31:58  \n\u001b[0m12:31:58  Concurrency: 4 threads (target='dev')\n\u001b[0m12:31:58  \n\u001b[0m12:32:00  1 of 1 START sql table model main.rpt_return_reconciliation .................... [RUN]\n\u001b[0m12:32:00  1 of 1 OK created sql table model main.rpt_return_reconciliation ............... [\u001b[32mOK\u001b[0m in 0.29s]\n\u001b[0m12:32:00  \n\u001b[0m12:32:00  Finished running 1 table model in 0 hours 0 minutes and 2.48 seconds (2.48s).\n\u001b[0m12:32:02  \n\u001b[0m12:32:02  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m12:32:02  \n\u001b[0m12:32:02  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_required_columns\nPASS: component_5_valid_tier_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nFAIL: component_8_waterfall_tier_logic: Tier logic errors:\nreturn 0b5c41ba-0d3d-416e-a354-904ebe30d27f: tier='critical_delay', expected='needs_improvement' (days=11.0, rate=5.32, slow_pct=0.30)\nreturn 16cd0e50-5303-4f95-8d48-b3614beab578: tier='needs_improvement', expected='acceptable' (days=9.0, rate=3.25, slow_pct=0.60)\nreturn 1a775a13-2d9c-41ac-b703-0677339195d0: tier='needs_improvement', expected='acceptable' (days=8.0, rate=5.42, slow_pct=0.74)\nreturn 1cbd3698-5d85-4629-8949-89e53f9f0569: tier='needs_improvement', expected='acceptable' (days=8.0, rate=3.05, slow_pct=0.74)\nreturn 23a9926d-a420-48d5-a831-a9ea0872cd0e: tier='needs_improvement', expected='acceptable' (days=7.0, rate=1.89, slow_pct=0.86)\nPASS: component_9_refund_completion_rate_formula\nPASS: component_10_no_inf_nan_all_numeric_columns\nPASS: component_11_tier_boundary_testing\nPASS: component_12_days_non_negative\nPASS: component_13_total_processing_days_consistency\n\nFinal Score: 0.0\nF\n================================== FAILURES ===================================\n________________________________ test_solution ________________________________\n\n    def test_solution():\n        scores = {}\n    \n        for component_name in WEIGHTS:\n            try:\n                component_func = globals()[component_name]\n                scores[component_name] = component_func()\n                print(f\"PASS: {component_name}\")\n            except Exception as e:\n                scores[component_name] = 0.0\n                print(f\"FAIL: {component_name}: {e}\")\n    \n        all_passed = all(scores.get(key, 0) == 1.0 for key in WEIGHTS)\n        final_score = 1.0 if all_passed else 0.0\n    \n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-refund-reconciliation/refund-verified-02-logs\").mkdir(parents=True, exist_ok=True)\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-refund-reconciliation/refund-verified-02-logs/reward.txt\").write_text(str(final_score))\n        # Harbor requires reward.json to be a single-key dict[str, float|int]\n        # (harbor.utils.pass_at_k rejects len(rewards) != 1; VerifierResult.rewards\n        # is dict[str, float|int]). Emit the overall score as {\"reward\": ...},\n        # matching reward.txt; per-component pass/fail is in the verifier stdout above.\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-refund-reconciliation/refund-verified-02-logs/reward.json\").write_text(json.dumps({\"reward\": final_score}))\n    \n        print(f\"\\nFinal Score: {final_score}\")\n>       assert final_score == 1.0, f\"Score: {final_score}\"\nE       AssertionError: Score: 0.0\nE       assert 0.0 == 1.0\n\ntest_outputs_native.py:672: AssertionError\n=========================== short test summary info ===========================\nFAILED test_outputs_native.py::test_solution - AssertionError: Score: 0.0\n1 failed in 44.92s\n",
+        "stderr": ""
+      }
+    },
+    {
+      "run_id": "division-verified-01-verified",
+      "task_id": "dbt-fix-division-by-zero",
+      "mode": "verified",
+      "repeat": 0,
+      "status": "completed",
+      "metrics": {
+        "model_calls": 16,
+        "tool_calls": 32,
+        "prompt_tokens": 675015,
+        "completion_tokens": 4581,
+        "total_tokens": 679596,
+        "estimated_cost_usd": 0.208002,
+        "elapsed_seconds": 95.891
+      },
+      "model": "deepseek-flash",
+      "max_steps": 16,
+      "budget_usd": 0.5,
+      "stop_reason": "step_limit",
+      "final_answer": "",
+      "verification": {
+        "passed": false,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles"
+        ],
+        "components_failed": [
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_ltv_tier_exists",
+          "component_5_ltv_tier_valid_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_8_new_columns_exist",
+          "component_9_engagement_score_formula",
+          "component_10_churn_risk_score_formula",
+          "component_11_engagement_score_bounds",
+          "component_12_churn_risk_score_bounds",
+          "component_13_customer_value_rank",
+          "component_14_above_median_revenue",
+          "component_15_ltv_tier_waterfall_logic"
+        ],
+        "valid_pytest_execution": true
+      },
+      "final_build": {
+        "success": true
+      },
+      "agent_report": "$PROJECT\\external\\native-results\\division-verified-01-verified.json",
+      "verifier_report": "$PROJECT\\external\\public-verifiers\\dbt-fix-division-by-zero\\division-verified-01-evaluation.json",
+      "raw_verifier": {
+        "task_id": "dbt-fix-division-by-zero",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-division-by-zero/tests/test_outputs.py",
+        "original_sha256": "3e47cc9167605bde35138bfe57f33987fc63775d791c8d7c7518638b52e80418",
+        "adapted_sha256": "8b8c8d60fe25b389574f1fbf31f0cfbc7d1dd6ad93e2f2da3c3bac33dacc6607",
+        "path_translation_only": true,
+        "returncode": 1,
+        "reward": 0.0,
+        "components_passed": [
+          "component_1_model_compiles"
+        ],
+        "components_failed": [
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_ltv_tier_exists",
+          "component_5_ltv_tier_valid_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_8_new_columns_exist",
+          "component_9_engagement_score_formula",
+          "component_10_churn_risk_score_formula",
+          "component_11_engagement_score_bounds",
+          "component_12_churn_risk_score_bounds",
+          "component_13_customer_value_rank",
+          "component_14_above_median_revenue",
+          "component_15_ltv_tier_waterfall_logic"
+        ],
+        "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m12:36:59  Running with dbt=1.12.6\n\u001b[0m12:37:02  Installing dbt-labs/dbt_utils\n\u001b[0m12:37:05  Installed from version 1.3.3\n\u001b[0m12:37:05  Updated version available: 1.4.1\n\u001b[0m12:37:05  \n\u001b[0m12:37:05  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_customer_metrics\nSTDOUT: \u001b[0m12:37:12  Running with dbt=1.12.6\n\u001b[0m12:37:12  Registered adapter: duckdb=1.11.0\n\u001b[0m12:37:17  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging.wms\n\u001b[0m12:37:19  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m12:37:19  \n\u001b[0m12:37:19  Concurrency: 4 threads (target='dev')\n\u001b[0m12:37:19  \n\u001b[0m12:37:21  1 of 1 START sql table model main.rpt_customer_metrics ......................... [RUN]\n\u001b[0m12:37:21  1 of 1 OK created sql table model main.rpt_customer_metrics .................... [\u001b[32mOK\u001b[0m in 0.22s]\n\u001b[0m12:37:21  \n\u001b[0m12:37:21  Finished running 1 table model in 0 hours 0 minutes and 1.77 seconds (1.77s).\n\u001b[0m12:37:23  \n\u001b[0m12:37:23  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m12:37:23  \n\u001b[0m12:37:23  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nFAIL: component_2_no_inf_nan_values: Found 766 inf/nan values\nFAIL: component_3_row_count: Row count mismatch: 383 vs 382\nFAIL: component_4_ltv_tier_exists: Binder Error: Referenced column \"ltv_tier\" not found in FROM clause!\nCandidate bindings: \"total_orders\", \"total_revenue\", \"revenue_velocity_ratio\", \"last_order_date\", \"customer_id\"\n\nLINE 2:             SELECT ltv_tier FROM main.rpt_customer_metrics LIMIT 1\n                           ^\nFAIL: component_5_ltv_tier_valid_values: Binder Error: Referenced column \"ltv_tier\" not found in FROM clause!\nCandidate bindings: \"total_orders\", \"total_revenue\", \"revenue_velocity_ratio\", \"last_order_date\", \"customer_id\"\n\nLINE 2:             SELECT DISTINCT ltv_tier FROM main.rpt_customer_metrics\n                                    ^\nFAIL: component_6_uses_window_function: Must use PERCENT_RANK() or NTILE() window function for tier calculation\nFAIL: component_7_tier_distribution: Binder Error: Referenced column \"ltv_tier\" not found in FROM clause!\nCandidate bindings: \"total_orders\", \"total_revenue\", \"revenue_velocity_ratio\", \"last_order_date\", \"customer_id\"\n\nLINE 4:             GROUP BY ltv_tier\n                             ^\nFAIL: component_8_new_columns_exist: Missing columns: ['days_since_last_order', 'orders_last_180d', 'customer_engagement_score', 'churn_risk_score', 'customer_value_rank', 'customer_value_percentile', 'above_median_revenue']\nFAIL: component_9_engagement_score_formula: Binder Error: Referenced column \"days_since_last_order\" not found in FROM clause!\nCandidate bindings: \"first_order_date\", \"last_order_date\", \"orders_last_30d\", \"orders_last_90d\", \"revenue_velocity_ratio\"\n\nLINE 4:                 days_since_last_order,\n                        ^\nFAIL: component_10_churn_risk_score_formula: Binder Error: Referenced column \"days_since_last_order\" not found in FROM clause!\nCandidate bindings: \"first_order_date\", \"last_order_date\", \"orders_last_30d\", \"orders_last_90d\", \"revenue_velocity_ratio\"\n\nLINE 4:                 days_since_last_order,\n                        ^\nFAIL: component_11_engagement_score_bounds: Binder Error: Referenced column \"customer_engagement_score\" not found in FROM clause!\nCandidate bindings: \"customer_id\", \"total_revenue\", \"revenue_velocity_ratio\", \"order_frequency_trend\", \"orders_per_month\"\n\nLINE 2:             SELECT MIN(customer_engagement_score), MAX(customer_engagement_score)\n                               ^\nFAIL: component_12_churn_risk_score_bounds: Binder Error: Referenced column \"churn_risk_score\" not found in FROM clause!\nCandidate bindings: \"first_order_date\", \"revenue_velocity_ratio\", \"orders_per_month\", \"customer_id\", \"revenue_last_30d\"\n\nLINE 2:             SELECT MIN(churn_risk_score), MAX(churn_risk_score)\n                               ^\nFAIL: component_13_customer_value_rank: Binder Error: Referenced column \"customer_value_rank\" not found in FROM clause!\nCandidate bindings: \"customer_id\", \"total_revenue\", \"revenue_last_30d\", \"revenue_last_90d\", \"last_order_date\"\n\nLINE 3:             WHERE customer_value_rank = 1\n                          ^\nFAIL: component_14_above_median_revenue: Binder Error: Referenced column \"above_median_revenue\" not found in FROM clause!\nCandidate bindings: \"avg_order_value\", \"revenue_velocity_ratio\", \"revenue_last_30d\", \"revenue_last_90d\", \"total_revenue\"\n\nLINE 2:             SELECT customer_id, total_revenue, above_median_revenue\n                                                       ^\nFAIL: component_15_ltv_tier_waterfall_logic: Binder Error: Referenced column \"orders_last_180d\" not found in FROM clause!\nCandidate bindings: \"orders_last_30d\", \"orders_last_90d\", \"last_order_date\", \"revenue_last_30d\", \"revenue_last_90d\"\n\nLINE 6:                 orders_last_180d,\n                        ^\n\nFinal Score: 0.0\nF\n================================== FAILURES ===================================\n________________________________ test_solution ________________________________\n\n    def test_solution():\n        \"\"\"Run all component tests and compute final score.\"\"\"\n        scores = {}\n    \n        for component_name in WEIGHTS:\n            try:\n                component_func = globals()[component_name]\n                scores[component_name] = component_func()\n                print(f\"PASS: {component_name}\")\n            except Exception as e:\n                scores[component_name] = 0.0\n                print(f\"FAIL: {component_name}: {e}\")\n    \n        all_passed = all(scores.get(key, 0) == 1.0 for key in WEIGHTS)\n        final_score = 1.0 if all_passed else 0.0\n    \n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-division-by-zero/division-verified-01-logs\").mkdir(parents=True, exist_ok=True)\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-division-by-zero/division-verified-01-logs/reward.txt\").write_text(str(final_score))\n        # Harbor requires reward.json to be a single-key dict[str, float|int]\n        # (harbor.utils.pass_at_k rejects len(rewards) != 1; VerifierResult.rewards\n        # is dict[str, float|int]). Emit the overall score as {\"reward\": ...},\n        # matching reward.txt; per-component pass/fail is in the verifier stdout above.\n        Path(\"$PROJECT/external/public-verifiers/dbt-fix-division-by-zero/division-verified-01-logs/reward.json\").write_text(json.dumps({\"reward\": final_score}))\n    \n        print(f\"\\nFinal Score: {final_score}\")\n>       assert final_score == 1.0, f\"Score: {final_score}\"\nE       AssertionError: Score: 0.0\nE       assert 0.0 == 1.0\n\ntest_outputs_native.py:645: AssertionError\n=========================== short test summary info ===========================\nFAILED test_outputs_native.py::test_solution - AssertionError: Score: 0.0\n1 failed in 40.37s\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "summary": [
+    {
+      "mode": "verified",
+      "trials": 2,
+      "passed": 0,
+      "task_success_rate": 0.0,
+      "wilson_95_interval": [
+        0,
+        0.6576
+      ],
+      "all_repeats_success_rate": null,
+      "min_repeats_per_task": 1,
+      "final_build_success_rate": 1.0,
+      "model_calls": 40,
+      "tool_calls": 66,
+      "total_tokens": 1672068,
+      "estimated_cost_usd": 0.509549,
+      "mean_elapsed_seconds": 122.82,
+      "infrastructure_failures": 0
+    }
+  ]
+}

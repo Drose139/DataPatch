@@ -1,0 +1,514 @@
+{
+  "run_id": "6705c77a-f906-5ff9-b80b-c56fdc767ee1",
+  "source_run_id": "public_expanded_fixes_20261026:dbt-fix-daily-revenue",
+  "task_id": "dbt-fix-daily-revenue",
+  "task": {
+    "id": "dbt-fix-daily-revenue",
+    "title": "公开项目 · 已审阅成品 · dbt: Fix Daily Revenue Report",
+    "description": "# dbt: Fix Daily Revenue Report\n\n## Objective\nFix a dbt model with data quality issues in daily reporting.\n\n## Background\nThe finance team relies on `rpt_order_daily_summary` to track daily revenue. They've reported issues with the report output.\n\n## The Bug\nThe report has data quality problems. Some expected records are missing and calculations appear incorrect.\n\n## Your Task\nFix the `rpt_order_daily_summary` model to produce correct output.\n\n## Files\n- DuckDB model: `/app/dbt_models_duckdb/models/marts/sales/rpt_order_daily_summary.sql`\n- Snowflake model: `/app/dbt_models_snowflake/models/marts/sales/rpt_order_daily_summary.sql`\n- Source data: `stg_orders__orders`\n\n## Database Backend\nThis task supports two database backends:\n\n- **DuckDB** (default): Local DuckDB database at `/app/database/retail.duckdb`. The dbt project is at `/app/dbt_models_duckdb/`.\n- **Snowflake**: Cloud Snowflake database. Connection details are provided via environment variables (`SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_USER`, `SNOWFLAKE_PASSWORD`, `SNOWFLAKE_DATABASE`, `SNOWFLAKE_SCHEMA`, `SNOWFLAKE_WAREHOUSE`, `SNOWFLAKE_ROLE`). The dbt project is at `/app/dbt_models_snowflake/`.\n\nCheck the `DB_TYPE` environment variable to determine which backend is active.\n\n## dbt Profile Setup\n\nCreate a `profiles.yml` in the appropriate dbt project directory:\n\n- For DuckDB: Configure with `type: duckdb` and `path` pointing to the database file.\n- For Snowflake: Configure with `type: snowflake` and use the environment variables for connection settings (password authentication). Set the profile's `schema:` to `$SNOWFLAKE_SCHEMA` — do NOT leave it blank (a blank schema makes Snowflake default to `PUBLIC`, so models land in the wrong schema and the verifier cannot find them).\n\n## Success Criteria\n- Output produces complete and accurate results\n- All dates in the range are present (no gaps)\n- Cumulative revenue is calculated correctly\n- All tests pass\n\n## Guidelines\n- Use Jinja conditionals (`{% if target.type == 'snowflake' %}`) for database-specific syntax\n- Do NOT modify upstream staging models\n- Do NOT change model materialization\n- Preserve all output columns\n\n## Notes\n- Do NOT modify upstream staging models\n- Do NOT change model materialization\n- Preserve all output columns\n",
+    "split": "public-development"
+  },
+  "provider": "operator_reviewed",
+  "model": "未调用模型",
+  "mode": "reviewed_patch",
+  "patch_origin": "operator_reviewed",
+  "report_type": "reviewed_patch_acceptance",
+  "status": "completed",
+  "archived": true,
+  "recording_source": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。验收策略 upstream_harness：当前候选物化和上游原 pytest 是必需门槛。附加 dbt build 已通过。",
+  "execution_backend": "native_trusted",
+  "metrics": {
+    "elapsed_seconds": 203.328,
+    "model_calls": 0,
+    "tool_calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "estimated_cost_usd": 0
+  },
+  "recorded_operations": [
+    "dbt current candidate and ancestor run",
+    "dbt target build",
+    "original upstream pytest"
+  ],
+  "zero_model_api_calls": true,
+  "events": [
+    {
+      "seq": 1,
+      "type": "status",
+      "content": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。验收策略 upstream_harness：当前候选物化和上游原 pytest 是必需门槛。附加 dbt build 已通过。"
+    },
+    {
+      "type": "tool",
+      "name": "已记录当前候选及祖先物化",
+      "arguments": {
+        "command": "run",
+        "select": "+rpt_order_daily_summary"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 31.735,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.stg_orders__orders",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.rpt_order_daily_summary",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_order_daily_summary",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_order_daily_summary"
+        ],
+        "target_model_success": true
+      },
+      "seq": 2
+    },
+    {
+      "seq": 3,
+      "type": "tool",
+      "name": "已记录 dbt 构建",
+      "arguments": {
+        "select": "rpt_order_daily_summary"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 33.046,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.rpt_order_daily_summary",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_order_daily_summary",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_order_daily_summary"
+        ],
+        "target_model_success": true
+      }
+    },
+    {
+      "seq": 4,
+      "type": "validation",
+      "name": "已记录上游原 pytest",
+      "result": {
+        "task_id": "dbt-fix-daily-revenue",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-daily-revenue/tests/test_outputs.py",
+        "original_sha256": "a78ee0e26db67a79ab8717a72b4ff52da5200b5590f348e26c9a69d9814f96e8",
+        "adapted_sha256": "3c3f1c903ce59d91b3ca26870517806162f805e0f9106eaab6d1bbfee9671b39",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [],
+        "components_failed": [],
+        "grading_protocol": "pytest_exit_status",
+        "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-daily-revenue/tests/test.sh",
+        "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+        "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+        "pytest_counts": {
+          "passed": 13,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "pytest_returncode": 0,
+        "runtime_settings": {
+          "duckdb_timezone": "UTC"
+        },
+        "runtime_launcher": {
+          "source_path": "$PROJECT\\integrations\\run_public_pytest.py",
+          "archive_path": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\run_public_pytest.py",
+          "sha256": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+          "scope": "Declared DuckDB connection session setting; pytest assertions and exit status unchanged"
+        },
+        "command": [
+          "$PROJECT\\.venv\\Scripts\\python.exe",
+          "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\run_public_pytest.py",
+          "--duckdb-timezone",
+          "UTC",
+          "-v",
+          "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\test_outputs_daily.py"
+        ],
+        "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 13 items\n\ntest_outputs_daily.py::test_no_missing_dates PASSED                      [  7%]\ntest_outputs_daily.py::test_zero_revenue_dates_exist PASSED              [ 15%]\ntest_outputs_daily.py::test_cumulative_revenue_matches_total PASSED      [ 23%]\ntest_outputs_daily.py::test_cumulative_revenue_monotonic_increasing PASSED [ 30%]\ntest_outputs_daily.py::test_cumulative_revenue_accuracy_sample_dates PASSED [ 38%]\ntest_outputs_daily.py::test_date_sequence_continuous PASSED              [ 46%]\ntest_outputs_daily.py::test_no_null_revenue_values PASSED                [ 53%]\ntest_outputs_daily.py::test_zero_revenue_days_have_zero_orders PASSED    [ 61%]\ntest_outputs_daily.py::test_revenue_sum_matches_orders PASSED            [ 69%]\ntest_outputs_daily.py::test_cumulative_starts_with_first_day_revenue PASSED [ 76%]\ntest_outputs_daily.py::test_model_structure_preserved PASSED             [ 84%]\ntest_outputs_daily.py::test_no_duplicate_dates PASSED                    [ 92%]\ntest_outputs_daily.py::test_cumulative_never_zero_after_first_revenue PASSED [100%]\n\n============================= 13 passed in 2.28s ==============================\n",
+        "stderr": ""
+      }
+    },
+    {
+      "seq": 5,
+      "type": "final",
+      "content": "成品补丁验收通过。"
+    }
+  ],
+  "diff": "--- a/models/marts/sales/rpt_order_daily_summary.sql\n+++ b/models/marts/sales/rpt_order_daily_summary.sql\n@@ -1,21 +1,49 @@\n+-- operator_reviewed\n+-- Preserve all source orders and the original model materialization.\n+-- Aggregate before joining a complete inclusive calendar; missing days are zero.\n with orders as (\n     select * from {{ ref('stg_orders__orders') }}\n+), bounds as (\n+    select cast(min(ordered_at) as date) as first_day,\n+           cast(max(ordered_at) as date) as last_day\n+    from orders\n+), calendar as (\n+{% if target.type == 'snowflake' %}\n+    select dateadd(day, offset_day, first_day)::date as order_date\n+    from bounds, lateral (\n+        select row_number() over (order by seq4()) - 1 as offset_day\n+        from table(generator(rowcount => 100000))\n+    ) where offset_day <= datediff(day, first_day, last_day)\n+{% else %}\n+    select cast(day as date) as order_date\n+    from bounds, lateral generate_series(first_day, last_day, interval '1 day') as dates(day)\n+{% endif %}\n+), daily as (\n+    select cast(ordered_at as date) as order_date,\n+           count(distinct order_id) as total_orders,\n+           count(distinct customer_id) as unique_customers,\n+           sum(grand_total) as total_revenue,\n+           sum(subtotal) as subtotal_revenue,\n+           sum(discount_total) as total_discounts,\n+           sum(shipping_total) as total_shipping,\n+           sum(tax_total) as total_tax,\n+           avg(grand_total) as avg_order_value\n+    from orders\n+    group by 1\n+), complete_daily as (\n+    select c.order_date,\n+           coalesce(d.total_orders, 0) as total_orders,\n+           coalesce(d.unique_customers, 0) as unique_customers,\n+           coalesce(d.total_revenue, 0) as total_revenue,\n+           coalesce(d.subtotal_revenue, 0) as subtotal_revenue,\n+           coalesce(d.total_discounts, 0) as total_discounts,\n+           coalesce(d.total_shipping, 0) as total_shipping,\n+           coalesce(d.total_tax, 0) as total_tax,\n+           coalesce(d.avg_order_value, 0) as avg_order_value\n+    from calendar c left join daily d on c.order_date = d.order_date\n )\n-\n-select\n-    date_trunc('day', ordered_at) as order_date,\n-    count(distinct order_id) as total_orders,\n-    count(distinct customer_id) as unique_customers,\n-    sum(grand_total) as total_revenue,\n-    sum(subtotal) as subtotal_revenue,\n-    sum(discount_total) as total_discounts,\n-    sum(shipping_total) as total_shipping,\n-    sum(tax_total) as total_tax,\n-    avg(grand_total) as avg_order_value,\n-    sum(sum(grand_total)) over (\n-        order by date_trunc('day', ordered_at)\n-        rows unbounded preceding\n-    ) as cumulative_revenue\n-from orders\n-group by 1\n-order by 1\n+select *, sum(total_revenue) over (\n+    order by order_date rows between unbounded preceding and current row\n+) as cumulative_revenue\n+from complete_daily\n+order by order_date\n",
+  "applied_sql": "-- operator_reviewed\n-- Preserve all source orders and the original model materialization.\n-- Aggregate before joining a complete inclusive calendar; missing days are zero.\nwith orders as (\n    select * from {{ ref('stg_orders__orders') }}\n), bounds as (\n    select cast(min(ordered_at) as date) as first_day,\n           cast(max(ordered_at) as date) as last_day\n    from orders\n), calendar as (\n{% if target.type == 'snowflake' %}\n    select dateadd(day, offset_day, first_day)::date as order_date\n    from bounds, lateral (\n        select row_number() over (order by seq4()) - 1 as offset_day\n        from table(generator(rowcount => 100000))\n    ) where offset_day <= datediff(day, first_day, last_day)\n{% else %}\n    select cast(day as date) as order_date\n    from bounds, lateral generate_series(first_day, last_day, interval '1 day') as dates(day)\n{% endif %}\n), daily as (\n    select cast(ordered_at as date) as order_date,\n           count(distinct order_id) as total_orders,\n           count(distinct customer_id) as unique_customers,\n           sum(grand_total) as total_revenue,\n           sum(subtotal) as subtotal_revenue,\n           sum(discount_total) as total_discounts,\n           sum(shipping_total) as total_shipping,\n           sum(tax_total) as total_tax,\n           avg(grand_total) as avg_order_value\n    from orders\n    group by 1\n), complete_daily as (\n    select c.order_date,\n           coalesce(d.total_orders, 0) as total_orders,\n           coalesce(d.unique_customers, 0) as unique_customers,\n           coalesce(d.total_revenue, 0) as total_revenue,\n           coalesce(d.subtotal_revenue, 0) as subtotal_revenue,\n           coalesce(d.total_discounts, 0) as total_discounts,\n           coalesce(d.total_shipping, 0) as total_shipping,\n           coalesce(d.total_tax, 0) as total_tax,\n           coalesce(d.avg_order_value, 0) as avg_order_value\n    from calendar c left join daily d on c.order_date = d.order_date\n)\nselect *, sum(total_revenue) over (\n    order by order_date rows between unbounded preceding and current row\n) as cumulative_revenue\nfrom complete_daily\norder by order_date\n",
+  "checks": [
+    {
+      "name": "target_materialization_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "dependency_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "dependency_target_model_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "pytest_executed_tests",
+      "passed": true,
+      "expected": ">0 (passed + failed)",
+      "actual": 13
+    },
+    {
+      "name": "pytest_no_failures",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_no_errors",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_no_skips",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_exit_status",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    }
+  ],
+  "verification": {
+    "passed": true,
+    "acceptance_policy": "upstream_harness",
+    "build_required": false,
+    "target_materialization_success": true,
+    "dependency_build_success": true,
+    "original_tests_passed": true,
+    "reward": 1.0,
+    "grading_protocol": "pytest_exit_status",
+    "checks": [
+      {
+        "name": "target_materialization_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "dependency_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "dependency_target_model_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "pytest_executed_tests",
+        "passed": true,
+        "expected": ">0 (passed + failed)",
+        "actual": 13
+      },
+      {
+        "name": "pytest_no_failures",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_no_errors",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_no_skips",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_exit_status",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      }
+    ]
+  },
+  "final_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 33.046,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.rpt_order_daily_summary",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "rpt_order_daily_summary",
+    "target_model_ids": [
+      "model.retail_dw_master.rpt_order_daily_summary"
+    ],
+    "target_model_success": true
+  },
+  "raw_verifier": {
+    "task_id": "dbt-fix-daily-revenue",
+    "mode": "native-path-adapted-upstream-verifier",
+    "official_harbor_result": false,
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-daily-revenue/tests/test_outputs.py",
+    "original_sha256": "a78ee0e26db67a79ab8717a72b4ff52da5200b5590f348e26c9a69d9814f96e8",
+    "adapted_sha256": "3c3f1c903ce59d91b3ca26870517806162f805e0f9106eaab6d1bbfee9671b39",
+    "path_translation_only": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "components_passed": [],
+    "components_failed": [],
+    "grading_protocol": "pytest_exit_status",
+    "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-daily-revenue/tests/test.sh",
+    "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+    "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+    "pytest_counts": {
+      "passed": 13,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pytest_returncode": 0,
+    "runtime_settings": {
+      "duckdb_timezone": "UTC"
+    },
+    "runtime_launcher": {
+      "source_path": "$PROJECT\\integrations\\run_public_pytest.py",
+      "archive_path": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\run_public_pytest.py",
+      "sha256": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+      "scope": "Declared DuckDB connection session setting; pytest assertions and exit status unchanged"
+    },
+    "command": [
+      "$PROJECT\\.venv\\Scripts\\python.exe",
+      "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\run_public_pytest.py",
+      "--duckdb-timezone",
+      "UTC",
+      "-v",
+      "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\test_outputs_daily.py"
+    ],
+    "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 13 items\n\ntest_outputs_daily.py::test_no_missing_dates PASSED                      [  7%]\ntest_outputs_daily.py::test_zero_revenue_dates_exist PASSED              [ 15%]\ntest_outputs_daily.py::test_cumulative_revenue_matches_total PASSED      [ 23%]\ntest_outputs_daily.py::test_cumulative_revenue_monotonic_increasing PASSED [ 30%]\ntest_outputs_daily.py::test_cumulative_revenue_accuracy_sample_dates PASSED [ 38%]\ntest_outputs_daily.py::test_date_sequence_continuous PASSED              [ 46%]\ntest_outputs_daily.py::test_no_null_revenue_values PASSED                [ 53%]\ntest_outputs_daily.py::test_zero_revenue_days_have_zero_orders PASSED    [ 61%]\ntest_outputs_daily.py::test_revenue_sum_matches_orders PASSED            [ 69%]\ntest_outputs_daily.py::test_cumulative_starts_with_first_day_revenue PASSED [ 76%]\ntest_outputs_daily.py::test_model_structure_preserved PASSED             [ 84%]\ntest_outputs_daily.py::test_no_duplicate_dates PASSED                    [ 92%]\ntest_outputs_daily.py::test_cumulative_never_zero_after_first_revenue PASSED [100%]\n\n============================= 13 passed in 2.28s ==============================\n",
+    "stderr": ""
+  },
+  "preparation": {
+    "task_id": "dbt-fix-daily-revenue",
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "mode": "native-adapted-public-development-case",
+    "project_dir": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\daily\\project",
+    "database_path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\daily\\database\\retail.duckdb",
+    "model": "models/marts/sales/rpt_order_daily_summary.sql",
+    "initialized": true,
+    "task_type": "fix-model",
+    "initialization_selectors": [
+      "rpt_order_daily_summary"
+    ],
+    "bug_overlay": "environment/rpt_order_daily_summary.sql",
+    "base_build": "selected model and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0",
+      "duckdb_timezone": "UTC"
+    },
+    "path_translations": {
+      "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\daily\\project",
+      "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\daily\\database\\retail.duckdb"
+    },
+    "official_harbor_result": false,
+    "hidden_verifier_used_by_agent": false,
+    "runtime_settings": {
+      "duckdb_timezone": "UTC"
+    }
+  },
+  "patch_sha256": "f0ff4288c19eabab606c2e7642b53550a8c7cb591b010b42fef0358271c86f99",
+  "applied_patch_sha256": "f0ff4288c19eabab606c2e7642b53550a8c7cb591b010b42fef0358271c86f99",
+  "source_integrity": {
+    "task_id": "dbt-fix-daily-revenue",
+    "patch_sha256": "f0ff4288c19eabab606c2e7642b53550a8c7cb591b010b42fef0358271c86f99",
+    "build_report_sha256": "fad5def013ab3e733d371eb9d1213cc33fe960b76dc12ccc8b382f32175558e3",
+    "verifier_report_sha256": "685a0565505c46e8fc4354d7c49ad96d23854a7095790bbd154bdc6f1df4d40c",
+    "accepted": true,
+    "dependency_build_report_sha256": "c1a543048f36739ea229f94884f40cfaaa4025b1375cffb848ed776c4e7d32de"
+  },
+  "input_snapshot": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "snapshot_lock": "$PROJECT\\external\\data-eng-bench-expanded\\snapshot-lock.json",
+    "snapshot_lock_sha256": "71a7ab40f08c89d01f401f5aa85663a050c3b017480c35dd46b9cf2037029bd0",
+    "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+    "database_bytes": 488910848
+  },
+  "input_files": [
+    {
+      "path": "tasks/dbt-fix-daily-revenue/environment/Dockerfile",
+      "sha256": "8855db75e4975680c265a7297b04b14f23cdb6e1c769e73ec8de27d68bfe061c",
+      "bytes": 264
+    },
+    {
+      "path": "tasks/dbt-fix-daily-revenue/environment/rpt_order_daily_summary.sql",
+      "sha256": "a8a195885792fa69f1bf060207db0bff9f5510063bb6de9126e8aa3e17ffa943",
+      "bytes": 639
+    },
+    {
+      "path": "tasks/dbt-fix-daily-revenue/instruction.md",
+      "sha256": "80153137f7186f786b3de44ae28e461805b6189c32d195ceb0ac06b3cab9337d",
+      "bytes": 2272
+    },
+    {
+      "path": "tasks/dbt-fix-daily-revenue/task.toml",
+      "sha256": "da3308031fcf29bda3541c1f135a5649438cd4e1dd8624fc8382c51f2ebc5d6c",
+      "bytes": 1173
+    }
+  ],
+  "public_benchmark": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "official_harbor_result": false,
+    "setting": "native-adapted-public-development-case"
+  },
+  "source_artifacts": {
+    "report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026.json",
+    "patch": "$PROJECT\\examples\\public_fixes\\dbt-fix-daily-revenue.sql",
+    "applied_sql": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\daily\\project\\models\\marts\\sales\\rpt_order_daily_summary.sql",
+    "build_report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\dbt-fix-daily-revenue\\build.json",
+    "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-daily-revenue\\daily-evaluation.json",
+    "instruction": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\dbt-fix-daily-revenue\\instruction.md",
+    "original_buggy_sql": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\dbt-fix-daily-revenue\\environment\\rpt_order_daily_summary.sql",
+    "dependency_build_report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\dbt-fix-daily-revenue\\dependency_build.json"
+  },
+  "final_answer": "成品补丁已通过当前候选物化和上游原 pytest。验收策略 upstream_harness：当前候选物化和上游原 pytest 是必需门槛。附加 dbt build 已通过。未调用模型；自主 Agent 历史成绩另行保留。",
+  "final_dependency_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 31.735,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.stg_orders__orders",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.rpt_order_daily_summary",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "rpt_order_daily_summary",
+    "target_model_ids": [
+      "model.retail_dw_master.rpt_order_daily_summary"
+    ],
+    "target_model_success": true
+  },
+  "acceptance_policy": "upstream_harness",
+  "final_materialization": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 31.735,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.stg_orders__orders",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.rpt_order_daily_summary",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "rpt_order_daily_summary",
+    "target_model_ids": [
+      "model.retail_dw_master.rpt_order_daily_summary"
+    ],
+    "target_model_success": true
+  },
+  "project_quality": {
+    "build": {
+      "success": true,
+      "returncode": 0,
+      "stdout": "{\"success\": true, \"exception\": null}\n",
+      "stderr": "",
+      "elapsed_seconds": 33.046,
+      "nodes": [
+        {
+          "id": "model.retail_dw_master.rpt_order_daily_summary",
+          "status": "success",
+          "message": "OK"
+        }
+      ],
+      "process_success": true,
+      "target_model": "rpt_order_daily_summary",
+      "target_model_ids": [
+        "model.retail_dw_master.rpt_order_daily_summary"
+      ],
+      "target_model_success": true
+    },
+    "build_required": false,
+    "role": "additional project dbt checks; not the upstream harness gate"
+  },
+  "extra_quality": [
+    {
+      "name": "final_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true,
+      "required": false
+    },
+    {
+      "name": "target_model_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true,
+      "required": false
+    }
+  ]
+}

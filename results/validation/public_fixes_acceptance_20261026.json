@@ -1,0 +1,642 @@
+{
+  "type": "reviewed_patch_acceptance_audit",
+  "audit": {
+    "type": "reviewed_patch_acceptance_audit",
+    "report_type": "reviewed_patch_acceptance",
+    "report": "$PROJECT\\artifacts\\acceptance\\public_fixes_20261026.json",
+    "report_sha256": "5f34d17f125a39fb30611e83db0bcffab47af15e768813ce5d9bcaf81e1e958e",
+    "created_at": "2026-10-26T06:10:49.307940+00:00",
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "checks": [
+      {
+        "status": "passed",
+        "code": "dedicated_report_type",
+        "message": "Reviewed patches must be distinct from autonomous Agent trials"
+      },
+      {
+        "status": "passed",
+        "code": "operator_origin_and_zero_model_api",
+        "message": "Report must identify reviewed patches and zero generation calls"
+      },
+      {
+        "status": "passed",
+        "code": "completed_four_task_denominator",
+        "message": "All four planned tasks must have a final record"
+      },
+      {
+        "status": "passed",
+        "code": "task_matrix",
+        "message": "Exactly one reviewed acceptance record per fixed task"
+      },
+      {
+        "status": "passed",
+        "code": "fixed_plan",
+        "message": "Predeclared task order and one-attempt policy must match"
+      },
+      {
+        "status": "passed",
+        "code": "no_simulated_agent_metrics",
+        "message": "No invented Agent calls, tokens, or model costs may be used"
+      },
+      {
+        "status": "passed",
+        "code": "snapshot_lock_hash",
+        "message": "Input lock bytes must match their recorded SHA-256"
+      },
+      {
+        "status": "passed",
+        "code": "pinned_input_revision",
+        "message": "Source repository and exact public benchmark commit must match"
+      },
+      {
+        "status": "passed",
+        "code": "original_database_hash",
+        "message": "Actual source database bytes and size must match the pinned LFS object"
+      },
+      {
+        "status": "passed",
+        "code": "provenance_archive",
+        "message": "Provenance file, archived content, and hash must agree"
+      },
+      {
+        "status": "passed",
+        "code": "row_reviewed_origin",
+        "message": "Each row must identify an operator-reviewed, zero-generation patch",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "target_scope",
+        "message": "Patch must target only the declared model under the isolated models tree",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "patch_bytes_and_provenance",
+        "message": "Source patch, applied SQL, report, and provenance must have identical actual byte hashes",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "explicit_patch_marker",
+        "message": "Reviewed SQL must carry its explicit origin marker",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "patch_provenance_fields",
+        "message": "Reviewed target and patch-generation accounting must agree",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "candidate_lineage_hash",
+        "message": "Retained source candidate must match its recorded original byte hash",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "fresh_preparation_metadata",
+        "message": "Saved original-input preparation metadata must agree",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_manifest",
+        "message": "Task input records must be the pinned snapshot entries",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-product-metrics/environment/Dockerfile",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-product-metrics/instruction.md",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-product-metrics/task.toml",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "build_archive_matches",
+        "message": "Archived original build result must equal the report including stdout",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "actual_target_build",
+        "message": "Build requires a real successful result for the declared manifest model, not a zero-node exit",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "verifier_archive_isolation",
+        "message": "Original evaluator record must agree and remain outside the task workspace",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "original_and_adapted_verifier_hashes",
+        "message": "Original and actually executed adapted verifier bytes must match their recorded hashes",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "pinned_verifier_source",
+        "message": "Verifier must use the pinned task source and only platform path translation",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "ordinary_pytest_counts",
+        "message": "All 11 original product tests must pass, with no failures, errors, or skips",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "original_scoring_harness_hash",
+        "message": "Ordinary pytest scoring must retain the exact original shell harness and hash",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "strict_original_test_gate",
+        "message": "Original pytest execution, exit code, reward and all-tests gate must pass",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "acceptance_matches_evidence",
+        "message": "Accepted status must be derived from build plus original tests with no execution errors",
+        "task_id": "dbt-fix-product-metrics"
+      },
+      {
+        "status": "passed",
+        "code": "row_reviewed_origin",
+        "message": "Each row must identify an operator-reviewed, zero-generation patch",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "target_scope",
+        "message": "Patch must target only the declared model under the isolated models tree",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "patch_bytes_and_provenance",
+        "message": "Source patch, applied SQL, report, and provenance must have identical actual byte hashes",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "explicit_patch_marker",
+        "message": "Reviewed SQL must carry its explicit origin marker",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "patch_provenance_fields",
+        "message": "Reviewed target and patch-generation accounting must agree",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "candidate_lineage_hash",
+        "message": "Retained source candidate must match its recorded original byte hash",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "fresh_preparation_metadata",
+        "message": "Saved original-input preparation metadata must agree",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_manifest",
+        "message": "Task input records must be the pinned snapshot entries",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-refund-reconciliation/environment/Dockerfile",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-refund-reconciliation/environment/data/rpt_return_reconciliation.sql",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-refund-reconciliation/instruction.md",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-refund-reconciliation/task.toml",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "build_archive_matches",
+        "message": "Archived original build result must equal the report including stdout",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "actual_target_build",
+        "message": "Build requires a real successful result for the declared manifest model, not a zero-node exit",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "verifier_archive_isolation",
+        "message": "Original evaluator record must agree and remain outside the task workspace",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "original_and_adapted_verifier_hashes",
+        "message": "Original and actually executed adapted verifier bytes must match their recorded hashes",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "pinned_verifier_source",
+        "message": "Verifier must use the pinned task source and only platform path translation",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "original_components_all_pass",
+        "message": "All original components must pass exactly once and match stdout",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "strict_original_test_gate",
+        "message": "Original pytest execution, exit code, reward and all-tests gate must pass",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "acceptance_matches_evidence",
+        "message": "Accepted status must be derived from build plus original tests with no execution errors",
+        "task_id": "dbt-fix-refund-reconciliation"
+      },
+      {
+        "status": "passed",
+        "code": "row_reviewed_origin",
+        "message": "Each row must identify an operator-reviewed, zero-generation patch",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "target_scope",
+        "message": "Patch must target only the declared model under the isolated models tree",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "patch_bytes_and_provenance",
+        "message": "Source patch, applied SQL, report, and provenance must have identical actual byte hashes",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "explicit_patch_marker",
+        "message": "Reviewed SQL must carry its explicit origin marker",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "patch_provenance_fields",
+        "message": "Reviewed target and patch-generation accounting must agree",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "candidate_lineage_hash",
+        "message": "Retained source candidate must match its recorded original byte hash",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "fresh_preparation_metadata",
+        "message": "Saved original-input preparation metadata must agree",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_manifest",
+        "message": "Task input records must be the pinned snapshot entries",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-division-by-zero/environment/Dockerfile",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-division-by-zero/environment/data/rpt_customer_metrics.sql",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-division-by-zero/instruction.md",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-division-by-zero/task.toml",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "build_archive_matches",
+        "message": "Archived original build result must equal the report including stdout",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "actual_target_build",
+        "message": "Build requires a real successful result for the declared manifest model, not a zero-node exit",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "verifier_archive_isolation",
+        "message": "Original evaluator record must agree and remain outside the task workspace",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "original_and_adapted_verifier_hashes",
+        "message": "Original and actually executed adapted verifier bytes must match their recorded hashes",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "pinned_verifier_source",
+        "message": "Verifier must use the pinned task source and only platform path translation",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "original_components_all_pass",
+        "message": "All original components must pass exactly once and match stdout",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "strict_original_test_gate",
+        "message": "Original pytest execution, exit code, reward and all-tests gate must pass",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "acceptance_matches_evidence",
+        "message": "Accepted status must be derived from build plus original tests with no execution errors",
+        "task_id": "dbt-fix-division-by-zero"
+      },
+      {
+        "status": "passed",
+        "code": "row_reviewed_origin",
+        "message": "Each row must identify an operator-reviewed, zero-generation patch",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "target_scope",
+        "message": "Patch must target only the declared model under the isolated models tree",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "patch_bytes_and_provenance",
+        "message": "Source patch, applied SQL, report, and provenance must have identical actual byte hashes",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "explicit_patch_marker",
+        "message": "Reviewed SQL must carry its explicit origin marker",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "patch_provenance_fields",
+        "message": "Reviewed target and patch-generation accounting must agree",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "candidate_lineage_hash",
+        "message": "Retained source candidate must match its recorded original byte hash",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "fresh_preparation_metadata",
+        "message": "Saved original-input preparation metadata must agree",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_manifest",
+        "message": "Task input records must be the pinned snapshot entries",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-inventory-model/environment/Dockerfile",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-inventory-model/environment/data/rpt_product_inventory_metrics.sql",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-inventory-model/instruction.md",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "task_input_file_hash",
+        "message": "Actual task input bytes must match the snapshot lock",
+        "member": "tasks/dbt-fix-inventory-model/task.toml",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "build_archive_matches",
+        "message": "Archived original build result must equal the report including stdout",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "actual_target_build",
+        "message": "Build requires a real successful result for the declared manifest model, not a zero-node exit",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "verifier_archive_isolation",
+        "message": "Original evaluator record must agree and remain outside the task workspace",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "original_and_adapted_verifier_hashes",
+        "message": "Original and actually executed adapted verifier bytes must match their recorded hashes",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "pinned_verifier_source",
+        "message": "Verifier must use the pinned task source and only platform path translation",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "original_components_all_pass",
+        "message": "All original components must pass exactly once and match stdout",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "strict_original_test_gate",
+        "message": "Original pytest execution, exit code, reward and all-tests gate must pass",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "acceptance_matches_evidence",
+        "message": "Accepted status must be derived from build plus original tests with no execution errors",
+        "task_id": "dbt-fix-inventory-model"
+      },
+      {
+        "status": "passed",
+        "code": "independent_case_directories",
+        "message": "All four acceptance workspaces must be distinct"
+      },
+      {
+        "status": "passed",
+        "code": "four_of_four_reviewed_acceptance",
+        "message": "Four reviewed patches must pass; this is not an autonomous Agent success-rate update"
+      },
+      {
+        "status": "passed",
+        "code": "report_unchanged",
+        "message": "Original acceptance report must remain byte-for-byte unchanged"
+      }
+    ],
+    "summary": {
+      "task_count": 4,
+      "accepted": 4,
+      "not_accepted": 0,
+      "acceptance_rate": 1.0
+    },
+    "evidence": [
+      {
+        "task_id": "dbt-fix-product-metrics",
+        "target_build_success": true,
+        "original_tests_passed": true,
+        "pytest_counts": {
+          "passed": 11,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "components_passed": 0,
+        "reward": 1.0,
+        "patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606"
+      },
+      {
+        "task_id": "dbt-fix-refund-reconciliation",
+        "target_build_success": true,
+        "original_tests_passed": true,
+        "pytest_counts": {
+          "passed": 1,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "components_passed": 13,
+        "reward": 1.0,
+        "patch_sha256": "249115f1c66a82cc4ce674ddd173f4db229520ad6913e30a970d2b0d7c04c73b"
+      },
+      {
+        "task_id": "dbt-fix-division-by-zero",
+        "target_build_success": true,
+        "original_tests_passed": true,
+        "pytest_counts": {
+          "passed": 1,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "components_passed": 15,
+        "reward": 1.0,
+        "patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069"
+      },
+      {
+        "task_id": "dbt-fix-inventory-model",
+        "target_build_success": true,
+        "original_tests_passed": true,
+        "pytest_counts": {
+          "passed": 1,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "components_passed": 12,
+        "reward": 1.0,
+        "patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd"
+      }
+    ],
+    "zero_model_api_calls": true,
+    "read_only_verification": true,
+    "acceptance_runner_sha256": "e8d4a206a2a30cd87aa484933c4c52b39f2df04b7488b4534bf5a9f4ec2de481"
+  }
+}

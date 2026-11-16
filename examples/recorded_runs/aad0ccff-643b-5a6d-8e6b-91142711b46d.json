@@ -1,0 +1,3178 @@
+{
+  "run_id": "aad0ccff-643b-5a6d-8e6b-91142711b46d",
+  "source_run_id": "product-v4-01-verified",
+  "task_id": "dbt-fix-product-metrics",
+  "task": {
+    "id": "dbt-fix-product-metrics",
+    "title": "公开项目 · Product Performance Metrics",
+    "description": "Native adapter has selected and verified the DuckDB backend (DB_TYPE=duckdb). Use this project's existing profiles.yml; no shell tool is exposed, so the adapter replaces the original echo-DB_TYPE setup step. Read/edit tool paths are relative to the task workspace.\n# Product Performance Metrics\n\nBuild a product performance summary from sales data. Create a model called `fct_product_metrics` that aggregates key performance indicators for each product.\n\n## Database Backend\n\nThis task supports both DuckDB and Snowflake. **Run `echo $DB_TYPE` in a shell BEFORE you write any code or spawn any subagents — the live env determines which backend the verifier runs against.** Do NOT assume a default from this prose. Both `$PROJECT/external/native-cases/product-v4-01/project/` and `/app/dbt_models_snowflake/` exist on disk; the verifier only checks the project matching the live `$DB_TYPE`.\n\n### DuckDB\n- Set `DB_TYPE=duckdb`\n- Database path: `$DUCKDB_PATH` (default: `$PROJECT/external/native-cases/product-v4-01/database/retail.duckdb`)\n\n### Snowflake\n- Set `DB_TYPE=snowflake`\n- Environment variables (pre-configured):\n  - `SNOWFLAKE_ACCOUNT`\n  - `SNOWFLAKE_USER`\n  - `SNOWFLAKE_PASSWORD`\n  - `SNOWFLAKE_DATABASE` - The clone database to use\n  - `SNOWFLAKE_SCHEMA`\n  - `SNOWFLAKE_WAREHOUSE`\n  - `SNOWFLAKE_ROLE` (optional)\n\n**Note**: For Snowflake, the entrypoint automatically creates a clone database and sets `SNOWFLAKE_DATABASE`. The clone is destroyed when the task completes.\n\n## dbt Profile Setup\n\nYou must configure dbt to connect to the database:\n- Create a `profiles.yml` in the dbt project directory with profile name `retail_dw_master`\n- Set `DBT_PROFILES_DIR` environment variable to the directory containing `profiles.yml`\n\n### DuckDB Profile\nConfigure with `type: duckdb` and the database path from `$DUCKDB_PATH`.\n\n### Snowflake Profile\nConfigure with `type: snowflake` using password authentication:\n- Use the environment variables for account, user, password, database, schema, warehouse, and role\n- Set the profile's `schema:` to `$SNOWFLAKE_SCHEMA` — do NOT leave it blank. A blank or omitted schema makes Snowflake silently default to `PUBLIC`, so your models get built in the wrong schema and the verifier cannot find them.\n\n## Model Location\n\nCreate the model at `models/marts/product/fct_product_metrics.sql` in the dbt project directory:\n- DuckDB: `$PROJECT/external/native-cases/product-v4-01/project/models/marts/product/fct_product_metrics.sql`\n- Snowflake: `/app/dbt_models_snowflake/models/marts/product/fct_product_metrics.sql`\n\n## Requirements\n\nExplore the staging models in the dbt project to find relevant tables for products, variants, orders, and order line items. You will need to understand the relationships between these tables and determine which columns to use.\n\nThe output model should provide a comprehensive product-level summary including identification fields, order counts, unit volumes, revenue, average pricing, and variant information.\n\n**Order filtering**: Exclude orders with status `CANCELLED`, `RETURNED`, or `FAILED`. All other order statuses represent valid completed sales.\n\nOutput columns: `product_id`, `product_name`, `category`, `total_orders`, `units_sold`, `product_revenue`, `avg_unit_price`, `total_variants`\n\n**Important**: `avg_unit_price` must be calculated as total revenue divided by total units sold (i.e., `product_revenue / units_sold` -- a weighted average, not a simple `AVG(unit_price)`).\n\nAll products should appear in the output, even those without any sales. Materialize as a table and sort by revenue descending.\n\n## Guidelines\n\n- Pay attention to the grain of your model -- joining across multiple dimensions can cause fan-out issues\n",
+    "split": "public-development"
+  },
+  "mode": "verified",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "status": "failed",
+  "events": [
+    {
+      "type": "model",
+      "name": "deepseek-v4-pro",
+      "content": "模型请求工具执行",
+      "finish_reason": "tool_calls",
+      "usage": {
+        "prompt_tokens": 5045,
+        "completion_tokens": 183,
+        "total_tokens": 5228,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 104
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5045
+      },
+      "response_id": "06ce2a23-da9f-4d4a-ba2e-846418d11495",
+      "latency_seconds": 5.265,
+      "metrics": {
+        "model_calls": 1,
+        "tool_calls": 0,
+        "prompt_tokens": 5045,
+        "completion_tokens": 183,
+        "total_tokens": 5228,
+        "estimated_cost_usd": 0.007384080000000001
+      },
+      "seq": 1
+    },
+    {
+      "type": "tool",
+      "name": "list_files",
+      "step": 1,
+      "arguments": {
+        "directory": "project/models"
+      },
+      "result": {
+        "files": [
+          "project/models/data_quality/dq_duplicate_customers.sql",
+          "project/models/data_quality/dq_late_arriving_facts.sql",
+          "project/models/data_quality/dq_orphaned_records.sql",
+          "project/models/data_quality/dq_schema.yml",
+          "project/models/intermediate/customers/int_customers__contacts_cleaned.sql",
+          "project/models/intermediate/customers/int_customers__kna1_addr_cleaned.sql",
+          "project/models/intermediate/customers/int_customers__lifetime_metrics.sql",
+          "project/models/intermediate/customers/int_customers__loyalty_status.sql",
+          "project/models/intermediate/customers/int_customers__unified.sql",
+          "project/models/intermediate/int_customers_sarah_experiment.sql",
+          "project/models/intermediate/int_orders_TESTING.sql",
+          "project/models/intermediate/inventory/int_inventory__locations_cleaned.sql",
+          "project/models/intermediate/inventory/int_inventory__warehouses_cleaned.sql",
+          "project/models/intermediate/joins/int_campaigns_unioned.sql",
+          "project/models/intermediate/joins/int_ekko_ekpo_joined.sql",
+          "project/models/intermediate/joins/int_refunds_unioned.sql",
+          "project/models/intermediate/joins/int_sessions_events_joined.sql",
+          "project/models/intermediate/joins/int_subscriptions_unioned.sql",
+          "project/models/intermediate/joins/int_vbak_vbap_joined.sql",
+          "project/models/intermediate/marketing/int_marketing__ads_campaigns_cleaned.sql",
+          "project/models/intermediate/marketing/int_marketing__campaigns_cleaned.sql",
+          "project/models/intermediate/marketing/int_marketing__email_campaigns_cleaned.sql",
+          "project/models/intermediate/marketing/int_marketing__promotions_cleaned.sql",
+          "project/models/intermediate/marketing/int_marketing__utm_campaigns_cleaned.sql",
+          "project/models/intermediate/orders/int_orders__replen_orders_cleaned.sql",
+          "project/models/intermediate/orders/int_orders__transactions_cleaned.sql",
+          "project/models/intermediate/orders/int_orders__vbak_cleaned.sql",
+          "project/models/intermediate/orders/int_orders__vbak_qt_cleaned.sql",
+          "project/models/intermediate/payments/int_payments__transactions_cleaned.sql",
+          "project/models/intermediate/products/int_products__cart_items_cleaned.sql",
+          "project/models/intermediate/products/int_products__lifecycle_stage.sql",
+          "project/models/intermediate/products/int_products__mara_attr_cleaned.sql",
+          "project/models/intermediate/products/int_products__mara_var_cleaned.sql",
+          "project/models/intermediate/products/int_products__promo_items_cleaned.sql",
+          "project/models/intermediate/products/int_products__substitution_analysis.sql",
+          "project/models/intermediate/sales/int_sales__daily_summary.sql",
+          "project/models/intermediate/sales/int_sales__monthly_summary.sql",
+          "project/models/intermediate/sales/int_sales__order_lines.sql",
+          "project/models/intermediate/sales/int_sales__orders_enriched.sql",
+          "project/models/intermediate/sales/int_sales__weekly_summary.sql",
+          "project/models/intermediate/sales/tmp_test_incremental.sql",
+          "project/models/intermediate/schema.yml",
+          "project/models/intermediate/web/int_web__email_events_cleaned.sql",
+          "project/models/intermediate/web/int_web__events_cleaned.sql",
+          "project/models/intermediate/web/int_web__pageviews_cleaned.sql",
+          "project/models/intermediate/web/int_web__sessions_cleaned.sql",
+          "project/models/marts/_archive/agg_monthly_kpis_deprecated.sql",
+          "project/models/marts/_archive/dim_dates_fiscal_backup.sql",
+          "project/models/marts/_archive/dim_products_denormalized.sql",
+          "project/models/marts/_archive/fct_inventory_snapshot_v0.sql",
+          "project/models/marts/_archive/fct_web_sessions_ga3.sql",
+          "project/models/marts/_archive/rpt_customer_ltv_v1.sql",
+          "project/models/marts/_archive/rpt_daily_revenue_backup.sql",
+          "project/models/marts/_archive/rpt_inventory_valuation_old_method.sql",
+          "project/models/marts/_archive/rpt_quarterly_board_deck_q3.sql",
+          "project/models/marts/_archive/rpt_weekly_sales_old.sql",
+          "project/models/marts/comparisons/comp_customers__mom.sql",
+          "project/models/marts/comparisons/comp_customers__qoq.sql",
+          "project/models/marts/comparisons/comp_customers__wow.sql",
+          "project/models/marts/comparisons/comp_customers__yoy.sql",
+          "project/models/marts/comparisons/comp_finance__mom.sql",
+          "project/models/marts/comparisons/comp_finance__qoq.sql",
+          "project/models/marts/comparisons/comp_finance__wow.sql",
+          "project/models/marts/comparisons/comp_finance__yoy.sql",
+          "project/models/marts/comparisons/comp_inventory__mom.sql",
+          "project/models/marts/comparisons/comp_inventory__qoq.sql",
+          "project/models/marts/comparisons/comp_inventory__wow.sql",
+          "project/models/marts/comparisons/comp_inventory__yoy.sql",
+          "project/models/marts/comparisons/comp_marketing__mom.sql",
+          "project/models/marts/comparisons/comp_marketing__qoq.sql",
+          "project/models/marts/comparisons/comp_marketing__wow.sql",
+          "project/models/marts/comparisons/comp_marketing__yoy.sql",
+          "project/models/marts/comparisons/comp_operations__mom.sql",
+          "project/models/marts/comparisons/comp_operations__qoq.sql",
+          "project/models/marts/comparisons/comp_operations__wow.sql",
+          "project/models/marts/comparisons/COMP_OPERATIONS_YOY.sql",
+          "project/models/marts/comparisons/comp_products__qoq.sql",
+          "project/models/marts/comparisons/comp_products__wow.sql",
+          "project/models/marts/comparisons/comp_products__yoy.sql",
+          "project/models/marts/comparisons/comp_sales__mom.sql",
+          "project/models/marts/comparisons/comp_sales__qoq.sql",
+          "project/models/marts/comparisons/comp_sales__wow.sql",
+          "project/models/marts/comparisons/comp_sales__yoy.sql",
+          "project/models/marts/comparisons/comparison_products_month_over_month.sql",
+          "project/models/marts/core/dim_categories.sql",
+          "project/models/marts/core/dim_customers.sql",
+          "project/models/marts/core/dim_dates.sql",
+          "project/models/marts/core/dim_exchange_rates.sql",
+          "project/models/marts/core/dim_products.sql",
+          "project/models/marts/core/fct_sales.sql",
+          "project/models/marts/customer/dim_customer_master.sql",
+          "project/models/marts/customer/dim_customer_v2.sql",
+          "project/models/marts/customer/dim_customers_ml_features.sql",
+          "project/models/marts/customer/fct_customer_events.sql",
+          "project/models/marts/customer/fct_customer_segment_membership.sql",
+          "project/models/marts/customer/fct_customer_tier_benefits.sql",
+          "project/models/marts/customer/rpt_age_demographics.sql",
+          "project/models/marts/customer/rpt_churn_features.sql",
+          "project/models/marts/customer/rpt_churn_risk_segmentation.sql",
+          "project/models/marts/customer/rpt_cohort_retention.sql",
+          "project/models/marts/customer/rpt_contact_history.sql",
+          "project/models/marts/customer/rpt_customer_acquisition_analysis.sql",
+          "project/models/marts/customer/rpt_customer_acquisition_source.sql",
+          "project/models/marts/customer/rpt_customer_address_freshness.sql",
+          "project/models/marts/customer/rpt_customer_address_missing_data.sql",
+          "project/models/marts/customer/rpt_customer_address_summary.sql",
+          "project/models/marts/customer/rpt_customer_address_type_distribution.sql",
+          "project/models/marts/customer/rpt_customer_channel_preference.sql",
+          "project/models/marts/customer/rpt_customer_cohort_order_analysis.sql",
+          "project/models/marts/customer/rpt_customer_consent_history.sql",
+          "project/models/marts/customer/rpt_customer_consent_status.sql",
+          "project/models/marts/customer/rpt_customer_contact_method_summary.sql",
+          "project/models/marts/customer/rpt_customer_contact_preferences.sql",
+          "project/models/marts/customer/rpt_customer_contact_verification.sql",
+          "project/models/marts/customer/rpt_customer_country_summary.sql",
+          "project/models/marts/customer/rpt_customer_data_quality_score.sql",
+          "project/models/marts/customer/rpt_customer_default_address_summary.sql",
+          "project/models/marts/customer/rpt_customer_geographic_distribution.sql",
+          "project/models/marts/customer/rpt_customer_lifecycle_duration.sql",
+          "project/models/marts/customer/rpt_customer_lifecycle_event_sequence.sql",
+          "project/models/marts/customer/rpt_customer_lifecycle_events_summary.sql",
+          "project/models/marts/customer/rpt_customer_lifecycle_funnel.sql",
+          "project/models/marts/customer/rpt_customer_lifetime_value_deciles.sql",
+          "project/models/marts/customer/rpt_customer_monetary_analysis.sql",
+          "project/models/marts/customer/rpt_customer_monthly_activity.sql",
+          "project/models/marts/customer/rpt_customer_multi_segment_membership.sql",
+          "project/models/marts/customer/rpt_customer_note_types_distribution.sql",
+          "project/models/marts/customer/rpt_customer_notes_activity.sql",
+          "project/models/marts/customer/rpt_customer_postal_code_analysis.sql",
+          "project/models/marts/customer/rpt_customer_preference_categories.sql",
+          "project/models/marts/customer/rpt_customer_preference_trends.sql",
+          "project/models/marts/customer/rpt_customer_segment_empty_check.sql",
+          "project/models/marts/customer/rpt_customer_segment_overlap.sql",
+          "project/models/marts/customer/rpt_customer_segment_type_analysis.sql",
+          "project/models/marts/customer/rpt_customer_state_province_analysis.sql",
+          "project/models/marts/customer/rpt_customer_weekly_registrations.sql",
+          "project/models/marts/customer/rpt_frequency_distribution.sql",
+          "project/models/marts/customer/rpt_monetary_distribution.sql",
+          "project/models/marts/customer/rpt_reactivation_rate.sql",
+          "project/models/marts/customer/rpt_rfm_analysis.sql",
+          "project/models/marts/customer/rpt_second_purchase_analysis.sql",
+          "project/models/marts/digital/fct_reconstructed_sessions.sql",
+          "project/models/marts/digital/fct_sessions_incremental.sql",
+          "project/models/marts/digital/FCT_USER_DEVICE_STATS.sql",
+          "project/models/marts/digital/FCT_WEB_TRAFFIC_SUMMARY.sql",
+          "project/models/marts/digital/rpt_browser_analysis.sql",
+          "project/models/marts/digital/rpt_cart_abandonment.sql",
+          "project/models/marts/digital/rpt_cart_item_analysis.sql",
+          "project/models/marts/digital/rpt_channel_configuration_summary.sql",
+          "project/models/marts/digital/rpt_customer_journey_paths.sql"
+        ],
+        "truncated": true
+      },
+      "elapsed_seconds": 0.329,
+      "metrics": {
+        "model_calls": 1,
+        "tool_calls": 1,
+        "prompt_tokens": 5045,
+        "completion_tokens": 183,
+        "total_tokens": 5228,
+        "estimated_cost_usd": 0.007384080000000001
+      },
+      "seq": 2
+    },
+    {
+      "type": "tool",
+      "name": "list_files",
+      "step": 1,
+      "arguments": {
+        "directory": "project/models/marts/product"
+      },
+      "result": {
+        "files": [
+          "project/models/marts/product/dim_product_detail.sql",
+          "project/models/marts/product/dim_products_enriched.sql",
+          "project/models/marts/product/fct_product_sales_performance.sql",
+          "project/models/marts/product/rpt_brand_performance.sql",
+          "project/models/marts/product/rpt_brand_revenue_share.sql",
+          "project/models/marts/product/rpt_brand_summary.sql",
+          "project/models/marts/product/rpt_cannibalization_analysis.sql",
+          "project/models/marts/product/rpt_category_performance.sql",
+          "project/models/marts/product/rpt_category_summary.sql",
+          "project/models/marts/product/rpt_co_purchase_analysis.sql",
+          "project/models/marts/product/rpt_color_performance.sql",
+          "project/models/marts/product/rpt_private_label_products.sql",
+          "project/models/marts/product/rpt_product_affinity_analysis.sql",
+          "project/models/marts/product/rpt_product_attribute_summary.sql",
+          "project/models/marts/product/rpt_product_category_hierarchy.sql",
+          "project/models/marts/product/rpt_product_daily_sales.sql",
+          "project/models/marts/product/rpt_product_geographic_sales.sql",
+          "project/models/marts/product/rpt_product_image_analysis.sql",
+          "project/models/marts/product/rpt_product_image_summary.sql",
+          "project/models/marts/product/rpt_product_inventory_status.sql",
+          "project/models/marts/product/rpt_product_lifecycle.sql",
+          "project/models/marts/product/rpt_product_lifecycle_distribution.sql",
+          "project/models/marts/product/rpt_product_monthly_trends.sql",
+          "project/models/marts/product/rpt_product_price_analysis.sql",
+          "project/models/marts/product/rpt_product_price_history.sql",
+          "project/models/marts/product/rpt_product_rating_summary.sql",
+          "project/models/marts/product/rpt_product_review_analysis.sql",
+          "project/models/marts/product/rpt_product_review_sentiment.sql",
+          "project/models/marts/product/rpt_product_sales_by_channel.sql",
+          "project/models/marts/product/rpt_product_summary.sql",
+          "project/models/marts/product/rpt_product_tag_analysis.sql",
+          "project/models/marts/product/rpt_product_variant_count.sql",
+          "project/models/marts/product/rpt_product_weekly_sales.sql",
+          "project/models/marts/product/rpt_recommendation_features.sql",
+          "project/models/marts/product/rpt_review_sentiment.sql",
+          "project/models/marts/product/rpt_seasonality_analysis.sql",
+          "project/models/marts/product/rpt_size_performance.sql",
+          "project/models/marts/product/rpt_sku_performance.sql",
+          "project/models/marts/product/rpt_slow_moving_inventory.sql",
+          "project/models/marts/product/rpt_variant_performance.sql",
+          "project/models/marts/product/rpt_variant_summary.sql"
+        ],
+        "truncated": false
+      },
+      "elapsed_seconds": 0.015,
+      "metrics": {
+        "model_calls": 1,
+        "tool_calls": 2,
+        "prompt_tokens": 5045,
+        "completion_tokens": 183,
+        "total_tokens": 5228,
+        "estimated_cost_usd": 0.007384080000000001
+      },
+      "seq": 3
+    },
+    {
+      "type": "model",
+      "name": "deepseek-v4-pro",
+      "content": "模型请求工具执行",
+      "finish_reason": "tool_calls",
+      "usage": {
+        "prompt_tokens": 8408,
+        "completion_tokens": 157,
+        "total_tokens": 8565,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 76
+        },
+        "prompt_cache_hit_tokens": 5120,
+        "prompt_cache_miss_tokens": 3288
+      },
+      "response_id": "646860a4-9415-4ad9-aa52-67b4d8831c6a",
+      "latency_seconds": 3.969,
+      "metrics": {
+        "model_calls": 2,
+        "tool_calls": 2,
+        "prompt_tokens": 13453,
+        "completion_tokens": 340,
+        "total_tokens": 13793,
+        "estimated_cost_usd": 0.01910436
+      },
+      "seq": 4
+    },
+    {
+      "type": "tool",
+      "name": "list_files",
+      "step": 2,
+      "arguments": {
+        "directory": "project/models/staging"
+      },
+      "result": {
+        "files": [
+          "project/models/staging/_enterprise_sources.yml",
+          "project/models/staging/analytics/_sources.yml",
+          "project/models/staging/analytics/stg_analytics__dim_channel.sql",
+          "project/models/staging/analytics/stg_analytics__dim_customer.sql",
+          "project/models/staging/analytics/stg_analytics__dim_date.sql",
+          "project/models/staging/analytics/stg_analytics__dim_employee.sql",
+          "project/models/staging/analytics/stg_analytics__dim_geography.sql",
+          "project/models/staging/analytics/stg_analytics__dim_product.sql",
+          "project/models/staging/analytics/stg_analytics__dim_time.sql",
+          "project/models/staging/analytics/stg_analytics__fact_customer_interactions.sql",
+          "project/models/staging/analytics/stg_analytics__fact_inventory.sql",
+          "project/models/staging/analytics/stg_analytics__fact_marketing_spend.sql",
+          "project/models/staging/analytics/stg_analytics__fact_sales.sql",
+          "project/models/staging/analytics/stg_analytics__fact_web_traffic.sql",
+          "project/models/staging/analytics/stg_dim_channel.sql",
+          "project/models/staging/analytics/stg_dim_employee.sql",
+          "project/models/staging/analytics/stg_dim_geography(1).sql",
+          "project/models/staging/analytics/stg_dim_geography.sql",
+          "project/models/staging/analytics/stg_dim_time.sql",
+          "project/models/staging/analytics/stg_fact_customer_interactions.sql",
+          "project/models/staging/analytics/stg_fact_inventory.sql",
+          "project/models/staging/analytics/stg_fact_marketing_spend.sql",
+          "project/models/staging/analytics/stg_fact_sales.sql",
+          "project/models/staging/analytics/stg_fact_web_traffic.sql",
+          "project/models/staging/audit/_sources.yml",
+          "project/models/staging/audit/stg_audit__audit_logs.sql",
+          "project/models/staging/audit/stg_audit__compliance_rules.sql",
+          "project/models/staging/audit/stg_audit__compliance_violations.sql",
+          "project/models/staging/audit/stg_audit__consent_preferences.sql",
+          "project/models/staging/audit/stg_audit__data_change_history.sql",
+          "project/models/staging/audit/stg_audit__data_masking_rules.sql",
+          "project/models/staging/audit/stg_audit__data_retention_policies.sql",
+          "project/models/staging/audit/stg_audit__user_access_logs.sql",
+          "project/models/staging/audit/stg_audit_logs.sql",
+          "project/models/staging/audit/stg_compliance_rules.sql",
+          "project/models/staging/audit/stg_compliance_violations.sql",
+          "project/models/staging/audit/stg_consent_preferences.sql",
+          "project/models/staging/audit/stg_data_change_history.sql",
+          "project/models/staging/audit/stg_data_masking_rules.sql",
+          "project/models/staging/audit/stg_data_retention_policies.sql",
+          "project/models/staging/audit/stg_user_access_logs.sql",
+          "project/models/staging/customer/_sources.yml",
+          "project/models/staging/customer/stg_customer__customer_addresses.sql",
+          "project/models/staging/customer/stg_customer__customer_consent_log.sql",
+          "project/models/staging/customer/stg_customer__customer_contacts.sql",
+          "project/models/staging/customer/stg_customer__customer_lifecycle_events.sql",
+          "project/models/staging/customer/stg_customer__customer_notes.sql",
+          "project/models/staging/customer/stg_customer__customer_preferences.sql",
+          "project/models/staging/customer/stg_customer__customer_segment_members.sql",
+          "project/models/staging/customer/stg_customer__customer_segments.sql",
+          "project/models/staging/customer/stg_customer__customer_tags.sql",
+          "project/models/staging/customer/stg_customer__customer_tier_history.sql",
+          "project/models/staging/customer/stg_customer__customer_tiers.sql",
+          "project/models/staging/customer/stg_customer__customers.sql",
+          "project/models/staging/customer/stg_customer_addresses.sql",
+          "project/models/staging/customer/stg_customer_consent_log.sql",
+          "project/models/staging/customer/stg_customer_contacts.sql",
+          "project/models/staging/customer/stg_customer_lifecycle_events.sql",
+          "project/models/staging/customer/stg_customer_notes.sql",
+          "project/models/staging/customer/stg_customer_preferences.sql",
+          "project/models/staging/customer/stg_customer_segment_members.sql",
+          "project/models/staging/customer/stg_customer_segments.sql",
+          "project/models/staging/customer/stg_customer_tags.sql",
+          "project/models/staging/customer/stg_customer_tier_history.sql",
+          "project/models/staging/customer/stg_customer_tiers.sql",
+          "project/models/staging/customer/stg_customers.sql",
+          "project/models/staging/digital/_sources.yml",
+          "project/models/staging/digital/stg_channel_configurations.sql",
+          "project/models/staging/digital/stg_digital__channel_configurations.sql",
+          "project/models/staging/digital/stg_digital__marketplace_listings.sql",
+          "project/models/staging/digital/stg_digital__sales_channels.sql",
+          "project/models/staging/digital/stg_digital__shopping_cart_items.sql",
+          "project/models/staging/digital/stg_digital__shopping_carts.sql",
+          "project/models/staging/digital/stg_digital__web_events.sql",
+          "project/models/staging/digital/stg_digital__web_page_views.sql",
+          "project/models/staging/digital/stg_digital__web_sessions.sql",
+          "project/models/staging/digital/stg_digital__wishlist_items.sql",
+          "project/models/staging/digital/stg_marketplace_listings.sql",
+          "project/models/staging/digital/stg_sales_channels.sql",
+          "project/models/staging/digital/stg_shopping_cart_items.sql",
+          "project/models/staging/digital/stg_shopping_carts.sql",
+          "project/models/staging/digital/stg_web_events.sql",
+          "project/models/staging/digital/stg_web_page_views.sql",
+          "project/models/staging/digital/stg_web_sessions.sql",
+          "project/models/staging/digital/stg_wishlist_items.sql",
+          "project/models/staging/finance/_sources.yml",
+          "project/models/staging/finance/stg_chart_of_accounts.sql",
+          "project/models/staging/finance/stg_cost_centers.sql",
+          "project/models/staging/finance/stg_currency_exchange_rates.sql",
+          "project/models/staging/finance/stg_customer_aging.sql",
+          "project/models/staging/finance/stg_customer_credits.sql",
+          "project/models/staging/finance/stg_customer_invoice_lines.sql",
+          "project/models/staging/finance/stg_customer_invoices.sql",
+          "project/models/staging/finance/stg_customer_payment_applications.sql",
+          "project/models/staging/finance/stg_customer_payments.sql",
+          "project/models/staging/finance/stg_deferred_revenue.sql",
+          "project/models/staging/finance/stg_finance__chart_of_accounts.sql",
+          "project/models/staging/finance/stg_finance__cost_centers.sql",
+          "project/models/staging/finance/stg_finance__currency_exchange_rates.sql",
+          "project/models/staging/finance/stg_finance__customer_aging.sql",
+          "project/models/staging/finance/stg_finance__customer_credits.sql",
+          "project/models/staging/finance/stg_finance__customer_invoice_lines.sql",
+          "project/models/staging/finance/stg_finance__customer_invoices.sql",
+          "project/models/staging/finance/stg_finance__customer_payment_applications.sql",
+          "project/models/staging/finance/stg_finance__customer_payments.sql",
+          "project/models/staging/finance/stg_finance__deferred_revenue.sql",
+          "project/models/staging/finance/stg_finance__gl_periods.sql",
+          "project/models/staging/finance/stg_finance__gl_transactions.sql",
+          "project/models/staging/finance/stg_finance__profit_centers.sql",
+          "project/models/staging/finance/stg_finance__revenue_recognition.sql",
+          "project/models/staging/finance/stg_finance__tax_rates.sql",
+          "project/models/staging/finance/stg_finance__tax_transactions.sql",
+          "project/models/staging/finance/stg_gl_periods.sql",
+          "project/models/staging/finance/stg_gl_transactions.sql",
+          "project/models/staging/finance/stg_profit_centers.sql",
+          "project/models/staging/finance/stg_revenue_recognition.sql",
+          "project/models/staging/finance/stg_tax_rates.sql",
+          "project/models/staging/finance/stg_tax_transactions.sql",
+          "project/models/staging/ga/_sources.yml",
+          "project/models/staging/ga/schema.yml",
+          "project/models/staging/ga/stg_ga__abandoned_carts.sql",
+          "project/models/staging/ga/stg_ga__ads_campaigns.sql",
+          "project/models/staging/ga/stg_ga__ads_clicks.sql",
+          "project/models/staging/ga/stg_ga__ads_impressions.sql",
+          "project/models/staging/ga/stg_ga__audiences.sql",
+          "project/models/staging/ga/stg_ga__campaigns.sql",
+          "project/models/staging/ga/stg_ga__cart_items.sql",
+          "project/models/staging/ga/stg_ga__carts.sql",
+          "project/models/staging/ga/stg_ga__consent_log.sql",
+          "project/models/staging/ga/stg_ga__conversions.sql",
+          "project/models/staging/ga/stg_ga__devices.sql",
+          "project/models/staging/ga/stg_ga__ecom_trans.sql",
+          "project/models/staging/ga/stg_ga__email_clicks.sql",
+          "project/models/staging/ga/stg_ga__events.sql",
+          "project/models/staging/ga/stg_ga__pageviews.sql",
+          "project/models/staging/ga/stg_ga__product_views.sql",
+          "project/models/staging/ga/stg_ga__promo_codes.sql",
+          "project/models/staging/ga/stg_ga__ratings.sql",
+          "project/models/staging/ga/stg_ga__recommendations.sql",
+          "project/models/staging/ga/stg_ga__reviews.sql",
+          "project/models/staging/ga/stg_ga__searches.sql",
+          "project/models/staging/ga/stg_ga__sessions.sql",
+          "project/models/staging/ga/stg_ga__user_props.sql",
+          "project/models/staging/ga/stg_ga__utm_campaigns.sql",
+          "project/models/staging/ga/stg_ga__wishlists.sql",
+          "project/models/staging/ga/stg_web__sessions.sql",
+          "project/models/staging/hr/_sources.yml",
+          "project/models/staging/hr/stg_cost_center_assignments.sql",
+          "project/models/staging/hr/stg_departments.sql",
+          "project/models/staging/hr/stg_employee_compensation.sql"
+        ],
+        "truncated": true
+      },
+      "elapsed_seconds": 0.219,
+      "metrics": {
+        "model_calls": 2,
+        "tool_calls": 3,
+        "prompt_tokens": 13453,
+        "completion_tokens": 340,
+        "total_tokens": 13793,
+        "estimated_cost_usd": 0.01910436
+      },
+      "seq": 5
+    },
+    {
+      "type": "tool",
+      "name": "list_files",
+      "step": 2,
+      "arguments": {
+        "directory": "project/models/marts/core"
+      },
+      "result": {
+        "files": [
+          "project/models/marts/core/dim_categories.sql",
+          "project/models/marts/core/dim_customers.sql",
+          "project/models/marts/core/dim_dates.sql",
+          "project/models/marts/core/dim_exchange_rates.sql",
+          "project/models/marts/core/dim_products.sql",
+          "project/models/marts/core/fct_sales.sql"
+        ],
+        "truncated": false
+      },
+      "elapsed_seconds": 0.015,
+      "metrics": {
+        "model_calls": 2,
+        "tool_calls": 4,
+        "prompt_tokens": 13453,
+        "completion_tokens": 340,
+        "total_tokens": 13793,
+        "estimated_cost_usd": 0.01910436
+      },
+      "seq": 6
+    },
+    {
+      "type": "model",
+      "name": "deepseek-v4-pro",
+      "content": "模型请求工具执行",
+      "finish_reason": "tool_calls",
+      "usage": {
+        "prompt_tokens": 11238,
+        "completion_tokens": 184,
+        "total_tokens": 11422,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 66
+        },
+        "prompt_cache_hit_tokens": 8448,
+        "prompt_cache_miss_tokens": 2790
+      },
+      "response_id": "e7484bd7-84d8-43da-aec5-2b2b5726c64f",
+      "latency_seconds": 6.266,
+      "metrics": {
+        "model_calls": 3,
+        "tool_calls": 4,
+        "prompt_tokens": 24691,
+        "completion_tokens": 524,
+        "total_tokens": 25215,
+        "estimated_cost_usd": 0.03466716
+      },
+      "seq": 7
+    },
+    {
+      "type": "tool",
+      "name": "list_files",
+      "step": 3,
+      "arguments": {
+        "directory": "project/models/staging/sales"
+      },
+      "result": {
+        "files": [],
+        "truncated": false
+      },
+      "elapsed_seconds": 0.0,
+      "metrics": {
+        "model_calls": 3,
+        "tool_calls": 5,
+        "prompt_tokens": 24691,
+        "completion_tokens": 524,
+        "total_tokens": 25215,
+        "estimated_cost_usd": 0.03466716
+      },
+      "seq": 8
+    },
+    {
+      "type": "tool",
+      "name": "list_files",
+      "step": 3,
+      "arguments": {
+        "directory": "project/models/staging/orders"
+      },
+      "result": {
+        "files": [
+          "project/models/staging/orders/_sources.yml",
+          "project/models/staging/orders/stg_channels.sql",
+          "project/models/staging/orders/stg_order_cancellations.sql",
+          "project/models/staging/orders/stg_order_fraud_scores.sql",
+          "project/models/staging/orders/stg_order_holds.sql",
+          "project/models/staging/orders/stg_order_line_discounts.sql",
+          "project/models/staging/orders/stg_order_lines.sql",
+          "project/models/staging/orders/stg_order_modifications.sql",
+          "project/models/staging/orders/stg_order_notes_dbt_3.sql",
+          "project/models/staging/orders/stg_order_payments.sql",
+          "project/models/staging/orders/stg_order_status_history.sql",
+          "project/models/staging/orders/stg_orders.sql",
+          "project/models/staging/orders/stg_orders__channels.sql",
+          "project/models/staging/orders/stg_orders__order_cancellations.sql",
+          "project/models/staging/orders/stg_orders__order_fraud_scores.sql",
+          "project/models/staging/orders/stg_orders__order_holds.sql",
+          "project/models/staging/orders/stg_orders__order_line_discounts.sql",
+          "project/models/staging/orders/stg_orders__order_lines.sql",
+          "project/models/staging/orders/stg_orders__order_modifications.sql",
+          "project/models/staging/orders/stg_orders__order_notes.sql",
+          "project/models/staging/orders/stg_orders__order_payments.sql",
+          "project/models/staging/orders/stg_orders__order_status_history.sql",
+          "project/models/staging/orders/stg_orders__orders.sql",
+          "project/models/staging/orders/stg_orders__return_lines.sql",
+          "project/models/staging/orders/stg_orders__return_reasons.sql",
+          "project/models/staging/orders/stg_orders__returns.sql",
+          "project/models/staging/orders/stg_orders__shipment_lines.sql",
+          "project/models/staging/orders/stg_orders__shipment_packages.sql",
+          "project/models/staging/orders/stg_orders__shipment_tracking.sql",
+          "project/models/staging/orders/stg_orders__shipments.sql",
+          "project/models/staging/orders/stg_return_reasons.sql",
+          "project/models/staging/orders/stg_shipment_lines.sql",
+          "project/models/staging/orders/stg_shipment_packages.sql",
+          "project/models/staging/orders/stg_shipment_tracking.sql"
+        ],
+        "truncated": false
+      },
+      "elapsed_seconds": 0.0,
+      "metrics": {
+        "model_calls": 3,
+        "tool_calls": 6,
+        "prompt_tokens": 24691,
+        "completion_tokens": 524,
+        "total_tokens": 25215,
+        "estimated_cost_usd": 0.03466716
+      },
+      "seq": 9
+    },
+    {
+      "type": "tool",
+      "name": "list_files",
+      "step": 3,
+      "arguments": {
+        "directory": "project/models/staging/products"
+      },
+      "result": {
+        "files": [],
+        "truncated": false
+      },
+      "elapsed_seconds": 0.0,
+      "metrics": {
+        "model_calls": 3,
+        "tool_calls": 7,
+        "prompt_tokens": 24691,
+        "completion_tokens": 524,
+        "total_tokens": 25215,
+        "estimated_cost_usd": 0.03466716
+      },
+      "seq": 10
+    },
+    {
+      "type": "model",
+      "name": "deepseek-v4-pro",
+      "content": "模型请求工具执行",
+      "finish_reason": "tool_calls",
+      "usage": {
+        "prompt_tokens": 12016,
+        "completion_tokens": 116,
+        "total_tokens": 12132,
+        "prompt_tokens_details": {
+          "cached_tokens": 11392
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 40
+        },
+        "prompt_cache_hit_tokens": 11392,
+        "prompt_cache_miss_tokens": 624
+      },
+      "response_id": "d5b43b03-2a41-42ad-8db1-b618521fd806",
+      "latency_seconds": 4.641,
+      "metrics": {
+        "model_calls": 4,
+        "tool_calls": 7,
+        "prompt_tokens": 36707,
+        "completion_tokens": 640,
+        "total_tokens": 37347,
+        "estimated_cost_usd": 0.05098764
+      },
+      "seq": 11
+    },
+    {
+      "type": "tool",
+      "name": "search_schema",
+      "step": 4,
+      "arguments": {
+        "query": "product"
+      },
+      "result": {
+        "tables": {
+          "ANALYTICS.DIM_PRODUCT": [
+            {
+              "name": "PRODUCT_KEY",
+              "type": "INTEGER"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SKU",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SUBCATEGORY_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "UNIT_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "UNIT_COST",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "EFFECTIVE_FROM",
+              "type": "DATE"
+            },
+            {
+              "name": "EFFECTIVE_TO",
+              "type": "DATE"
+            },
+            {
+              "name": "IS_CURRENT",
+              "type": "BOOLEAN"
+            }
+          ],
+          "ANALYTICS.FACT_INVENTORY": [
+            {
+              "name": "PRODUCT_KEY",
+              "type": "INTEGER"
+            }
+          ],
+          "ANALYTICS.FACT_SALES": [
+            {
+              "name": "PRODUCT_KEY",
+              "type": "INTEGER"
+            }
+          ],
+          "DIGITAL.MARKETPLACE_LISTINGS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "DIGITAL.WEB_EVENTS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "DIGITAL.WEB_PAGE_VIEWS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "MARKETING.PROMOTION_PRODUCTS": [
+            {
+              "name": "MAPPING_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PROMOTION_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "ORDERS.ORDER_LINES": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "PROCUREMENT.PRODUCT_COSTS": [
+            {
+              "name": "COST_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SUPPLIER_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "COST_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "UNIT_COST",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "CURRENCY_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "EFFECTIVE_FROM",
+              "type": "DATE"
+            },
+            {
+              "name": "EFFECTIVE_TO",
+              "type": "DATE"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.BRANDS": [
+            {
+              "name": "BRAND_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_LOGO_URL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_WEBSITE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PARENT_BRAND_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_PRIVATE_LABEL",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRICE_HISTORY": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "EFFECTIVE_DATE",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "PRICE",
+              "type": "DOUBLE"
+            }
+          ],
+          "PRODUCT.PRODUCTS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SHORT_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRIMARY_CATEGORY_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BASE_UOM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "WEIGHT",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "WEIGHT_UOM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LENGTH",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "WIDTH",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "HEIGHT",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "DIMENSION_UOM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_SERIALIZED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_LOT_TRACKED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_PERISHABLE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "SHELF_LIFE_DAYS",
+              "type": "INTEGER"
+            },
+            {
+              "name": "COUNTRY_OF_ORIGIN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "HS_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "TAX_CLASS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "WARRANTY_MONTHS",
+              "type": "INTEGER"
+            },
+            {
+              "name": "META_TITLE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "META_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "META_KEYWORDS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CANONICAL_URL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LIFECYCLE_STATUS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LAUNCHED_AT",
+              "type": "DATE"
+            },
+            {
+              "name": "DISCONTINUED_AT",
+              "type": "DATE"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "CREATED_BY",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "UPDATED_BY",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LEGACY_PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "OLD_SKU",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "AS400_ITEM_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SAP_MATERIAL_NUMBER",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ORACLE_ITEM_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MIGRATION_SOURCE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MIGRATION_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "PRE_MIGRATION_STATUS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LEGACY_CATEGORY_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LEGACY_BRAND_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ORIGINAL_CREATE_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "SOURCE_SYSTEM_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SHOPIFY_PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SHOPIFY_VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "AMAZON_ASIN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "WALMART_ITEM_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "GOOGLE_PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "FACEBOOK_PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PINTEREST_PIN_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SALESFORCE_PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "NETSUITE_ITEM_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PIM_PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "COST_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "WHOLESALE_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "MAP_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "MSRP",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "COMPARE_AT_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "MEMBER_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "CLEARANCE_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "LAST_PRICE_CHANGE_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "PRICE_CHANGE_REASON",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MARGIN_PCT",
+              "type": "DECIMAL(5,2)"
+            },
+            {
+              "name": "MARKUP_PCT",
+              "type": "DECIMAL(5,2)"
+            },
+            {
+              "name": "PRICE_TIER",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PROMOTIONAL_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "PROMO_START_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "PROMO_END_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "REORDER_POINT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "REORDER_QUANTITY",
+              "type": "INTEGER"
+            },
+            {
+              "name": "SAFETY_STOCK",
+              "type": "INTEGER"
+            },
+            {
+              "name": "LEAD_TIME_DAYS",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ABC_CLASSIFICATION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VELOCITY_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LAST_RECEIVED_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "LAST_SOLD_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "DAYS_OF_SUPPLY",
+              "type": "INTEGER"
+            },
+            {
+              "name": "STOCKOUT_COUNT_YTD",
+              "type": "INTEGER"
+            },
+            {
+              "name": "BACKORDER_ALLOWED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "DROPSHIP_ELIGIBLE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "WEIGHT_LBS",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "LENGTH_IN",
+              "type": "DECIMAL(10,2)"
+            },
+            {
+              "name": "WIDTH_IN",
+              "type": "DECIMAL(10,2)"
+            },
+            {
+              "name": "HEIGHT_IN",
+              "type": "DECIMAL(10,2)"
+            },
+            {
+              "name": "CUBIC_FEET",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "UPC_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "EAN_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "GTIN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MPN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CONDITION_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "AGE_RESTRICTED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "HAZMAT_FLAG",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "FDA_REGISTERED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "PROP65_WARNING",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CPSIA_COMPLIANT",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "ENERGY_STAR",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "ORGANIC_CERTIFIED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "FAIR_TRADE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "COMPLIANCE_STATUS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LAST_COMPLIANCE_CHECK",
+              "type": "DATE"
+            },
+            {
+              "name": "DEMAND_FORECAST_MONTHLY",
+              "type": "INTEGER"
+            },
+            {
+              "name": "FORECAST_ACCURACY",
+              "type": "DECIMAL(5,2)"
+            },
+            {
+              "name": "TRENDING_SCORE",
+              "type": "DECIMAL(5,4)"
+            },
+            {
+              "name": "SEASONAL_INDEX",
+              "type": "DECIMAL(5,2)"
+            },
+            {
+              "name": "CANNIBALIZATION_RISK",
+              "type": "DECIMAL(5,4)"
+            },
+            {
+              "name": "CROSS_SELL_AFFINITY",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SEARCH_RANK",
+              "type": "INTEGER"
+            },
+            {
+              "name": "RECOMMENDATION_SCORE",
+              "type": "DECIMAL(5,4)"
+            },
+            {
+              "name": "RETURN_RATE",
+              "type": "DECIMAL(5,4)"
+            },
+            {
+              "name": "REVIEW_SENTIMENT_SCORE",
+              "type": "DECIMAL(5,4)"
+            },
+            {
+              "name": "TEMP_DISCONTINUE_FLAG",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "ANALYST_NOTES",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "REVIEW_FLAG",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "EXCLUDE_FROM_FEED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "TEST_PRODUCT_FLAG",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "SAMPLE_PRODUCT_FLAG",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "PHOTO_SHOOT_NEEDED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CONTENT_REVIEW_STATUS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "OLD_CATEGORY_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "DEPRECATED_BRAND_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "V1_PRODUCT_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LEGACY_TAX_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "OLD_VENDOR_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PREVIOUS_UPC",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ARCHIVE_FLAG",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "SUPERSEDED_BY",
+              "type": "VARCHAR"
+            }
+          ],
+          "PRODUCT.PRODUCT_ATTRIBUTES": [
+            {
+              "name": "ATTRIBUTE_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ATTRIBUTE_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ATTRIBUTE_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ATTRIBUTE_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ATTRIBUTE_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "DATA_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_VARIANT_ATTRIBUTE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_FILTERABLE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_SEARCHABLE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_COMPARABLE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_REQUIRED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "DEFAULT_VALUE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VALIDATION_REGEX",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MIN_VALUE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "MAX_VALUE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "DISPLAY_ORDER",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ATTRIBUTE_GROUP",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_ATTRIBUTE_OPTIONS": [
+            {
+              "name": "OPTION_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ATTRIBUTE_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "OPTION_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "OPTION_VALUE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "OPTION_LABEL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SORT_ORDER",
+              "type": "INTEGER"
+            },
+            {
+              "name": "SWATCH_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SWATCH_VALUE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_DEFAULT",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_CATEGORIES": [
+            {
+              "name": "CATEGORY_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PARENT_CATEGORY_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_LEVEL",
+              "type": "INTEGER"
+            },
+            {
+              "name": "CATEGORY_PATH",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_PATH_IDS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SORT_ORDER",
+              "type": "INTEGER"
+            },
+            {
+              "name": "IMAGE_URL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ICON_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "META_TITLE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "META_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "META_KEYWORDS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_FEATURED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_CATEGORY_MAPPING": [
+            {
+              "name": "MAPPING_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_PRIMARY",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "SORT_ORDER",
+              "type": "INTEGER"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_IMAGES": [
+            {
+              "name": "IMAGE_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IMAGE_URL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "THUMBNAIL_URL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ALT_TEXT",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IMAGE_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SORT_ORDER",
+              "type": "INTEGER"
+            },
+            {
+              "name": "WIDTH",
+              "type": "INTEGER"
+            },
+            {
+              "name": "HEIGHT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "FILE_SIZE_KB",
+              "type": "INTEGER"
+            },
+            {
+              "name": "IS_PRIMARY",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_PRICES": [
+            {
+              "name": "PRICE_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRICE_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CURRENCY_CODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRICE_AMOUNT",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "COMPARE_AT_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "COST_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "MIN_QTY",
+              "type": "INTEGER"
+            },
+            {
+              "name": "MAX_QTY",
+              "type": "INTEGER"
+            },
+            {
+              "name": "CUSTOMER_TIER_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CHANNEL_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "EFFECTIVE_FROM",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "EFFECTIVE_TO",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "CREATED_BY",
+              "type": "VARCHAR"
+            }
+          ],
+          "PRODUCT.PRODUCT_RATINGS_SUMMARY": [
+            {
+              "name": "SUMMARY_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "TOTAL_REVIEWS",
+              "type": "INTEGER"
+            },
+            {
+              "name": "AVERAGE_RATING",
+              "type": "DECIMAL(3,2)"
+            },
+            {
+              "name": "RATING_1_COUNT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "RATING_2_COUNT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "RATING_3_COUNT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "RATING_4_COUNT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "RATING_5_COUNT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "RECOMMEND_PERCENTAGE",
+              "type": "DECIMAL(5,2)"
+            },
+            {
+              "name": "LAST_REVIEW_DATE",
+              "type": "DATE"
+            },
+            {
+              "name": "LAST_CALCULATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_REVIEWS": [
+            {
+              "name": "REVIEW_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CUSTOMER_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ORDER_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "RATING",
+              "type": "DECIMAL(2,1)"
+            },
+            {
+              "name": "REVIEW_TITLE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "REVIEW_TEXT",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PROS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CONS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IS_VERIFIED_PURCHASE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_RECOMMENDED",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "HELPFUL_COUNT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "NOT_HELPFUL_COUNT",
+              "type": "INTEGER"
+            },
+            {
+              "name": "MEDIA_URLS",
+              "type": "JSON"
+            },
+            {
+              "name": "STATUS",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MODERATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "MODERATED_BY",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "REJECTION_REASON",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "REVIEW_SOURCE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "REVIEWER_DISPLAY_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SUBMITTED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_TAGS": [
+            {
+              "name": "TAG_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "TAG_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "TAG_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "PRODUCT.PRODUCT_VARIANTS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SKU",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BARCODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BARCODE_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "GTIN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MPN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "WEIGHT",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "WEIGHT_UOM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LENGTH",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "WIDTH",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "HEIGHT",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "DIMENSION_UOM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "COST_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "COMPARE_AT_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "REQUIRES_SHIPPING",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_TAXABLE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "INVENTORY_POLICY",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "FULFILLMENT_SERVICE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IMAGE_URL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SORT_ORDER",
+              "type": "INTEGER"
+            },
+            {
+              "name": "IS_DEFAULT",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "RAW_GA.CART_ITEMS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.EVENTS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.EVENTS_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.EVENTS_STG": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.PRODUCT_VIEWS": [
+            {
+              "name": "_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_LOADED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "_SOURCE_SYSTEM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_SOURCE_TABLE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_ROW_HASH",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VIEW_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SESSION_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VIEWED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "TIME_ON_PAGE",
+              "type": "INTEGER"
+            },
+            {
+              "name": "SOURCE_PAGE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "ADDED_TO_CART",
+              "type": "BOOLEAN"
+            }
+          ],
+          "RAW_GA.PRODUCT_VIEWS_HIST": [
+            {
+              "name": "_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_LOADED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "_SOURCE_SYSTEM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_SOURCE_TABLE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_ROW_HASH",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_archived_at",
+              "type": "TIMESTAMP WITH TIME ZONE"
+            }
+          ],
+          "RAW_GA.PRODUCT_VIEWS_STG": [
+            {
+              "name": "_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_LOADED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "_SOURCE_SYSTEM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_SOURCE_TABLE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_ROW_HASH",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "_status",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.RATINGS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.REVIEWS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.REVIEWS_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.REVIEWS_STG": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMIMG": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMIMG_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMIMG_STG": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMTAGS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMTAGS_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMTAGS_STG": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_POS.RETURN_LINES": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_POS.TRANS_LINES": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_POS.TRANS_LINES_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARA_VAR": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARA_VAR_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.PROMO_ITEMS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.PROMO_ITEMS_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.VBAP": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.VBAP_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SFDC.FEEDBACK": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SFDC.FEEDBACK_HIST": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SFDC.QUOTE_LINES": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SFDC.SUBSCRIPTIONS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_WMS.LOT_TRACKING": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_WMS.MOVEMENTS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_WMS.PICKS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_WMS.REPLEN_ORDERS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_WMS.SHIP_LINES": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "main.CART_ITEMS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "main.DIM_PRODUCT": [
+            {
+              "name": "PRODUCT_KEY",
+              "type": "INTEGER"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SKU",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BRAND_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "CATEGORY_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SUBCATEGORY_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "UNIT_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "UNIT_COST",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "EFFECTIVE_FROM",
+              "type": "DATE"
+            },
+            {
+              "name": "EFFECTIVE_TO",
+              "type": "DATE"
+            },
+            {
+              "name": "IS_CURRENT",
+              "type": "BOOLEAN"
+            }
+          ],
+          "main.EVENTS": [
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            }
+          ]
+        },
+        "table_count": 363,
+        "truncated": true
+      },
+      "elapsed_seconds": 0.828,
+      "metrics": {
+        "model_calls": 4,
+        "tool_calls": 8,
+        "prompt_tokens": 36707,
+        "completion_tokens": 640,
+        "total_tokens": 37347,
+        "estimated_cost_usd": 0.05098764
+      },
+      "seq": 12
+    },
+    {
+      "type": "tool",
+      "name": "search_schema",
+      "step": 4,
+      "arguments": {
+        "query": "variant"
+      },
+      "result": {
+        "tables": {
+          "DIGITAL.MARKETPLACE_LISTINGS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "DIGITAL.SHOPPING_CART_ITEMS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "DIGITAL.WISHLIST_ITEMS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.DEMAND_FORECASTS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.INVENTORY_ADJUSTMENT_LINES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.INVENTORY_COUNT_DETAILS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.INVENTORY_LEVELS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.INVENTORY_RESERVATIONS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.INVENTORY_SNAPSHOTS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.INVENTORY_TRANSACTIONS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.INVENTORY_TRANSFER_LINES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "INVENTORY.REORDER_RULES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "ORDERS.ORDER_LINES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "PROCUREMENT.LANDED_COST_COMPONENTS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PROCUREMENT.PRODUCT_COSTS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PROCUREMENT.PURCHASE_CONTRACT_ITEMS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PROCUREMENT.PURCHASE_ORDER_LINES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PRODUCT.PRODUCTS": [
+            {
+              "name": "SHOPIFY_VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PRODUCT.PRODUCT_ATTRIBUTES": [
+            {
+              "name": "IS_VARIANT_ATTRIBUTE",
+              "type": "BOOLEAN"
+            }
+          ],
+          "PRODUCT.PRODUCT_IMAGES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PRODUCT.PRODUCT_PRICES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PRODUCT.PRODUCT_REVIEWS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "PRODUCT.PRODUCT_VARIANTS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "PRODUCT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SKU",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_DESCRIPTION",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BARCODE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "BARCODE_TYPE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "GTIN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "MPN",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "WEIGHT",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "WEIGHT_UOM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "LENGTH",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "WIDTH",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "HEIGHT",
+              "type": "DECIMAL(10,4)"
+            },
+            {
+              "name": "DIMENSION_UOM",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "COST_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "COMPARE_AT_PRICE",
+              "type": "DECIMAL(18,4)"
+            },
+            {
+              "name": "REQUIRES_SHIPPING",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_TAXABLE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "INVENTORY_POLICY",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "FULFILLMENT_SERVICE",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "IMAGE_URL",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "SORT_ORDER",
+              "type": "INTEGER"
+            },
+            {
+              "name": "IS_DEFAULT",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "IS_ACTIVE",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "CREATED_AT",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "UPDATED_AT",
+              "type": "TIMESTAMP"
+            }
+          ],
+          "RAW_GA.CART_ITEMS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.REVIEWS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.REVIEWS_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.REVIEWS_STG": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.WISHLISTS": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.WISHLISTS_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_GA.WISHLISTS_STG": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMATTR": [
+            {
+              "name": "IS_VARIANT_ATTRIBUTE",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMATTR_HIST": [
+            {
+              "name": "IS_VARIANT_ATTRIBUTE",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMATTR_STG": [
+            {
+              "name": "IS_VARIANT_ATTRIBUTE",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMIMG": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMIMG_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.ITMIMG_STG": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.PODTL": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.PODTL_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.PODTL_STG": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.PRCLST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_LEGACY.PRCLST_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_POS.TRANS_LINES": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_POS.TRANS_LINES_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.A305": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.A305_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.EKPO": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.EKPO_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARA_ATTR": [
+            {
+              "name": "IS_VARIANT_ATTRIBUTE",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARA_ATTR_HIST": [
+            {
+              "name": "IS_VARIANT_ATTRIBUTE",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARA_VAR": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_DESCRIPTION",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARA_VAR_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_DESCRIPTION",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARD": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.MARD_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.PBIM": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.PBIM_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.VBAP": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SAP.VBAP_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            },
+            {
+              "name": "VARIANT_NAME",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SFDC.FEEDBACK": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_SFDC.FEEDBACK_HIST": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ],
+          "RAW_WMS.INV_SNAPSHOT": [
+            {
+              "name": "VARIANT_ID",
+              "type": "VARCHAR"
+            }
+          ]
+        },
+        "table_count": 335,
+        "truncated": true
+      },
+      "elapsed_seconds": 0.765,
+      "metrics": {
+        "model_calls": 4,
+        "tool_calls": 9,
+        "prompt_tokens": 36707,
+        "completion_tokens": 640,
+        "total_tokens": 37347,
+        "estimated_cost_usd": 0.05098764
+      },
+      "seq": 13
+    },
+    {
+      "type": "status",
+      "name": "progress_reminder",
+      "content": "Execution budget: 20 model calls remain. Model files changed: False. Do not repeat semantically equivalent exploration. If sufficient evidence exists, implement the requested model change, run a targeted build and validate it. If blocked, explain the actual blocker.",
+      "seq": 14
+    }
+  ],
+  "metrics": {
+    "model_calls": 4,
+    "tool_calls": 9,
+    "prompt_tokens": 36707,
+    "completion_tokens": 640,
+    "total_tokens": 37347,
+    "estimated_cost_usd": 0.05098764
+  },
+  "diff": "",
+  "checks": [
+    {
+      "name": "final_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true,
+      "source": "saved final_build"
+    },
+    {
+      "name": "pytest_executed_tests",
+      "passed": true,
+      "expected": ">0 (passed + failed)",
+      "actual": 11,
+      "source": "saved pytest_counts; preserves original overall verdict"
+    },
+    {
+      "name": "pytest_no_failures",
+      "passed": false,
+      "expected": 0,
+      "actual": 11,
+      "source": "saved pytest_counts; preserves original overall verdict"
+    },
+    {
+      "name": "pytest_no_errors",
+      "passed": true,
+      "expected": 0,
+      "actual": 0,
+      "source": "saved pytest_counts; preserves original overall verdict"
+    },
+    {
+      "name": "pytest_no_skips",
+      "passed": true,
+      "expected": 0,
+      "actual": 0,
+      "source": "saved pytest_counts; preserves original overall verdict"
+    },
+    {
+      "name": "pytest_exit_status",
+      "passed": false,
+      "expected": 0,
+      "actual": 1,
+      "source": "saved pytest_returncode"
+    }
+  ],
+  "verification": {
+    "passed": false,
+    "reward": 0.0,
+    "components_passed": [],
+    "components_failed": [],
+    "valid_pytest_execution": true,
+    "grading_protocol": "pytest_exit_status",
+    "pytest_counts": {
+      "passed": 0,
+      "failed": 11,
+      "errors": 0,
+      "skipped": 0
+    },
+    "checks": [
+      {
+        "name": "final_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true,
+        "source": "saved final_build"
+      },
+      {
+        "name": "pytest_executed_tests",
+        "passed": true,
+        "expected": ">0 (passed + failed)",
+        "actual": 11,
+        "source": "saved pytest_counts; preserves original overall verdict"
+      },
+      {
+        "name": "pytest_no_failures",
+        "passed": false,
+        "expected": 0,
+        "actual": 11,
+        "source": "saved pytest_counts; preserves original overall verdict"
+      },
+      {
+        "name": "pytest_no_errors",
+        "passed": true,
+        "expected": 0,
+        "actual": 0,
+        "source": "saved pytest_counts; preserves original overall verdict"
+      },
+      {
+        "name": "pytest_no_skips",
+        "passed": true,
+        "expected": 0,
+        "actual": 0,
+        "source": "saved pytest_counts; preserves original overall verdict"
+      },
+      {
+        "name": "pytest_exit_status",
+        "passed": false,
+        "expected": 0,
+        "actual": 1,
+        "source": "saved pytest_returncode"
+      }
+    ]
+  },
+  "raw_verifier": {
+    "task_id": "dbt-fix-product-metrics",
+    "mode": "native-path-adapted-upstream-verifier",
+    "official_harbor_result": false,
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test_outputs.py",
+    "original_sha256": "722cb0cc17a43c2d77016b93bbba435bd1d0b8f2fb0414352ada9f5cab473da0",
+    "adapted_sha256": "5dcec137953ab3788630e8b7407ed6cd2bc53d8713f93e0c9f433998217583df",
+    "path_translation_only": true,
+    "returncode": 1,
+    "reward": 0.0,
+    "components_passed": [],
+    "components_failed": [],
+    "stdout": "FFFFFFFFFFF\n================================== FAILURES ===================================\n__________________ test_product_revenue_matches_order_lines ___________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_product_revenue_matches_order_lines(db_conn):\n        \"\"\"Test that product revenue matches actual order line totals for valid orders only.\n        Revenue should exclude cancelled, returned, and failed orders.\n        Tolerance is 0.01 (exact to 2 decimal places).\n        \"\"\"\n        conn, db_type = db_conn\n    \n        # Get total from report\n>       report_total = execute_scalar(conn, db_type, \"\"\"\n            SELECT COALESCE(SUM(product_revenue), 0) as total\n            FROM main.fct_product_metrics\n        \"\"\")\n\ntest_outputs_product_v4_01.py:141: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT COALESCE(SUM(product_revenue), 0) as total\\n        FROM main.fct_product_metrics\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 3:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n__________________________ test_data_quality_check_2 __________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_data_quality_check_2(db_conn):\n        \"\"\"Test data accuracy for a specific product with multiple variants.\n        Validates that per-product revenue matches the sum of valid order line totals.\n        \"\"\"\n        conn, db_type = db_conn\n    \n        # Find a product with multiple variants and valid orders\n        product_check = execute_query(conn, db_type, f\"\"\"\n            SELECT\n                pv.product_id,\n                COUNT(DISTINCT pv.variant_id) as variant_count,\n                COUNT(DISTINCT ol.order_line_id) as order_lines\n            FROM main.stg_product__product_variants pv\n            INNER JOIN main.stg_orders__order_lines ol ON pv.variant_id = ol.variant_id\n            INNER JOIN main.stg_orders__orders o ON ol.order_id = o.order_id\n            WHERE o.{VALID_ORDER_FILTER}\n            GROUP BY pv.product_id\n            HAVING COUNT(DISTINCT pv.variant_id) > 1\n            LIMIT 1\n        \"\"\")\n    \n        if not product_check:\n            pytest.skip(\"No products with multiple variants and valid orders found\")\n    \n        product_id = product_check[0][0]\n    \n        # Get revenue from report for this product\n        if db_type == 'snowflake':\n            report_revenue = execute_scalar(conn, db_type,\n                \"SELECT product_revenue FROM main.fct_product_metrics WHERE product_id = %s\",\n                [product_id])\n        else:\n>           report_revenue = execute_scalar(conn, db_type,\n                \"SELECT product_revenue FROM main.fct_product_metrics WHERE product_id = ?\",\n                [product_id])\n\ntest_outputs_product_v4_01.py:190: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = 'SELECT product_revenue FROM main.fct_product_metrics WHERE product_id = ?'\nparams = ['9593959d-4849-43b1-ae49-d37a0bd013de']\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n>               return conn.execute(query, params).fetchall()\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE               _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE               Did you mean \"fct_product_sales_performance\"?\nE               \nE               LINE 1: SELECT product_revenue FROM main.fct_product_metrics WHERE product_id = ?\nE                                                   ^\n\ntest_outputs_product_v4_01.py:100: CatalogException\n__________________________ test_units_sold_accuracy ___________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_units_sold_accuracy(db_conn):\n        \"\"\"Test that units sold matches order lines for valid orders only.\n        Tolerance is 0.01 (exact match expected for integer quantities).\n        \"\"\"\n        conn, db_type = db_conn\n    \n>       report_units = execute_scalar(conn, db_type, \"\"\"\n            SELECT COALESCE(SUM(units_sold), 0)\n            FROM main.fct_product_metrics\n        \"\"\")\n\ntest_outputs_product_v4_01.py:224: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT COALESCE(SUM(units_sold), 0)\\n        FROM main.fct_product_metrics\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 3:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n__________________________ test_order_count_accuracy __________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_order_count_accuracy(db_conn):\n        \"\"\"Test that order counts are reasonable relative to valid orders only.\"\"\"\n        conn, db_type = db_conn\n    \n        # Total orders in report (can be higher than actual if products in multiple orders)\n>       report_orders = execute_scalar(conn, db_type, \"\"\"\n            SELECT SUM(total_orders)\n            FROM main.fct_product_metrics\n        \"\"\")\n\ntest_outputs_product_v4_01.py:245: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT SUM(total_orders)\\n        FROM main.fct_product_metrics\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 3:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n_______________________ test_model_structure_preserved ________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_model_structure_preserved(db_conn):\n        \"\"\"Test that all required columns exist\"\"\"\n        conn, db_type = db_conn\n    \n        required_columns = [\n            'product_id', 'product_name', 'category', 'total_orders',\n            'units_sold', 'product_revenue', 'avg_unit_price', 'total_variants'\n        ]\n    \n        result = execute_query(conn, db_type, \"\"\"\n            SELECT lower(column_name)\n            FROM information_schema.columns\n            WHERE lower(table_name) = 'fct_product_metrics'\n              AND lower(table_schema) = 'main'\n        \"\"\")\n    \n        existing_columns = [row[0] for row in result]\n    \n        for col in required_columns:\n>           assert col.lower() in existing_columns, f\"Required column '{col}' is missing\"\nE           AssertionError: Required column 'product_id' is missing\nE           assert 'product_id' in []\nE            +  where 'product_id' = <built-in method lower of str object at 0x00000184DDF01B70>()\nE            +    where <built-in method lower of str object at 0x00000184DDF01B70> = 'product_id'.lower\n\ntest_outputs_product_v4_01.py:281: AssertionError\n__________________________ test_variant_counts_match __________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_variant_counts_match(db_conn):\n        \"\"\"Test that variant counts are accurate\"\"\"\n        conn, db_type = db_conn\n    \n        # Check a product with known variants\n        product_check = execute_query(conn, db_type, \"\"\"\n            SELECT\n                pv.product_id,\n                COUNT(DISTINCT pv.variant_id) as actual_variants\n            FROM main.stg_product__product_variants pv\n            GROUP BY pv.product_id\n            HAVING COUNT(DISTINCT pv.variant_id) > 1\n            LIMIT 1\n        \"\"\")\n    \n        if not product_check:\n            pytest.skip(\"No products with multiple variants found\")\n    \n        product_id = product_check[0][0]\n        actual_variants = int(product_check[0][1])\n    \n        if db_type == 'snowflake':\n            report_variants = execute_scalar(conn, db_type,\n                \"SELECT total_variants FROM main.fct_product_metrics WHERE product_id = %s\",\n                [product_id])\n        else:\n>           report_variants = execute_scalar(conn, db_type,\n                \"SELECT total_variants FROM main.fct_product_metrics WHERE product_id = ?\",\n                [product_id])\n\ntest_outputs_product_v4_01.py:310: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = 'SELECT total_variants FROM main.fct_product_metrics WHERE product_id = ?'\nparams = ['7d5601e3-86c2-402f-9d96-e0ffb94cdf0b']\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n>               return conn.execute(query, params).fetchall()\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE               _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE               Did you mean \"fct_product_sales_performance\"?\nE               \nE               LINE 1: SELECT total_variants FROM main.fct_product_metrics WHERE product_id = ?\nE                                                  ^\n\ntest_outputs_product_v4_01.py:100: CatalogException\n___________________________ test_no_negative_values ___________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_no_negative_values(db_conn):\n        \"\"\"Test that metrics don't have negative values\"\"\"\n        conn, db_type = db_conn\n    \n>       negative_count = execute_scalar(conn, db_type, \"\"\"\n            SELECT COUNT(*)\n            FROM main.fct_product_metrics\n            WHERE product_revenue < 0\n               OR units_sold < 0\n               OR total_orders < 0\n               OR total_variants < 0\n        \"\"\")\n\ntest_outputs_product_v4_01.py:322: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT COUNT(*)\\n        FROM main.fct_product_metrics\\n        WHERE product_revenue < 0\\n           OR units_sold < 0\\n           OR total_orders < 0\\n           OR total_variants < 0\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 3:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n__________________________ test_all_products_present __________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_all_products_present(db_conn):\n        \"\"\"Test that all products are in the metrics\"\"\"\n        conn, db_type = db_conn\n    \n        source_count = execute_scalar(conn, db_type, \"\"\"\n            SELECT COUNT(DISTINCT product_id)\n            FROM main.stg_product__products\n        \"\"\")\n    \n>       report_count = execute_scalar(conn, db_type, \"\"\"\n            SELECT COUNT(DISTINCT product_id)\n            FROM main.fct_product_metrics\n        \"\"\")\n\ntest_outputs_product_v4_01.py:343: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT COUNT(DISTINCT product_id)\\n        FROM main.fct_product_metrics\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 3:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n______________________ test_no_cancelled_orders_included ______________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_no_cancelled_orders_included(db_conn):\n        \"\"\"Verify that revenue does not include cancelled, returned, or failed orders.\n    \n        Cross-checks the report's total revenue against an independent calculation\n        from source tables that explicitly excludes invalid order statuses. If the\n        agent included all orders without filtering, the report total will be higher\n        than the valid-only total, causing this test to fail.\n        \"\"\"\n        conn, db_type = db_conn\n    \n        # Revenue from the report\n>       report_revenue = execute_scalar(conn, db_type, \"\"\"\n            SELECT COALESCE(SUM(product_revenue), 0)\n            FROM main.fct_product_metrics\n        \"\"\")\n\ntest_outputs_product_v4_01.py:363: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT COALESCE(SUM(product_revenue), 0)\\n        FROM main.fct_product_metrics\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 3:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n______________________ test_product_count_matches_source ______________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_product_count_matches_source(db_conn):\n        \"\"\"Verify total product count in report matches the products dimension table.\n    \n        The model starts from the products table and LEFT JOINs to sales data,\n        so total row count should equal the number of distinct products in the\n        products table (including those with zero sales).\n        \"\"\"\n        conn, db_type = db_conn\n    \n        # Total products in the source dimension table\n        source_product_count = execute_scalar(conn, db_type, \"\"\"\n            SELECT COUNT(DISTINCT product_id)\n            FROM main.stg_product__products\n        \"\"\")\n    \n        # Total products in the report\n>       report_product_count = execute_scalar(conn, db_type, \"\"\"\n            SELECT COUNT(*)\n            FROM main.fct_product_metrics\n        \"\"\")\n\ntest_outputs_product_v4_01.py:410: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\ntest_outputs_product_v4_01.py:106: in execute_scalar\n    result = execute_query(conn, db_type, query, params)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT COUNT(*)\\n        FROM main.fct_product_metrics\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 3:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n_________________________ test_avg_unit_price_formula _________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>, 'duckdb')\n\n    def test_avg_unit_price_formula(db_conn):\n        \"\"\"Verify that avg_unit_price equals product_revenue / units_sold for products\n        with sales.\n    \n        The average unit price should be computed as total revenue divided by total\n        units sold, not as a simple average of the unit_price column. This test\n        checks all products with non-zero units_sold to ensure the formula is correct\n        to within 0.01.\n        \"\"\"\n        conn, db_type = db_conn\n    \n        # Find products where avg_unit_price != product_revenue / units_sold\n>       mismatches = execute_query(conn, db_type, \"\"\"\n            SELECT\n                product_id,\n                product_revenue,\n                units_sold,\n                avg_unit_price,\n                CASE WHEN units_sold > 0 THEN product_revenue / units_sold ELSE 0 END as expected_avg\n            FROM main.fct_product_metrics\n            WHERE units_sold > 0\n              AND ABS(avg_unit_price - (product_revenue / units_sold)) > 0.01\n        \"\"\")\n\ntest_outputs_product_v4_01.py:432: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\nconn = <_duckdb.DuckDBPyConnection object at 0x00000184DDFD54F0>\ndb_type = 'duckdb'\nquery = '\\n        SELECT\\n            product_id,\\n            product_revenue,\\n            units_sold,\\n            avg_uni...metrics\\n        WHERE units_sold > 0\\n          AND ABS(avg_unit_price - (product_revenue / units_sold)) > 0.01\\n    '\nparams = None\n\n    def execute_query(conn, db_type, query, params=None):\n        \"\"\"Execute a query and return results\"\"\"\n        if db_type == 'snowflake':\n            cursor = conn.cursor()\n            if params:\n                cursor.execute(query, params)\n            else:\n                cursor.execute(query)\n            return cursor.fetchall()\n        else:\n            if params:\n                return conn.execute(query, params).fetchall()\n>           return conn.execute(query).fetchall()\n                   ^^^^^^^^^^^^^^^^^^^\nE           _duckdb.CatalogException: Catalog Error: Table with name fct_product_metrics does not exist!\nE           Did you mean \"fct_product_sales_performance\"?\nE           \nE           LINE 8:         FROM main.fct_product_metrics\nE                                ^\n\ntest_outputs_product_v4_01.py:101: CatalogException\n=========================== short test summary info ===========================\nFAILED test_outputs_product_v4_01.py::test_product_revenue_matches_order_lines\nFAILED test_outputs_product_v4_01.py::test_data_quality_check_2 - _duckdb.Cat...\nFAILED test_outputs_product_v4_01.py::test_units_sold_accuracy - _duckdb.Cata...\nFAILED test_outputs_product_v4_01.py::test_order_count_accuracy - _duckdb.Cat...\nFAILED test_outputs_product_v4_01.py::test_model_structure_preserved - Assert...\nFAILED test_outputs_product_v4_01.py::test_variant_counts_match - _duckdb.Cat...\nFAILED test_outputs_product_v4_01.py::test_no_negative_values - _duckdb.Catal...\nFAILED test_outputs_product_v4_01.py::test_all_products_present - _duckdb.Cat...\nFAILED test_outputs_product_v4_01.py::test_no_cancelled_orders_included - _du...\nFAILED test_outputs_product_v4_01.py::test_product_count_matches_source - _du...\nFAILED test_outputs_product_v4_01.py::test_avg_unit_price_formula - _duckdb.C...\n11 failed in 1.61s\n",
+    "stderr": "",
+    "grading_protocol": "pytest_exit_status",
+    "pytest_counts": {
+      "passed": 0,
+      "failed": 11,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pytest_returncode": 1,
+    "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test.sh",
+    "scoring_source_sha256": "40ccf3e00f0e4a67193ac6da7453a781eb2ae53c9ee16d969cdece76d04e0cf3",
+    "harness_execution": "offline native equivalent of pinned shell exit/count grading on the original actual pytest stdout; no test or model rerun",
+    "grading_amendment": "Originally no reward.json was emitted by this ordinary-pytest task. The pinned test.sh exit/count rule is now applied; assertions and original stdout are unchanged."
+  },
+  "archived": true,
+  "execution_backend": "native_trusted",
+  "recording_source": "已记录真实公开运行回放；来自实际 DeepSeek API、原始工具事件、补丁与上游验收，导出未重新执行模型或验收。",
+  "source_artifacts": {
+    "report": "$PROJECT\\artifacts\\evaluations\\public_native_v4_20261025.json",
+    "agent_report": "$PROJECT\\external\\native-results\\product-v4-01-verified.json",
+    "events": "$PROJECT\\external\\native-results\\product-v4-01-verified.jsonl",
+    "patch": "$PROJECT\\external\\native-results\\product-v4-01-verified.patch",
+    "verifier_report": "$PROJECT\\external\\public-verifiers\\dbt-fix-product-metrics\\product-v4-01-evaluation.json",
+    "instruction": "$PROJECT\\external\\native-cases\\product-v4-01\\instruction.md"
+  },
+  "public_benchmark": {
+    "repository": "https://github.com/Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "official_harbor_result": false,
+    "setting": "native-adapted-public-development-case"
+  },
+  "final_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 15.407,
+    "nodes": []
+  },
+  "max_steps": 24,
+  "budget_usd": 0.6,
+  "generation_settings": {
+    "thinking_enabled": true,
+    "reasoning_effort": "high",
+    "max_output_tokens": 16384,
+    "input_usd_per_million_tokens": 1.32,
+    "output_usd_per_million_tokens": 3.96
+  },
+  "observed_model_versions": [
+    "deepseek-v4-pro"
+  ],
+  "source_sha256": "f1310b46c0b0e0dfd99da322a2c1bd8942ee415f2d0cf8024e93148810c409c6",
+  "source_snapshot": "$PROJECT\\artifacts\\evaluations\\public_native_v4_20261025_source.zip",
+  "source_snapshot_sha256": "3bcd7293245ac5b871960e8fa6b54c5ea7140ee91bc1b5c765eb85932c5f209c",
+  "agent_revision": "v4-reasoning-contract-coverage",
+  "stop_reason": null,
+  "final_answer": "",
+  "candidate_review": null,
+  "error": "infrastructure: model API HTTP 402 insufficient balance: 模型 API HTTP 402: {\"error\":{\"message\":\"Insufficient Balance (request_id: 2ac560b9-5338-407b-a2a8-8dc1b4e8d0cb)\",\"type\":\"insufficient_balance_error\",\"param\":null,\"code\":\"invalid_request_error\"}}",
+  "execution_error": "模型 API HTTP 402: {\"error\":{\"message\":\"Insufficient Balance (request_id: 2ac560b9-5338-407b-a2a8-8dc1b4e8d0cb)\",\"type\":\"insufficient_balance_error\",\"param\":null,\"code\":\"invalid_request_error\"}}",
+  "error_type": "ModelError",
+  "failure_category": "infrastructure: model API HTTP 402 insufficient balance"
+}

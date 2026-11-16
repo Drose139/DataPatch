@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>DataPatch · 数据工程修复工作台</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-mark">d<span>p</span></span><span>DataPatch<small>AGENT WORKBENCH</small></span></a>
+    <div class="workspace-label"><span class="live-dot"></span> 本地工作空间 <span class="workspace-count">01</span></div>
+    <nav class="navigation" aria-label="主导航">
+      <button class="nav-item active" data-view="workbench"><span class="nav-icon">▦</span> 修复工作台 <span>↗</span></button>
+      <button class="nav-item" data-view="history"><span class="nav-icon">◷</span> 运行记录 <span id="history-count">0</span></button>
+      <button class="nav-item" data-view="evaluation"><span class="nav-icon">▤</span> 对比评测 <span>↗</span></button>
+    </nav>
+    <div class="sidebar-section"><span>任务库</span><span id="task-count">—</span></div>
+    <div id="task-list" class="task-list"><p class="sidebar-hint">正在加载任务…</p></div>
+    <div class="sidebar-footer"><span class="connection-dot" id="connection-dot"></span><div id="connection-label">连接本地服务<small>模型密钥仅保存在服务端</small></div><span>⌘</span></div>
+  </aside>
+
+  <main>
+    <header class="topbar"><div><span class="breadcrumb">工作空间</span><span class="separator">/</span><span id="view-label">修复工作台</span></div><div class="topbar-right"><span class="environment">LOCAL</span><span id="model-label">DeepSeek</span></div></header>
+    <div id="error-banner" class="error-banner hidden" role="alert"><span id="error-message"></span><button id="dismiss-error" aria-label="关闭错误">×</button></div>
+
+    <section id="workbench-view" class="view">
+      <div class="page-heading"><div><div class="eyebrow">EVIDENCE → PATCH → VERIFY</div><h1>把问题，修复到结果里。<span class="heading-dot"></span></h1><p>处理数据工程工单，审阅代码变更，以独立业务检查验证修复效果。</p></div><span class="outline-tag">可追溯执行</span></div>
+      <section class="task-panel panel">
+        <label class="mobile-task-picker">选择任务<select id="task-picker" aria-label="选择数据工程工单"></select></label>
+        <div class="section-caption"><span class="caption-square"></span> 当前任务 <span class="muted" id="task-id-label"></span></div>
+        <h2 id="task-title">选择一个数据修复任务</h2>
+        <p id="task-description" class="task-description">从左侧任务库选择任务，查看任务说明并启动 Agent。</p>
+        <div class="task-controls">
+          <label>执行方案<select id="mode-select"><option value="verified">Verified · 校验与恢复</option><option value="context">Context · 结构化上下文</option><option value="react">ReAct · 通用工具调用</option><option value="baseline">Baseline · 单次补丁</option></select></label>
+          <label class="steps-control">最大步数<input id="max-steps" type="number" min="1" max="40" value="12"></label>
+          <div class="execution-note" id="execution-note">使用真实模型 API 执行</div>
+          <button class="primary-button" id="start-run" disabled><span>启动修复</span><span>↗</span></button>
+        </div>
+        <details class="task-details"><summary>查看任务上下文与配置</summary><pre id="task-json">尚未选择任务</pre></details>
+      </section>
+
+      <div class="run-heading"><div><span class="section-label">EXECUTION</span><h2>执行详情 <span class="status-badge idle" id="run-status">等待运行</span></h2></div><div class="run-heading-right"><span class="replay-tag hidden" id="replay-tag">已记录真实运行回放</span><span class="run-id" id="run-id-label">NO RUN SELECTED</span></div></div>
+      <div class="metrics-grid">
+        <div class="metric"><span>执行耗时</span><strong id="metric-duration">—<small>s</small></strong><div class="metric-line"></div></div>
+        <div class="metric"><span>模型调用</span><strong id="metric-calls">—<small>次</small></strong><div class="metric-line"></div></div>
+        <div class="metric"><span>Token 用量</span><strong id="metric-tokens">—</strong><div class="metric-line"></div></div>
+        <div class="metric"><span>业务检查</span><strong id="metric-checks">—</strong><div class="metric-line"></div></div>
+      </div>
+
+      <div class="execution-grid">
+        <section class="panel timeline-panel"><div class="panel-heading"><h3>执行轨迹 <span id="event-count">0</span></h3><span class="panel-subtitle" id="timeline-label">工具调用与反馈</span></div><div id="timeline" class="timeline"><div class="empty-state"><span class="empty-icon">⌁</span><h3>执行过程将在这里展开</h3><p>每一步工具调用、模型反馈和验证结果，<br>都会保留为可查看的运行记录。</p></div></div></section>
+        <section class="panel result-panel"><div class="result-tabs" role="tablist" aria-label="执行结果"><button class="result-tab active" data-result="checks" role="tab">业务检查 <span id="checks-count">0</span></button><button class="result-tab" data-result="data" role="tab">数据变化</button><button class="result-tab" data-result="diff" role="tab">代码变更</button><button class="result-tab" data-result="details" role="tab">运行数据</button></div><div id="checks-result" class="result-content"><div class="empty-state"><span class="empty-icon">✓</span><h3>用结果验证修复</h3><p>任务运行后显示独立检查结果。<br>执行成功与业务正确性分别记录。</p></div></div><div id="data-result" class="result-content hidden"><div class="empty-state"><span class="empty-icon">⇄</span><h3>查看修复前后的数据变化</h3><p>运行后展示行数、字段和记录差异。<br>是否修复正确，请查看独立业务检查。</p></div></div><div id="diff-result" class="result-content hidden"><div class="empty-state"><h3>暂无代码变更</h3><p>Agent 生成的补丁将在这里显示。</p></div></div><div id="details-result" class="result-content hidden"><pre id="run-json" class="json-view">尚未选择运行</pre></div></section>
+      </div>
+    </section>
+
+    <section id="history-view" class="view hidden"><div class="page-heading"><div><div class="eyebrow">RUN HISTORY</div><h1>每次尝试，都有据可查。</h1><p>打开历史记录，回看模型调用、补丁与验证结果。</p></div><button class="secondary-button" id="refresh-history">刷新记录 ↻</button></div><div id="history-list" class="history-list panel"></div></section>
+
+    <section id="evaluation-view" class="view hidden"><div class="page-heading"><div><div class="eyebrow">MEASURE WHAT WORKS</div><h1>让改进，经得起对比。</h1><p>查看本地评测产物，对比任务通过率、模型用量与执行耗时。</p></div><button class="secondary-button" id="refresh-reports">刷新报告 ↻</button></div><div class="evaluation-layout"><section class="panel reports-sidebar"><div class="panel-heading"><h3>评测报告</h3><span id="report-count">0</span></div><div id="report-list"></div></section><section class="panel report-content"><div class="panel-heading"><h3 id="report-title">选择一份报告</h3><span class="outline-tag">本地评测结果</span></div><div id="report-body" class="report-body"><div class="empty-state"><span class="empty-icon">▥</span><h3>评测结果将在这里展示</h3><p>执行项目评测命令后刷新本页。<br>这里仅显示已保存的实际结果。</p></div></div></section></div></section>
+    <footer class="page-footer"><span>DataPatch <span class="footer-divider">/</span> Evidence you can inspect.</span><span>本地执行 · 真实模型 · 独立验证</span></footer>
+  </main>
+  <div id="toast" class="toast hidden" role="status"></div>
+</body>
+</html>

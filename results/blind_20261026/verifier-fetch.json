@@ -1,0 +1,16 @@
+[
+  {
+    "upstream_path": "tasks/dbt-carrier-delivery-performance/tests/test.sh",
+    "git_blob_sha1": "56b71d8dd510485b7261a97da56d6e72173e3b05",
+    "sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+    "fetched_at": "2026-10-26T09:38:13.835539+00:00",
+    "after_agent_stopped": true
+  },
+  {
+    "upstream_path": "tasks/dbt-carrier-delivery-performance/tests/test_outputs.py",
+    "git_blob_sha1": "60930fdaab429c84d5f859b4534b490e04bdfd6b",
+    "sha256": "7484bacc8e740261d6ce89ce01e861b7be039f984c63856d1a4cfc6074bce5db",
+    "fetched_at": "2026-10-26T09:38:12.844940+00:00",
+    "after_agent_stopped": true
+  }
+]

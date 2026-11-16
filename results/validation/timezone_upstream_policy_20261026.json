@@ -1,0 +1,85 @@
+{
+  "type": "readonly_public_acceptance_policy_audit",
+  "created_at": "2026-10-26T06:43:19.908202+00:00",
+  "task_id": "dbt-fix-timezone-sales",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "zero_model_api_calls": true,
+  "new_dbt_execution": false,
+  "database_read_only": true,
+  "official_harness": {
+    "test_script": {
+      "url": "https://github.com/Snowflake-Labs/data-eng-bench/blob/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test.sh",
+      "path": "$PROJECT\\artifacts\\acceptance\\timezone-development-02\\verifiers\\dbt-fix-timezone-sales\\test.original.sh",
+      "sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+      "grade": "pytest exit code 0; passed_count > 0; skipped_count = 0; failed_count = 0"
+    },
+    "test_module": {
+      "url": "https://github.com/Snowflake-Labs/data-eng-bench/blob/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test_outputs.py",
+      "path": "$PROJECT\\artifacts\\acceptance\\timezone-development-02\\verifiers\\dbt-fix-timezone-sales\\test_outputs.original.py",
+      "sha256": "3ec550c99ecf13bf299acffeb776db07c5d899c6f50322681da7e267dde40e6f",
+      "inspected_function": "rebuild_model",
+      "materialization_commands": [
+        "dbt deps",
+        "dbt run --select int_sales__orders_enriched"
+      ],
+      "dbt_build_or_test_in_materialization": false
+    }
+  },
+  "public_inputs": {
+    "instruction": {
+      "path": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\dbt-fix-timezone-sales\\instruction.md",
+      "sha256": "c2601e9d6646c3820f0bf756287ead27b9183dd6cb5344d30dc3b8e3909ff279",
+      "url": "https://github.com/Snowflake-Labs/data-eng-bench/blob/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/instruction.md"
+    },
+    "original_model": {
+      "path": "$PROJECT\\external\\data-eng-bench-expanded\\base-image\\dbt_models_duckdb\\models\\intermediate\\sales\\int_sales__orders_enriched.sql",
+      "sha256": "ec64543d95f3de345a774899ed85fadb2ff5cd873ef1e9a3ed9d4c37811a97c4"
+    },
+    "original_schema_yml": {
+      "path": "$PROJECT\\external\\data-eng-bench-expanded\\base-image\\dbt_models_duckdb\\models\\intermediate\\schema.yml",
+      "sha256": "f6c764f76bc63cf24300fe9e81f0fb89eb1e46ca504989d039708ccda5aba239",
+      "order_id_tests": [
+        "not_null",
+        "unique"
+      ]
+    }
+  },
+  "baseline": {
+    "database": "D:\\DataPatch-work\\public-expanded-dev-20261026\\timezone\\database\\retail.duckdb",
+    "method": "Render unoverlaid pinned base model SELECT with config removed and ref resolved to the initialized main staging relations; execute as read-only subquery, without replacing any table or view",
+    "query": "WITH baseline AS (/*\n================================================================================\n MODEL: int_sales__orders_enriched\n AUTHOR: Marcus Johnson\n CREATED: 2023-04-10\n LAST MODIFIED: 2024-10-15 by Sarah Chen\n\n DESCRIPTION:\n This intermediate model serves as the primary consolidation point for all\n order data across the organization's various transactional systems. It unions\n together order records from SAP ECC (legacy ERP), the new POS system, and\n performs critical data standardization operations.\n\n DATA SOURCES:\n   - stg_sap__vbak: SAP Sales Document Header (VBAK table)\n   - stg_pos__transactions: Point of Sale transaction records\n   - (future) stg_shopify__orders: E-commerce orders (see TODO below)\n\n BUSINESS RULES:\n   1. All monetary amounts are cast to decimal(18,2) for consistency\n   2. Timestamps use TRY_CAST to handle malformed date strings from legacy systems\n   3. Order status is preserved as-is from source (standardization in dim layer)\n\n GRAIN: One row per unique order_id\n\n PERFORMANCE METRICS:\n   - Full refresh runtime: 2 min 15 sec\n   - Incremental: N/A (view)\n   - Downstream dependencies: fct_sales, fct_orders_master\n\n KNOWN ISSUES:\n   - SAP exchange rates are point-in-time but we use current day rate\n   - POS timestamps are in store local time, not UTC (BUG: DATA-1023)\n\n CHANGE LOG:\n   2024-10-15: Added TRY_CAST for timestamp handling (Sarah)\n   2024-07-22: Added exchange_rate column (Marcus)\n   2024-03-01: Initial creation (Marcus)\n================================================================================\n*/\n\n-- TODO: Add Shopify orders when e-commerce integration completes (Q1 2025)\n-- TODO: Implement proper timezone conversion for POS orders\n-- FIXME: Exchange rate should be order-date rate, not current rate\n\n-- Helper macro-like approach to strip currency symbols\n-- Data may contain \"$108.53\" or \"945.9900 USD\" formats\n\n\nwith sap_orders as (\n\n    select\n        order_id,\n        order_number,\n        customer_id,\n        order_type,\n        'SAP' as source_system,\n        currency_code,\n        exchange_rate,\n        regexp_replace(CAST(subtotal AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as subtotal,\n        regexp_replace(CAST(discount_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as discount_total,\n        regexp_replace(CAST(shipping_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as shipping_total,\n        regexp_replace(CAST(tax_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as tax_total,\n        regexp_replace(CAST(grand_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as grand_total,\n        status,\n        payment_status,\n        fulfillment_status,\n        TRY_CAST(ordered_at AS timestamp) as ordered_at,\n        TRY_CAST(shipped_at AS timestamp) as shipped_at,\n        TRY_CAST(delivered_at AS timestamp) as delivered_at,\n        TRY_CAST(cancelled_at AS timestamp) as cancelled_at\n    from \"main\".\"stg_sap__vbak\"\n\n),\n\npos_orders as (\n\n    select\n        order_id,\n        order_number,\n        customer_id,\n        order_type,\n        'POS' as source_system,\n        currency_code,\n        exchange_rate,\n        regexp_replace(CAST(subtotal AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as subtotal,\n        regexp_replace(CAST(discount_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as discount_total,\n        regexp_replace(CAST(shipping_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as shipping_total,\n        regexp_replace(CAST(tax_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as tax_total,\n        regexp_replace(CAST(grand_total AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2) as grand_total,\n        status,\n        payment_status,\n        fulfillment_status,\n        TRY_CAST(ordered_at AS timestamp) as ordered_at,\n        TRY_CAST(shipped_at AS timestamp) as shipped_at,\n        TRY_CAST(delivered_at AS timestamp) as delivered_at,\n        TRY_CAST(cancelled_at AS timestamp) as cancelled_at\n    from \"main\".\"stg_pos__transactions\"\n\n),\n\nall_orders as (\n\n    select * from sap_orders\n    union all\n    select * from pos_orders\n\n),\n\nfinal as (\n\n    select\n        order_id,\n        order_number,\n        customer_id,\n        order_type,\n        source_system,\n        currency_code,\n        exchange_rate,\n\n        -- Order amounts\n        subtotal,\n        discount_total,\n        shipping_total,\n        tax_total,\n        grand_total,\n\n        -- Calculated fields\n        (subtotal - discount_total) as net_subtotal,\n        case\n            when subtotal > 0 then (discount_total / subtotal)\n            else 0\n        end as discount_rate,\n\n        -- Status fields\n        status,\n        payment_status,\n        fulfillment_status,\n\n        -- Timestamps\n        ordered_at,\n        shipped_at,\n        delivered_at,\n        cancelled_at,\n\n        -- Derived flags\n        case\n            when cancelled_at is not null then true\n            else false\n        end as is_cancelled,\n\n        case\n            when delivered_at is not null then true\n            else false\n        end as is_delivered,\n\n        -- Calculate fulfillment time in days\n        case\n            when delivered_at is not null and ordered_at is not null\n            then date_diff('day', ordered_at, delivered_at)\n            else null\n        end as days_to_fulfill\n\n    from all_orders\n\n)\n\nselect * from final), duplicate_groups AS (SELECT order_id,count(*) AS n FROM baseline GROUP BY order_id HAVING count(*)>1) SELECT (SELECT count(*) FROM baseline) AS row_count,(SELECT count(*) FROM baseline WHERE order_id IS NULL) AS null_order_ids,(SELECT count(*) FROM duplicate_groups WHERE order_id IS NOT NULL) AS nonnull_duplicate_groups,(SELECT count(*) FROM duplicate_groups) AS duplicate_groups_including_null",
+    "result": {
+      "row_count": 4216,
+      "null_order_ids": 177,
+      "nonnull_duplicate_groups": 1308,
+      "duplicate_groups_including_null": 1309
+    },
+    "minimal_order_id_projection_sql": "WITH baseline AS (SELECT order_id FROM main.stg_sap__vbak UNION ALL SELECT order_id FROM main.stg_pos__transactions), duplicate_groups AS (SELECT order_id FROM baseline WHERE order_id IS NOT NULL GROUP BY order_id HAVING count(*)>1) SELECT (SELECT count(*) FROM baseline) AS row_count,(SELECT count(*) FROM baseline WHERE order_id IS NULL) AS null_order_ids,(SELECT count(*) FROM duplicate_groups) AS nonnull_duplicate_groups",
+    "minimal_order_id_projection_result": {
+      "row_count": 4216,
+      "null_order_ids": 177,
+      "nonnull_duplicate_groups": 1308
+    }
+  },
+  "current_candidate": {
+    "query": "WITH d AS (SELECT order_id FROM main.int_sales__orders_enriched WHERE order_id IS NOT NULL GROUP BY order_id HAVING count(*)>1) SELECT (SELECT count(*) FROM main.int_sales__orders_enriched) AS row_count,(SELECT count(*) FROM main.int_sales__orders_enriched WHERE order_id IS NULL) AS null_order_ids,(SELECT count(*) FROM d) AS nonnull_duplicate_groups",
+    "result": {
+      "row_count": 4216,
+      "null_order_ids": 177,
+      "nonnull_duplicate_groups": 1308
+    }
+  },
+  "interpretation": {
+    "original_input_already_violates_attached_id_tests": true,
+    "candidate_order_id_violations_equal_original": true,
+    "instruction_scope": "mixed timestamp parsing and five-hour alignment; keep view and output columns; do not edit staging; no requested order_id repair",
+    "recommended_policy": "upstream_harness",
+    "required_gates": [
+      "run +target success",
+      "requested target node success",
+      "unchanged original pytest grading success"
+    ],
+    "additional_project_quality": "Retain dbt build result without changing failures to success; not required only when upstream_harness was explicitly selected before fresh execution",
+    "limitations": "Read-only baseline constraints establish a pre-existing input/model mismatch, not global correctness of all output columns. Original pytest remains an independent required gate."
+  }
+}

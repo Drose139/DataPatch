@@ -1,0 +1,499 @@
+{
+  "run_id": "4dd55909-2cec-52ee-8c8b-8163506bd44b",
+  "source_run_id": "public_core_recheck_20261026:dbt-fix-inventory-model",
+  "task_id": "dbt-fix-inventory-model",
+  "task": {
+    "id": "dbt-fix-inventory-model",
+    "title": "公开项目 · 已审阅成品 · Fix and Enhance Product Inventory Metrics Model",
+    "description": "# Fix and Enhance Product Inventory Metrics Model\n\n## Problem\n\nThe `rpt_product_inventory_metrics` model has bugs and is missing business-critical classification logic.\n\n## Files\n\n- DuckDB: `/app/dbt_models_duckdb/models/marts/inventory/rpt_product_inventory_metrics.sql`\n- Snowflake: `/app/dbt_models_snowflake/models/marts/inventory/rpt_product_inventory_metrics.sql`\n\n## Database Backend\nThis task supports both DuckDB and Snowflake. **Run `echo $DB_TYPE` in a shell BEFORE you write any code or spawn any subagents — the live env determines which backend the verifier runs against.** Do NOT assume a default from this prose. Both `/app/dbt_models_duckdb/` and `/app/dbt_models_snowflake/` exist on disk; the verifier only checks the project matching the live `$DB_TYPE`.\n\n### DuckDB\n- Set `DB_TYPE=duckdb`\n- Database path: `$DUCKDB_PATH` (default: `/app/database/retail.duckdb`)\n\n### Snowflake\n- Set `DB_TYPE=snowflake`\n- Environment variables (pre-configured):\n  - `SNOWFLAKE_ACCOUNT`\n  - `SNOWFLAKE_USER`\n  - `SNOWFLAKE_PASSWORD`\n  - `SNOWFLAKE_DATABASE` - The clone database to use\n  - `SNOWFLAKE_SCHEMA`\n  - `SNOWFLAKE_WAREHOUSE`\n  - `SNOWFLAKE_ROLE` (optional)\n\n**Note**: For Snowflake, the entrypoint automatically creates a clone database and sets `SNOWFLAKE_DATABASE`. The clone is destroyed when the task completes.\n\n## dbt Profile Setup\n\nYou must configure dbt to connect to the database:\n- Create a `profiles.yml` in the dbt project directory with profile name `retail_dw_master`\n- Set `DBT_PROFILES_DIR` environment variable to the directory containing `profiles.yml`\n\n### DuckDB Profile\nConfigure with `type: duckdb` and the database path from `$DUCKDB_PATH`.\n\n### Snowflake Profile\nConfigure with `type: snowflake` using password authentication:\n- Use the environment variables for account, user, password, database, schema, warehouse, and role\n- Set the profile's `schema:` to `$SNOWFLAKE_SCHEMA` — do NOT leave it blank. A blank or omitted schema makes Snowflake silently default to `PUBLIC`, so your models get built in the wrong schema and the verifier cannot find them.\n\n## Tasks\n\n### 1. Fix Existing Bugs\n\nThe model produces invalid values (`inf`, `nan`) in calculated metrics. Identify and fix all issues.\n\n### 2. Add Inventory Health Tier\n\nAdd `inventory_health_tier` column using **waterfall logic** (first match wins):\n\n| Tier          | Criteria                                                                                                    |\n| ------------- | ----------------------------------------------------------------------------------------------------------- |\n| `critical`  | Top 10% turnover + less than 1 week supply + has recent sales                                               |\n| `at_risk`   | High stockout rate (>15%) OR low supply (<2 weeks with sales activity) OR majority of locations stocked out |\n| `healthy`   | Above-median turnover + low stockout (<5%) + adequate supply (2-12 weeks)                                   |\n| `overstock` | Everything else                                                                                             |\n\n### 3. Add Velocity Score\n\nAdd `velocity_score` column (0-100 scale) combining:\n\n- Turnover performance (40% weight): Use `PERCENT_RANK() OVER (ORDER BY turnover_ratio)` to normalize turnover to 0-1\n- Sell-through efficiency (30% weight): Calculate as `units_sold_365d / NULLIF(units_sold_365d + GREATEST(total_quantity_on_hand, 0), 0)` (ratio of sold to total throughput)\n- Picking recency (30% weight): Stepped function on `days_since_last_pick`:\n  - <= 7 days: 1.0\n  - <= 30 days: 0.7\n  - <= 90 days: 0.4\n  - > 90 days: 0.1\n\nFinal score: `(turnover_component + sell_through_component + recency_component) * 100`\n\n## Expected Output\n\nThe model should include all existing columns plus:\n\n| Column                | Type    | Description                                                |\n| --------------------- | ------- | ---------------------------------------------------------- |\n| inventory_health_tier | varchar | Health classification (critical/at_risk/healthy/overstock) |\n| velocity_score        | decimal | Inventory velocity score (0-100)                           |\n\n## Requirements\n\n- Model compiles successfully\n- No invalid numeric values\n- All source products included in output\n- Tiers distributed across multiple categories\n- use PERCENT_RANK() window function for tier calculation\n\n## Guidelines\n\n- Do NOT use `CURRENT_DATE` for rolling window calculations (e.g., the 365-day transaction filter, days_since_last_pick, days_since_last_receipt). Instead, use `MAX(transaction_date)` from the inventory transactions table as the reference date. This ensures consistent results regardless of when the model is run.\n",
+    "split": "public-development"
+  },
+  "provider": "operator_reviewed",
+  "model": "未调用模型",
+  "mode": "reviewed_patch",
+  "patch_origin": "operator_reviewed",
+  "report_type": "reviewed_patch_acceptance",
+  "status": "completed",
+  "archived": true,
+  "recording_source": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。",
+  "execution_backend": "native_trusted",
+  "metrics": {
+    "elapsed_seconds": 226.828,
+    "model_calls": 0,
+    "tool_calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "estimated_cost_usd": 0
+  },
+  "recorded_operations": [
+    "dbt current candidate and ancestor run",
+    "dbt target build",
+    "original upstream pytest"
+  ],
+  "zero_model_api_calls": true,
+  "events": [
+    {
+      "seq": 1,
+      "type": "status",
+      "content": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。"
+    },
+    {
+      "type": "tool",
+      "name": "已记录当前候选及祖先物化",
+      "arguments": {
+        "command": "run",
+        "select": "+rpt_product_inventory_metrics"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 31.062,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.stg_inventory__inventory_levels",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_inventory__inventory_transactions",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_product_inventory_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_product_inventory_metrics"
+        ],
+        "target_model_success": true
+      },
+      "seq": 2
+    },
+    {
+      "seq": 3,
+      "type": "tool",
+      "name": "已记录 dbt 构建",
+      "arguments": {
+        "select": "rpt_product_inventory_metrics"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 29.562,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_product_inventory_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_product_inventory_metrics"
+        ],
+        "target_model_success": true
+      }
+    },
+    {
+      "seq": 4,
+      "type": "validation",
+      "name": "已记录上游原 pytest",
+      "result": {
+        "task_id": "dbt-fix-inventory-model",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-inventory-model/tests/test_outputs.py",
+        "original_sha256": "a5ce852b9507c04c4235ff8a0c6b5b37a24eda0693e19c2ad0e77355d09a5f37",
+        "adapted_sha256": "7d18289c578cdd8cde4d6bf97374bd182a0187ef135934072629ea8843e45304",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_tier_column_exists",
+          "component_5_velocity_score_exists",
+          "component_6_valid_tier_values",
+          "component_7_uses_percent_rank",
+          "component_8_distribution",
+          "component_9_critical_tier_logic",
+          "component_10_healthy_tier_logic",
+          "component_11_velocity_score_range",
+          "component_12_velocity_score_formula"
+        ],
+        "components_failed": [],
+        "grading_protocol": "component_reward_json",
+        "stdout": "CMD: dbt run -s rpt_product_inventory_metrics\nSTDOUT: \u001b[0m06:56:51  Running with dbt=1.12.6\n\u001b[0m06:56:52  Registered adapter: duckdb=1.11.0\n\u001b[0m06:56:59  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.legacy\n\u001b[0m06:57:03  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:57:03  \n\u001b[0m06:57:03  Concurrency: 4 threads (target='dev')\n\u001b[0m06:57:03  \n\u001b[0m06:57:07  1 of 1 START sql view model main.rpt_product_inventory_metrics ................. [RUN]\n\u001b[0m06:57:07  1 of 1 OK created sql view model main.rpt_product_inventory_metrics ............ [\u001b[32mOK\u001b[0m in 0.34s]\n\u001b[0m06:57:07  \n\u001b[0m06:57:07  Finished running 1 view model in 0 hours 0 minutes and 3.52 seconds (3.52s).\n\u001b[0m06:57:10  \n\u001b[0m06:57:10  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:57:10  \n\u001b[0m06:57:10  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_tier_column_exists\nPASS: component_5_velocity_score_exists\nPASS: component_6_valid_tier_values\nPASS: component_7_uses_percent_rank\nPASS: component_8_distribution\nPASS: component_9_critical_tier_logic\nPASS: component_10_healthy_tier_logic\nPASS: component_11_velocity_score_range\nPASS: component_12_velocity_score_formula\n\nFinal Score: 1.0\n.\n1 passed in 43.13s\n",
+        "stderr": ""
+      }
+    },
+    {
+      "seq": 5,
+      "type": "final",
+      "content": "成品补丁验收通过。"
+    }
+  ],
+  "diff": "--- a/models/marts/inventory/rpt_product_inventory_metrics.sql\n+++ b/models/marts/inventory/rpt_product_inventory_metrics.sql\n@@ -1,10 +1,5 @@\n-{{\n-    config(\n-        materialized='table',\n-        tags=['mart', 'inventory', 'metrics']\n-    )\n-}}\n-\n+-- operator_reviewed\n+-- Reviewed delivery artifact; not a new autonomous model run.\n /*\n ================================================================================\n MODEL: rpt_product_inventory_metrics\n@@ -14,7 +9,7 @@\n \n DESCRIPTION:\n Product-level inventory performance metrics including turnover ratios,\n-stockout analysis, and inventory health indicators.\n+stockout analysis, inventory health tier and inventory velocity score.\n \n KNOWN ISSUES:\n   - Performance: Full refresh takes ~8 minutes on large datasets\n@@ -33,6 +28,13 @@\n \n inventory_transactions as (\n     select * from {{ ref('stg_inventory__inventory_transactions') }}\n+),\n+\n+-- Reference date for all rolling windows: latest transaction date in the data\n+-- (never CURRENT_DATE, so results are stable regardless of run date)\n+reference as (\n+    select max(transaction_date) as reference_date\n+    from inventory_transactions\n ),\n \n -- Aggregate inventory at product level\n@@ -53,40 +55,47 @@\n     group by il.variant_id\n ),\n \n--- Calculate COGS from outbound transactions (last 365 days)\n+-- Calculate COGS from outbound transactions (365 days before reference date).\n+-- PICK quantities are stored with inconsistent signs, so use the absolute\n+-- picked quantity to obtain real units sold / demand (avoids near-zero or\n+-- negative denominators that produced inf/nan metrics).\n product_cogs as (\n     select\n-        variant_id as product_id,\n-        sum(quantity * unit_cost) as cogs_365d,\n-        sum(quantity) as units_sold_365d,\n-        count(distinct transaction_date) as selling_days\n-    from inventory_transactions\n-    where transaction_type = 'PICK'\n-      and transaction_date >= current_date - interval '365' day\n-    group by variant_id\n+        it.variant_id as product_id,\n+        sum(abs(it.quantity) * it.unit_cost) as cogs_365d,\n+        sum(abs(it.quantity)) as units_sold_365d,\n+        count(distinct it.transaction_date) as selling_days\n+    from inventory_transactions it\n+    cross join reference r\n+    where it.transaction_type = 'PICK'\n+      and it.transaction_date >= r.reference_date - interval '365' day\n+      and it.transaction_date <= r.reference_date\n+    group by it.variant_id\n ),\n \n -- Calculate average inventory value (simplified - using current snapshot)\n avg_inventory as (\n     select\n-        variant_id as product_id,\n-        avg(quantity_on_hand * unit_cost) as avg_inventory_value_365d\n-    from inventory_levels\n-    group by variant_id\n+        il.variant_id as product_id,\n+        avg(il.quantity_on_hand * il.unit_cost) as avg_inventory_value_365d\n+    from inventory_levels il\n+    group by il.variant_id\n ),\n \n -- Calculate daily demand for days of supply\n daily_demand as (\n     select\n-        variant_id as product_id,\n-        sum(quantity) / 365.0 as avg_daily_demand\n-    from inventory_transactions\n-    where transaction_type = 'PICK'\n-      and transaction_date >= current_date - interval '365' day\n-    group by variant_id\n-),\n-\n--- Combine all metrics\n+        it.variant_id as product_id,\n+        sum(abs(it.quantity)) / 365.0 as avg_daily_demand\n+    from inventory_transactions it\n+    cross join reference r\n+    where it.transaction_type = 'PICK'\n+      and it.transaction_date >= r.reference_date - interval '365' day\n+      and it.transaction_date <= r.reference_date\n+    group by it.variant_id\n+),\n+\n+-- Combine all metrics (all source products kept; denominators guarded)\n product_metrics as (\n     select\n         pi.product_id,\n@@ -109,33 +118,45 @@\n         coalesce(pc.units_sold_365d, 0) as units_sold_365d,\n         coalesce(pc.selling_days, 0) as selling_days,\n \n-        pc.cogs_365d / ai.avg_inventory_value_365d as turnover_ratio,\n-\n-        pi.total_inventory_value / pc.units_sold_365d as inventory_value_per_unit_sold,\n+        pc.cogs_365d / nullif(ai.avg_inventory_value_365d, 0) as turnover_ratio,\n+\n+        pi.total_inventory_value / nullif(pc.units_sold_365d, 0) as inventory_value_per_unit_sold,\n \n         -- Stockout metrics\n         coalesce(pi.stockout_location_count, 0) as stockout_location_count,\n         coalesce(pi.total_locations, 0) as total_locations,\n \n-        100.0 * pi.stockout_location_count / pi.total_locations as stockout_rate,\n-\n-        pi.total_quantity_on_hand / dd.avg_daily_demand as days_of_supply,\n+        100.0 * pi.stockout_location_count / nullif(pi.total_locations, 0) as stockout_rate,\n+\n+        pi.total_quantity_on_hand / nullif(dd.avg_daily_demand, 0) as days_of_supply,\n \n         -- Activity dates\n         pi.last_received_date,\n         pi.last_picked_date,\n \n-        -- Days since activity\n-        date_diff('day', pi.last_picked_date, current_date) as days_since_last_pick,\n-        date_diff('day', pi.last_received_date, current_date) as days_since_last_receipt\n+        -- Days since activity (relative to reference date)\n+        date_diff('day', pi.last_picked_date, r.reference_date) as days_since_last_pick,\n+        date_diff('day', pi.last_received_date, r.reference_date) as days_since_last_receipt\n \n     from product_inventory pi\n     left join product_cogs pc on pi.product_id = pc.product_id\n     left join avg_inventory ai on pi.product_id = ai.product_id\n     left join daily_demand dd on pi.product_id = dd.product_id\n-    -- Only include products with active inventory\n-    where coalesce(pi.total_quantity_on_hand, 0) > 0\n-      and pi.product_id is not null\n+    cross join reference r\n+    where pi.product_id is not null\n+),\n+\n+-- Window metrics used for classification and velocity scoring\n+metrics_scored as (\n+    select\n+        pm.*,\n+        percent_rank() over (order by pm.turnover_ratio) as turnover_percent_rank,\n+        med.median_turnover_ratio\n+    from product_metrics pm\n+    cross join (\n+        select median(turnover_ratio) as median_turnover_ratio\n+        from product_metrics\n+    ) med\n )\n \n select\n@@ -163,5 +184,40 @@\n     last_received_date,\n     last_picked_date,\n     days_since_last_pick,\n-    days_since_last_receipt\n-from product_metrics\n+    days_since_last_receipt,\n+\n+    -- Inventory health tier (waterfall: first match wins)\n+    case\n+        when turnover_percent_rank >= 0.90\n+             and days_of_supply < 7\n+             and units_sold_365d > 0\n+            then 'critical'\n+        when stockout_rate > 15\n+             or (days_of_supply < 14 and units_sold_365d > 0)\n+             or stockout_location_count > total_locations / 2.0\n+            then 'at_risk'\n+        when turnover_ratio > median_turnover_ratio\n+             and stockout_rate < 5\n+             and days_of_supply between 14 and 84\n+            then 'healthy'\n+        else 'overstock'\n+    end as inventory_health_tier,\n+\n+    -- Velocity score (0-100): 40% turnover rank + 30% sell-through + 30% recency\n+    round(\n+        (\n+            coalesce(turnover_percent_rank, 0) * 0.4\n+            + coalesce(\n+                units_sold_365d\n+                / nullif(units_sold_365d + greatest(total_quantity_on_hand, 0), 0),\n+                0\n+              ) * 0.3\n+            + (case\n+                   when days_since_last_pick <= 7 then 1.0\n+                   when days_since_last_pick <= 30 then 0.7\n+                   when days_since_last_pick <= 90 then 0.4\n+                   else 0.1\n+               end) * 0.3\n+        ) * 100\n+    , 2) as velocity_score\n+from metrics_scored\n",
+  "applied_sql": "-- operator_reviewed\n-- Reviewed delivery artifact; not a new autonomous model run.\n/*\n================================================================================\nMODEL: rpt_product_inventory_metrics\nAUTHOR: Tyler Brooks\nCREATED: 2024-02-15\nLAST MODIFIED: 2024-11-20 by Marcus Johnson\n\nDESCRIPTION:\nProduct-level inventory performance metrics including turnover ratios,\nstockout analysis, inventory health tier and inventory velocity score.\n\nKNOWN ISSUES:\n  - Performance: Full refresh takes ~8 minutes on large datasets\n  - TODO: Add warehouse-level breakdown\n\nCHANGE LOG:\n  2024-11-20: Added days_of_supply calculation (Marcus)\n  2024-08-10: Fixed COGS join issue (Tyler)\n  2024-02-15: Initial creation (Tyler)\n================================================================================\n*/\n\nwith inventory_levels as (\n    select * from {{ ref('stg_inventory__inventory_levels') }}\n),\n\ninventory_transactions as (\n    select * from {{ ref('stg_inventory__inventory_transactions') }}\n),\n\n-- Reference date for all rolling windows: latest transaction date in the data\n-- (never CURRENT_DATE, so results are stable regardless of run date)\nreference as (\n    select max(transaction_date) as reference_date\n    from inventory_transactions\n),\n\n-- Aggregate inventory at product level\nproduct_inventory as (\n    select\n        il.variant_id as product_id,\n        sum(il.quantity_on_hand) as total_quantity_on_hand,\n        sum(il.quantity_available) as total_quantity_available,\n        sum(il.quantity_reserved) as total_quantity_reserved,\n        sum(il.quantity_on_hand * il.unit_cost) as total_inventory_value,\n        avg(il.unit_cost) as avg_unit_cost,\n        count(distinct il.warehouse_id) as warehouse_count,\n        count(case when il.inventory_status = 'OUT_OF_STOCK' then 1 end) as stockout_location_count,\n        count(distinct il.inventory_id) as total_locations,\n        max(il.last_received_at) as last_received_date,\n        max(il.last_picked_at) as last_picked_date\n    from inventory_levels il\n    group by il.variant_id\n),\n\n-- Calculate COGS from outbound transactions (365 days before reference date).\n-- PICK quantities are stored with inconsistent signs, so use the absolute\n-- picked quantity to obtain real units sold / demand (avoids near-zero or\n-- negative denominators that produced inf/nan metrics).\nproduct_cogs as (\n    select\n        it.variant_id as product_id,\n        sum(abs(it.quantity) * it.unit_cost) as cogs_365d,\n        sum(abs(it.quantity)) as units_sold_365d,\n        count(distinct it.transaction_date) as selling_days\n    from inventory_transactions it\n    cross join reference r\n    where it.transaction_type = 'PICK'\n      and it.transaction_date >= r.reference_date - interval '365' day\n      and it.transaction_date <= r.reference_date\n    group by it.variant_id\n),\n\n-- Calculate average inventory value (simplified - using current snapshot)\navg_inventory as (\n    select\n        il.variant_id as product_id,\n        avg(il.quantity_on_hand * il.unit_cost) as avg_inventory_value_365d\n    from inventory_levels il\n    group by il.variant_id\n),\n\n-- Calculate daily demand for days of supply\ndaily_demand as (\n    select\n        it.variant_id as product_id,\n        sum(abs(it.quantity)) / 365.0 as avg_daily_demand\n    from inventory_transactions it\n    cross join reference r\n    where it.transaction_type = 'PICK'\n      and it.transaction_date >= r.reference_date - interval '365' day\n      and it.transaction_date <= r.reference_date\n    group by it.variant_id\n),\n\n-- Combine all metrics (all source products kept; denominators guarded)\nproduct_metrics as (\n    select\n        pi.product_id,\n        cast(null as varchar) as product_name,\n        cast(null as varchar) as product_code,\n        cast(null as varchar) as category_id,\n        cast(null as varchar) as lifecycle_status,\n        cast(null as varchar) as abc_classification,\n\n        -- Inventory quantities\n        coalesce(pi.total_quantity_on_hand, 0) as total_quantity_on_hand,\n        coalesce(pi.total_quantity_available, 0) as total_quantity_available,\n        coalesce(pi.total_quantity_reserved, 0) as total_quantity_reserved,\n        coalesce(pi.total_inventory_value, 0) as total_inventory_value,\n        coalesce(pi.avg_unit_cost, 0) as avg_unit_cost,\n        coalesce(pi.warehouse_count, 0) as warehouse_count,\n\n        -- Sales metrics\n        coalesce(pc.cogs_365d, 0) as cogs_365d,\n        coalesce(pc.units_sold_365d, 0) as units_sold_365d,\n        coalesce(pc.selling_days, 0) as selling_days,\n\n        pc.cogs_365d / nullif(ai.avg_inventory_value_365d, 0) as turnover_ratio,\n\n        pi.total_inventory_value / nullif(pc.units_sold_365d, 0) as inventory_value_per_unit_sold,\n\n        -- Stockout metrics\n        coalesce(pi.stockout_location_count, 0) as stockout_location_count,\n        coalesce(pi.total_locations, 0) as total_locations,\n\n        100.0 * pi.stockout_location_count / nullif(pi.total_locations, 0) as stockout_rate,\n\n        pi.total_quantity_on_hand / nullif(dd.avg_daily_demand, 0) as days_of_supply,\n\n        -- Activity dates\n        pi.last_received_date,\n        pi.last_picked_date,\n\n        -- Days since activity (relative to reference date)\n        date_diff('day', pi.last_picked_date, r.reference_date) as days_since_last_pick,\n        date_diff('day', pi.last_received_date, r.reference_date) as days_since_last_receipt\n\n    from product_inventory pi\n    left join product_cogs pc on pi.product_id = pc.product_id\n    left join avg_inventory ai on pi.product_id = ai.product_id\n    left join daily_demand dd on pi.product_id = dd.product_id\n    cross join reference r\n    where pi.product_id is not null\n),\n\n-- Window metrics used for classification and velocity scoring\nmetrics_scored as (\n    select\n        pm.*,\n        percent_rank() over (order by pm.turnover_ratio) as turnover_percent_rank,\n        med.median_turnover_ratio\n    from product_metrics pm\n    cross join (\n        select median(turnover_ratio) as median_turnover_ratio\n        from product_metrics\n    ) med\n)\n\nselect\n    product_id,\n    product_name,\n    product_code,\n    category_id,\n    lifecycle_status,\n    abc_classification,\n    total_quantity_on_hand,\n    total_quantity_available,\n    total_quantity_reserved,\n    round(total_inventory_value, 2) as total_inventory_value,\n    round(avg_unit_cost, 2) as avg_unit_cost,\n    warehouse_count,\n    round(cogs_365d, 2) as cogs_365d,\n    units_sold_365d,\n    selling_days,\n    round(turnover_ratio, 4) as turnover_ratio,\n    round(inventory_value_per_unit_sold, 2) as inventory_value_per_unit_sold,\n    stockout_location_count,\n    total_locations,\n    round(stockout_rate, 2) as stockout_rate,\n    round(days_of_supply, 1) as days_of_supply,\n    last_received_date,\n    last_picked_date,\n    days_since_last_pick,\n    days_since_last_receipt,\n\n    -- Inventory health tier (waterfall: first match wins)\n    case\n        when turnover_percent_rank >= 0.90\n             and days_of_supply < 7\n             and units_sold_365d > 0\n            then 'critical'\n        when stockout_rate > 15\n             or (days_of_supply < 14 and units_sold_365d > 0)\n             or stockout_location_count > total_locations / 2.0\n            then 'at_risk'\n        when turnover_ratio > median_turnover_ratio\n             and stockout_rate < 5\n             and days_of_supply between 14 and 84\n            then 'healthy'\n        else 'overstock'\n    end as inventory_health_tier,\n\n    -- Velocity score (0-100): 40% turnover rank + 30% sell-through + 30% recency\n    round(\n        (\n            coalesce(turnover_percent_rank, 0) * 0.4\n            + coalesce(\n                units_sold_365d\n                / nullif(units_sold_365d + greatest(total_quantity_on_hand, 0), 0),\n                0\n              ) * 0.3\n            + (case\n                   when days_since_last_pick <= 7 then 1.0\n                   when days_since_last_pick <= 30 then 0.7\n                   when days_since_last_pick <= 90 then 0.4\n                   else 0.1\n               end) * 0.3\n        ) * 100\n    , 2) as velocity_score\nfrom metrics_scored\n",
+  "checks": [
+    {
+      "name": "dependency_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "dependency_target_model_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "final_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "target_model_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "component_1_model_compiles",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_2_no_inf_nan_values",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_3_row_count",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_4_tier_column_exists",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_5_velocity_score_exists",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_6_valid_tier_values",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_7_uses_percent_rank",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_8_distribution",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_9_critical_tier_logic",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_10_healthy_tier_logic",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_11_velocity_score_range",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_12_velocity_score_formula",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    }
+  ],
+  "verification": {
+    "passed": true,
+    "acceptance_policy": "dbt_build",
+    "build_required": true,
+    "target_materialization_success": true,
+    "dependency_build_success": true,
+    "original_tests_passed": true,
+    "reward": 1.0,
+    "grading_protocol": "component_reward_json",
+    "checks": [
+      {
+        "name": "dependency_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "dependency_target_model_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "final_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "target_model_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "component_1_model_compiles",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_2_no_inf_nan_values",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_3_row_count",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_4_tier_column_exists",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_5_velocity_score_exists",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_6_valid_tier_values",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_7_uses_percent_rank",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_8_distribution",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_9_critical_tier_logic",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_10_healthy_tier_logic",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_11_velocity_score_range",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_12_velocity_score_formula",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      }
+    ]
+  },
+  "final_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 29.562,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "rpt_product_inventory_metrics",
+    "target_model_ids": [
+      "model.retail_dw_master.rpt_product_inventory_metrics"
+    ],
+    "target_model_success": true
+  },
+  "raw_verifier": {
+    "task_id": "dbt-fix-inventory-model",
+    "mode": "native-path-adapted-upstream-verifier",
+    "official_harbor_result": false,
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-inventory-model/tests/test_outputs.py",
+    "original_sha256": "a5ce852b9507c04c4235ff8a0c6b5b37a24eda0693e19c2ad0e77355d09a5f37",
+    "adapted_sha256": "7d18289c578cdd8cde4d6bf97374bd182a0187ef135934072629ea8843e45304",
+    "path_translation_only": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "components_passed": [
+      "component_1_model_compiles",
+      "component_2_no_inf_nan_values",
+      "component_3_row_count",
+      "component_4_tier_column_exists",
+      "component_5_velocity_score_exists",
+      "component_6_valid_tier_values",
+      "component_7_uses_percent_rank",
+      "component_8_distribution",
+      "component_9_critical_tier_logic",
+      "component_10_healthy_tier_logic",
+      "component_11_velocity_score_range",
+      "component_12_velocity_score_formula"
+    ],
+    "components_failed": [],
+    "grading_protocol": "component_reward_json",
+    "stdout": "CMD: dbt run -s rpt_product_inventory_metrics\nSTDOUT: \u001b[0m06:56:51  Running with dbt=1.12.6\n\u001b[0m06:56:52  Registered adapter: duckdb=1.11.0\n\u001b[0m06:56:59  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.legacy\n\u001b[0m06:57:03  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:57:03  \n\u001b[0m06:57:03  Concurrency: 4 threads (target='dev')\n\u001b[0m06:57:03  \n\u001b[0m06:57:07  1 of 1 START sql view model main.rpt_product_inventory_metrics ................. [RUN]\n\u001b[0m06:57:07  1 of 1 OK created sql view model main.rpt_product_inventory_metrics ............ [\u001b[32mOK\u001b[0m in 0.34s]\n\u001b[0m06:57:07  \n\u001b[0m06:57:07  Finished running 1 view model in 0 hours 0 minutes and 3.52 seconds (3.52s).\n\u001b[0m06:57:10  \n\u001b[0m06:57:10  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:57:10  \n\u001b[0m06:57:10  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_tier_column_exists\nPASS: component_5_velocity_score_exists\nPASS: component_6_valid_tier_values\nPASS: component_7_uses_percent_rank\nPASS: component_8_distribution\nPASS: component_9_critical_tier_logic\nPASS: component_10_healthy_tier_logic\nPASS: component_11_velocity_score_range\nPASS: component_12_velocity_score_formula\n\nFinal Score: 1.0\n.\n1 passed in 43.13s\n",
+    "stderr": ""
+  },
+  "preparation": {
+    "task_id": "dbt-fix-inventory-model",
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "mode": "native-adapted-public-development-case",
+    "project_dir": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\project",
+    "database_path": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\database\\retail.duckdb",
+    "model": "models/marts/inventory/rpt_product_inventory_metrics.sql",
+    "initialized": true,
+    "task_type": "fix-model",
+    "initialization_selectors": [
+      "rpt_product_inventory_metrics"
+    ],
+    "bug_overlay": "environment/data/rpt_product_inventory_metrics.sql",
+    "base_build": "selected model and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0"
+    },
+    "path_translations": {
+      "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\project",
+      "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\database\\retail.duckdb"
+    },
+    "official_harbor_result": false,
+    "hidden_verifier_used_by_agent": false
+  },
+  "patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+  "applied_patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+  "source_integrity": {
+    "task_id": "dbt-fix-inventory-model",
+    "patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+    "build_report_sha256": "88859d5752abf909eaafabfe7a85dd97e1437cd3df4d635700290999f8c26123",
+    "verifier_report_sha256": "ff77242a1769fb69be20fdc4948766fbb2d1f8682d412d6a835986c65c41c36e",
+    "accepted": true,
+    "dependency_build_report_sha256": "fa34148f04016957cc35f3645297121f274bf57d4c2ca65b039a87de0a4fd0a9"
+  },
+  "input_snapshot": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "snapshot_lock": "$PROJECT\\external\\data-eng-bench-expanded\\snapshot-lock.json",
+    "snapshot_lock_sha256": "71a7ab40f08c89d01f401f5aa85663a050c3b017480c35dd46b9cf2037029bd0",
+    "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+    "database_bytes": 488910848
+  },
+  "input_files": [
+    {
+      "path": "tasks/dbt-fix-inventory-model/environment/Dockerfile",
+      "sha256": "d1c2a56480a4172d9c7441257f78254d435431b65e9d499b25a7a5f336f73364",
+      "bytes": 352
+    },
+    {
+      "path": "tasks/dbt-fix-inventory-model/environment/data/rpt_product_inventory_metrics.sql",
+      "sha256": "1bb5a50d75d7e0a6f0874f497a663d0c12b4cfe4fde0203ec72a281a52b2b013",
+      "bytes": 5717
+    },
+    {
+      "path": "tasks/dbt-fix-inventory-model/instruction.md",
+      "sha256": "35dc801b240758441b6c4806756767d1cf11221d509544af7c57c2743fd6aaa0",
+      "bytes": 4742
+    },
+    {
+      "path": "tasks/dbt-fix-inventory-model/task.toml",
+      "sha256": "3e7580224321a343786f9a3c41231152baee013fb2725564f0f1e5a628cde450",
+      "bytes": 1062
+    }
+  ],
+  "public_benchmark": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "official_harbor_result": false,
+    "setting": "native-adapted-public-development-case"
+  },
+  "source_artifacts": {
+    "report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026.json",
+    "patch": "$PROJECT\\examples\\public_fixes\\dbt-fix-inventory-model.sql",
+    "applied_sql": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\project\\models\\marts\\inventory\\rpt_product_inventory_metrics.sql",
+    "build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-inventory-model\\build.json",
+    "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-inventory-model\\inventory-evaluation.json",
+    "instruction": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\dbt-fix-inventory-model\\instruction.md",
+    "original_buggy_sql": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\dbt-fix-inventory-model\\environment\\data\\rpt_product_inventory_metrics.sql",
+    "dependency_build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-inventory-model\\dependency_build.json"
+  },
+  "final_answer": "成品补丁已通过实际目标构建和上游原 pytest。未调用模型；自主 Agent 历史成绩另行保留。",
+  "final_dependency_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 31.062,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.stg_inventory__inventory_levels",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.stg_inventory__inventory_transactions",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "rpt_product_inventory_metrics",
+    "target_model_ids": [
+      "model.retail_dw_master.rpt_product_inventory_metrics"
+    ],
+    "target_model_success": true
+  },
+  "acceptance_policy": "dbt_build"
+}

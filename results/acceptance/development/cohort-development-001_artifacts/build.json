@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "returncode": 0,
+  "stdout": "{\"success\": true, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 19.454,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.cohort_retention_matrix",
+      "status": "success",
+      "message": "OK"
+    }
+  ],
+  "process_success": true,
+  "target_model": "cohort_retention_matrix",
+  "target_model_ids": [
+    "model.retail_dw_master.cohort_retention_matrix"
+  ],
+  "target_model_success": true
+}

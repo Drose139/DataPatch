@@ -1,0 +1,35 @@
+{
+  "success": false,
+  "returncode": 1,
+  "stdout": "06:52:03  2 of 4 FAIL 177 not_null_int_sales__orders_enriched_order_id ................... [FAIL 177 in 0.18s]\n06:52:03  3 of 4 FAIL 1308 unique_int_sales__orders_enriched_order_id .................... [FAIL 1308 in 0.18s]\n06:52:06  [ERROR]: in test not_null_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:52:06    Got 177 results, configured to fail if != 0\n06:52:06  [ERROR]: in test unique_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:52:06    Got 1308 results, configured to fail if != 0\n{\"success\": false, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 31.266,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.int_sales__orders_enriched",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "test.retail_dw_master.not_null_int_sales__orders_enriched_order_id.b8d5c9c519",
+      "status": "fail",
+      "message": "Got 177 results, configured to fail if != 0"
+    },
+    {
+      "id": "test.retail_dw_master.unique_int_sales__orders_enriched_order_id.46af3607b7",
+      "status": "fail",
+      "message": "Got 1308 results, configured to fail if != 0"
+    },
+    {
+      "id": "test.retail_dw_master.relationships_fct_sales_order_id__order_id__ref_int_sales__orders_enriched_.6c7ba54305",
+      "status": "skipped",
+      "message": "None"
+    }
+  ],
+  "process_success": false,
+  "target_model": "int_sales__orders_enriched",
+  "target_model_ids": [
+    "model.retail_dw_master.int_sales__orders_enriched"
+  ],
+  "target_model_success": true
+}

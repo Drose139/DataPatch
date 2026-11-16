@@ -1,0 +1,10 @@
+retail_dw_master:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: 'D:/DataPatch-work/public-expanded-acceptance-20261026/daily/database/retail.duckdb'
+      schema: main
+      threads: 4
+      settings:
+        TimeZone: 'UTC'

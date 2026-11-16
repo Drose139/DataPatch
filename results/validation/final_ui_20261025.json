@@ -1,0 +1,149 @@
+{
+  "tested_at": "2026-10-25T13:27:28.627Z",
+  "source": "Live final FastAPI service; saved actual DeepSeek run and reports; no mock responses",
+  "base_url": "http://127.0.0.1:8000",
+  "run_id": "42fdb20f-0177-4f84-a529-f29b5b6803da",
+  "browser": "Microsoft Edge headless via Playwright",
+  "checks": [
+    {
+      "label": "saved_run_replay_and_evidence",
+      "status": "passed",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_status": "验证通过",
+      "business_checks": "5/5",
+      "row_counts": [
+        16,
+        21,
+        5
+      ],
+      "record_changes": [
+        5,
+        0,
+        3
+      ],
+      "contracts": [
+        "未通过",
+        "通过"
+      ],
+      "semantic_review": "approve",
+      "review_matches_final_patch": true
+    },
+    {
+      "label": "report_verdict_and_provenance",
+      "status": "passed",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "report": "final_acceptance_20261025",
+      "title": "DataPatch 实际模型评测 · final_acceptance_20261025",
+      "task_counts": [
+        {
+          "passed": 1,
+          "trials": 1,
+          "task_success_rate": "100.0%",
+          "final_build_success_rate": "100.0%"
+        },
+        {
+          "passed": 1,
+          "trials": 1,
+          "task_success_rate": "100.0%",
+          "final_build_success_rate": "100.0%"
+        }
+      ]
+    },
+    {
+      "label": "report_verdict_and_provenance",
+      "status": "passed",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "report": "public_native_v31_20261025",
+      "title": "R2b 任务口径与审阅修订：公开开发题同题重测（Windows native，非官方成绩） · public_native_v31_20261025",
+      "task_counts": [
+        {
+          "passed": 0,
+          "trials": 2,
+          "task_success_rate": "0.0%",
+          "final_build_success_rate": "100.0%"
+        }
+      ]
+    },
+    {
+      "label": "saved_run_replay_and_evidence",
+      "status": "passed",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_status": "验证通过",
+      "business_checks": "5/5",
+      "row_counts": [
+        16,
+        21,
+        5
+      ],
+      "record_changes": [
+        5,
+        0,
+        3
+      ],
+      "contracts": [
+        "未通过",
+        "通过"
+      ],
+      "semantic_review": "approve",
+      "review_matches_final_patch": true
+    },
+    {
+      "label": "report_verdict_and_provenance",
+      "status": "passed",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "report": "final_acceptance_20261025",
+      "title": "DataPatch 实际模型评测 · final_acceptance_20261025",
+      "task_counts": [
+        {
+          "passed": 1,
+          "trials": 1,
+          "task_success_rate": "100.0%",
+          "final_build_success_rate": "100.0%"
+        },
+        {
+          "passed": 1,
+          "trials": 1,
+          "task_success_rate": "100.0%",
+          "final_build_success_rate": "100.0%"
+        }
+      ]
+    },
+    {
+      "label": "report_verdict_and_provenance",
+      "status": "passed",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "report": "public_native_v31_20261025",
+      "title": "R2b 任务口径与审阅修订：公开开发题同题重测（Windows native，非官方成绩） · public_native_v31_20261025",
+      "task_counts": [
+        {
+          "passed": 0,
+          "trials": 2,
+          "task_success_rate": "0.0%",
+          "final_build_success_rate": "100.0%"
+        }
+      ]
+    }
+  ],
+  "javascript_errors": [],
+  "console_errors": [],
+  "non_get_api_requests": [],
+  "status": "passed"
+}

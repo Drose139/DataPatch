@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "returncode": 0,
+  "stdout": "{\"success\": true, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 31.062,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.stg_inventory__inventory_levels",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.stg_inventory__inventory_transactions",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+      "status": "success",
+      "message": "OK"
+    }
+  ],
+  "process_success": true,
+  "target_model": "rpt_product_inventory_metrics",
+  "target_model_ids": [
+    "model.retail_dw_master.rpt_product_inventory_metrics"
+  ],
+  "target_model_success": true
+}

@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "returncode": 0,
+  "stdout": "{\"success\": true, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 33.046,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.rpt_order_daily_summary",
+      "status": "success",
+      "message": "OK"
+    }
+  ],
+  "process_success": true,
+  "target_model": "rpt_order_daily_summary",
+  "target_model_ids": [
+    "model.retail_dw_master.rpt_order_daily_summary"
+  ],
+  "target_model_success": true
+}

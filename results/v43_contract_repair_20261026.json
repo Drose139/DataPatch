@@ -1,0 +1,292 @@
+{
+  "name": "v43_contract_repair_20261026",
+  "title": "data-eng-bench 公开开发任务：本地适配实际结果（非官方成绩）",
+  "created_at": "2026-10-26T06:17:41.839895+00:00",
+  "dataset": "snowflake-data-eng-bench/native-public-development-subset",
+  "provenance": "Snowflake-Labs/data-eng-bench 固定公开开发题；原始数据、dbt项目和任务说明，Windows native路径适配；非官方Docker/Harbor成绩，非未知保留集。",
+  "upstream_repository": "https://github.com/Snowflake-Labs/data-eng-bench",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "official_harbor_result": false,
+  "protocol": {
+    "task_ids": [
+      "dbt-fix-product-metrics"
+    ],
+    "planned_task_ids": [
+      "dbt-fix-product-metrics"
+    ],
+    "modes": [
+      "verified"
+    ],
+    "repeats": 1,
+    "model": "deepseek-flash",
+    "max_steps_by_task": {
+      "dbt-fix-product-metrics": 4
+    },
+    "budget_usd": 0.045,
+    "hidden_feedback_to_agent": false,
+    "source_sha256_by_trial": {
+      "product-guided-v43-20261026-verified": "b413c4c287007657d5f3d2b19ae329e23b4ac941ef0bb660283fab2ebebec2cf"
+    },
+    "agent_revision_by_trial": {
+      "product-guided-v43-20261026-verified": "v4.3-public-contract-repair"
+    },
+    "generation_settings_by_trial": {
+      "product-guided-v43-20261026-verified": {
+        "thinking_enabled": true,
+        "reasoning_effort": "high",
+        "max_output_tokens": 8192,
+        "input_usd_per_million_tokens": 0.3,
+        "output_usd_per_million_tokens": 1.2
+      }
+    },
+    "observed_model_versions_by_trial": {
+      "product-guided-v43-20261026-verified": [
+        "deepseek-flash"
+      ]
+    },
+    "cost_is_estimate": true,
+    "path_translation_only_in_verifier": true,
+    "base_build": "declared staging inputs and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0"
+    },
+    "initial_adapter_issue": "A direct Python invocation only defined test functions; it was not counted as a score. This report uses the subsequent actual pytest execution.",
+    "assistance": "project_public_business_contract",
+    "public_contracts_by_trial": {
+      "product-guided-v43-20261026-verified": {
+        "contract_origin": "project_configuration",
+        "hidden_tests": false,
+        "reference_solution": false,
+        "source_directory": "$PROJECT\\examples\\public_contracts\\product",
+        "files": [
+          {
+            "kind": "sql",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\product_coverage.sql",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\product_coverage.sql",
+            "source_sha256": "45b9dc16dd7aeef2d08ab86d5c99c6cc04f67cf14c8851727852440a46860189",
+            "installed_sha256": "45b9dc16dd7aeef2d08ab86d5c99c6cc04f67cf14c8851727852440a46860189"
+          },
+          {
+            "kind": "sql",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\sales_totals.sql",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\sales_totals.sql",
+            "source_sha256": "ba7b73443236cdd1b78b41a04c55e007b612d236d2279177522835de6ddf4534",
+            "installed_sha256": "ba7b73443236cdd1b78b41a04c55e007b612d236d2279177522835de6ddf4534"
+          },
+          {
+            "kind": "sql",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\weighted_price.sql",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\weighted_price.sql",
+            "source_sha256": "47bf782d96943609ca1232be937f9eededfa378d531dcb8e6e1691d6353f43c0",
+            "installed_sha256": "47bf782d96943609ca1232be937f9eededfa378d531dcb8e6e1691d6353f43c0"
+          },
+          {
+            "kind": "readme",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\README.md",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\README.md",
+            "source_sha256": "e9f3e44a96db7cecbcbf2bcb36567a52e19ee187323db3136d2482b85ea7fed8",
+            "installed_sha256": "e9f3e44a96db7cecbcbf2bcb36567a52e19ee187323db3136d2482b85ea7fed8"
+          }
+        ],
+        "original_instruction_path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\instruction.md",
+        "original_instruction_sha256": "4042079c4aa346ca28aece2224f1f274342fabbe4093f63235ae800ddedb0f92",
+        "instruction_path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\solver-instruction.md",
+        "instruction_sha256": "3afcc979d3424479ce8e1d4a230b0af798d4bf7d3a01e4b1bce6dee25f45114f"
+      }
+    },
+    "instruction_path_by_trial": {
+      "product-guided-v43-20261026-verified": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\solver-instruction.md"
+    },
+    "target_start_by_trial": {
+      "product-guided-v43-20261026-verified": {
+        "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\project\\models\\marts\\product\\fct_product_metrics.sql",
+        "exists": true,
+        "sha256": "5ebd30cffd9e8ac4adb9c38276e3d03732d867f4d56f793435b2722c3dc74222"
+      }
+    }
+  },
+  "limitations": [
+    "Only 1 public development trial(s) in a fixed task subset; no performance/generalization claim.",
+    "Native Windows/dbt versions and selected-ancestor initialization differ from the official Linux Docker environment.",
+    "Task success requires every upstream component to pass; partial component credit is descriptive only.",
+    "No React comparison was run; these are development executions rather than an ablation experiment.",
+    "Explicit project-provided public business contracts assisted this execution; this is not an unassisted original-ticket or official benchmark result. Target starting hashes identify any preloaded repair continuation.",
+    "At least one execution reached the model step limit; inspect per-trial action logs before claiming completed delivery."
+  ],
+  "status": "completed",
+  "planned_trials": 1,
+  "records": [
+    {
+      "run_id": "product-guided-v43-20261026-verified",
+      "task_id": "dbt-fix-product-metrics",
+      "mode": "verified",
+      "repeat": 0,
+      "status": "completed",
+      "metrics": {
+        "model_calls": 4,
+        "tool_calls": 7,
+        "prompt_tokens": 59094,
+        "completion_tokens": 3361,
+        "total_tokens": 62455,
+        "estimated_cost_usd": 0.021761,
+        "elapsed_seconds": 37.094
+      },
+      "model": "deepseek-flash",
+      "max_steps": 4,
+      "budget_usd": 0.045,
+      "generation_settings": {
+        "thinking_enabled": true,
+        "reasoning_effort": "high",
+        "max_output_tokens": 8192,
+        "input_usd_per_million_tokens": 0.3,
+        "output_usd_per_million_tokens": 1.2
+      },
+      "observed_model_versions": [
+        "deepseek-flash"
+      ],
+      "instruction_path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\solver-instruction.md",
+      "public_contracts": {
+        "contract_origin": "project_configuration",
+        "hidden_tests": false,
+        "reference_solution": false,
+        "source_directory": "$PROJECT\\examples\\public_contracts\\product",
+        "files": [
+          {
+            "kind": "sql",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\product_coverage.sql",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\product_coverage.sql",
+            "source_sha256": "45b9dc16dd7aeef2d08ab86d5c99c6cc04f67cf14c8851727852440a46860189",
+            "installed_sha256": "45b9dc16dd7aeef2d08ab86d5c99c6cc04f67cf14c8851727852440a46860189"
+          },
+          {
+            "kind": "sql",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\sales_totals.sql",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\sales_totals.sql",
+            "source_sha256": "ba7b73443236cdd1b78b41a04c55e007b612d236d2279177522835de6ddf4534",
+            "installed_sha256": "ba7b73443236cdd1b78b41a04c55e007b612d236d2279177522835de6ddf4534"
+          },
+          {
+            "kind": "sql",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\weighted_price.sql",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\weighted_price.sql",
+            "source_sha256": "47bf782d96943609ca1232be937f9eededfa378d531dcb8e6e1691d6353f43c0",
+            "installed_sha256": "47bf782d96943609ca1232be937f9eededfa378d531dcb8e6e1691d6353f43c0"
+          },
+          {
+            "kind": "readme",
+            "source": "$PROJECT\\examples\\public_contracts\\product\\README.md",
+            "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\checks\\README.md",
+            "source_sha256": "e9f3e44a96db7cecbcbf2bcb36567a52e19ee187323db3136d2482b85ea7fed8",
+            "installed_sha256": "e9f3e44a96db7cecbcbf2bcb36567a52e19ee187323db3136d2482b85ea7fed8"
+          }
+        ],
+        "original_instruction_path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\instruction.md",
+        "original_instruction_sha256": "4042079c4aa346ca28aece2224f1f274342fabbe4093f63235ae800ddedb0f92",
+        "instruction_path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\solver-instruction.md",
+        "instruction_sha256": "3afcc979d3424479ce8e1d4a230b0af798d4bf7d3a01e4b1bce6dee25f45114f"
+      },
+      "target_start": {
+        "path": "$PROJECT\\external\\native-cases\\product-guided-v43-20261026\\project\\models\\marts\\product\\fct_product_metrics.sql",
+        "exists": true,
+        "sha256": "5ebd30cffd9e8ac4adb9c38276e3d03732d867f4d56f793435b2722c3dc74222"
+      },
+      "source_sha256": "b413c4c287007657d5f3d2b19ae329e23b4ac941ef0bb660283fab2ebebec2cf",
+      "agent_revision": "v4.3-public-contract-repair",
+      "source_snapshot": "$PROJECT\\artifacts\\evaluations\\v43_contract_repair_20261026_source.zip",
+      "source_snapshot_sha256": "1b9da8883bcd6b1151f467dcd26016711f44ac9f90f200c368706d68ca15414c",
+      "stop_reason": "step_limit",
+      "final_answer": "执行达到步数上限；补丁是否正确请查看独立验收，不能据此视为完成交付。",
+      "candidate_review": null,
+      "execution_error": null,
+      "execution_error_type": null,
+      "verification": {
+        "passed": true,
+        "reward": 1.0,
+        "components_passed": [],
+        "components_failed": [],
+        "valid_pytest_execution": true,
+        "grading_protocol": "pytest_exit_status",
+        "pytest_counts": {
+          "passed": 11,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "final_build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 19.14,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.fct_product_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "fct_product_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.fct_product_metrics"
+        ],
+        "target_model_success": true
+      },
+      "agent_report": "$PROJECT\\external\\native-results\\product-guided-v43-20261026-verified.json",
+      "verifier_report": "$PROJECT\\external\\public-verifiers\\dbt-fix-product-metrics\\product-guided-v43-20261026-evaluation.json",
+      "raw_verifier": {
+        "task_id": "dbt-fix-product-metrics",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test_outputs.py",
+        "original_sha256": "722cb0cc17a43c2d77016b93bbba435bd1d0b8f2fb0414352ada9f5cab473da0",
+        "adapted_sha256": "9bd5f61ef5c4f1fe45121073e960f002a0d78d8bc7d40a42cdd45ee12b405e60",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [],
+        "components_failed": [],
+        "grading_protocol": "pytest_exit_status",
+        "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test.sh",
+        "scoring_source_sha256": "40ccf3e00f0e4a67193ac6da7453a781eb2ae53c9ee16d969cdece76d04e0cf3",
+        "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+        "pytest_counts": {
+          "passed": 11,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "pytest_returncode": 0,
+        "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 11 items\n\ntest_outputs_product_guided_v43_20261026.py::test_product_revenue_matches_order_lines PASSED [  9%]\ntest_outputs_product_guided_v43_20261026.py::test_data_quality_check_2 PASSED [ 18%]\ntest_outputs_product_guided_v43_20261026.py::test_units_sold_accuracy PASSED [ 27%]\ntest_outputs_product_guided_v43_20261026.py::test_order_count_accuracy PASSED [ 36%]\ntest_outputs_product_guided_v43_20261026.py::test_model_structure_preserved PASSED [ 45%]\ntest_outputs_product_guided_v43_20261026.py::test_variant_counts_match PASSED [ 54%]\ntest_outputs_product_guided_v43_20261026.py::test_no_negative_values PASSED [ 63%]\ntest_outputs_product_guided_v43_20261026.py::test_all_products_present PASSED [ 72%]\ntest_outputs_product_guided_v43_20261026.py::test_no_cancelled_orders_included PASSED [ 81%]\ntest_outputs_product_guided_v43_20261026.py::test_product_count_matches_source PASSED [ 90%]\ntest_outputs_product_guided_v43_20261026.py::test_avg_unit_price_formula PASSED [100%]\n\n============================= 11 passed in 1.19s ==============================\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "summary": [
+    {
+      "mode": "verified",
+      "trials": 1,
+      "passed": 1,
+      "task_success_rate": 1.0,
+      "wilson_95_interval": [
+        0.2065,
+        1
+      ],
+      "all_repeats_success_rate": null,
+      "min_repeats_per_task": 1,
+      "final_build_success_rate": 1.0,
+      "model_calls": 4,
+      "tool_calls": 7,
+      "total_tokens": 62455,
+      "estimated_cost_usd": 0.021761,
+      "mean_elapsed_seconds": 37.09,
+      "infrastructure_failures": 0
+    }
+  ]
+}

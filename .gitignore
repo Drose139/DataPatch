@@ -1,0 +1,15 @@
+.venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+artifacts/
+external/
+playwright-report/
+test-results/
+
+
+.DS_Store

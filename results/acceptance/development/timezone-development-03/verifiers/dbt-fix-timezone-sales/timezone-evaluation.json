@@ -1,0 +1,27 @@
+{
+  "task_id": "dbt-fix-timezone-sales",
+  "mode": "native-path-adapted-upstream-verifier",
+  "official_harbor_result": false,
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test_outputs.py",
+  "original_sha256": "3ec550c99ecf13bf299acffeb776db07c5d899c6f50322681da7e267dde40e6f",
+  "adapted_sha256": "b6d0587d69a7362a24563783169ac6f2b2cad57f957d747346e657bad48486bb",
+  "path_translation_only": true,
+  "returncode": 1,
+  "reward": 0.0,
+  "components_passed": [],
+  "components_failed": [],
+  "grading_protocol": "pytest_exit_status",
+  "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test.sh",
+  "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+  "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+  "pytest_counts": {
+    "passed": 9,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pytest_returncode": 1,
+  "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 10 items\n\ntest_outputs_timezone.py::test_int_sales_orders_enriched_exists PASSED   [ 10%]\ntest_outputs_timezone.py::test_int_sales_has_data PASSED                 [ 20%]\ntest_outputs_timezone.py::test_sap_timestamps_handling PASSED            [ 30%]\ntest_outputs_timezone.py::test_timezone_alignment_consistency PASSED     [ 40%]\ntest_outputs_timezone.py::test_daily_aggregation_consistency PASSED      [ 50%]\ntest_outputs_timezone.py::test_all_timestamps_have_time_component PASSED [ 60%]\ntest_outputs_timezone.py::test_source_system_distribution PASSED         [ 70%]\ntest_outputs_timezone.py::test_no_null_timestamps_for_completed_orders PASSED [ 80%]\ntest_outputs_timezone.py::test_timestamp_ordering FAILED                 [ 90%]\ntest_outputs_timezone.py::test_model_structure_preserved PASSED          [100%]\n\n================================== FAILURES ===================================\n___________________________ test_timestamp_ordering ___________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x0000023CCEB467B0>, 'duckdb')\n\n    def test_timestamp_ordering(db_conn):\n        \"\"\"Test that timestamp ordering makes sense (ordered < shipped < delivered)\"\"\"\n        conn, db_type = db_conn\n        shipped_before_ordered = int(execute_scalar(conn, db_type, \"\"\"\n            SELECT COUNT(*)\n            FROM main.int_sales__orders_enriched\n            WHERE ordered_at IS NOT NULL\n            AND shipped_at IS NOT NULL\n            AND shipped_at < ordered_at\n        \"\"\"))\n    \n>       assert shipped_before_ordered == 0, \"Found orders where shipped_at is before ordered_at\"\nE       AssertionError: Found orders where shipped_at is before ordered_at\nE       assert 39 == 0\n\ntest_outputs_timezone.py:420: AssertionError\n=========================== short test summary info ===========================\nFAILED test_outputs_timezone.py::test_timestamp_ordering - AssertionError: Fo...\n======================== 1 failed, 9 passed in 35.32s =========================\n",
+  "stderr": ""
+}

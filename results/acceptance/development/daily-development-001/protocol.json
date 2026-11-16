@@ -1,0 +1,9 @@
+{
+  "task_id": "dbt-fix-daily-revenue",
+  "patch_origin": "operator_reviewed",
+  "model_api_calls": 0,
+  "initial_sql_sha256": "a8a195885792fa69f1bf060207db0bff9f5510063bb6de9126e8aa3e17ffa943",
+  "patch_sha256": "f0ff4288c19eabab606c2e7642b53550a8c7cb591b010b42fef0358271c86f99",
+  "case": "D:\\DataPatch-work\\public-expanded-dev-20261026\\daily",
+  "source": "pinned public ticket and input models, no verifier inspected before candidate"
+}

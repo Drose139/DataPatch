@@ -1,0 +1,6 @@
+{
+  "patch_origin": "operator_reviewed",
+  "model_api_calls": 0,
+  "patch_sha256": "4d4523660113a878ae9b2c2a3c3ae021410f886a29e847180415206353f554bc",
+  "change": "Preserve separate settlement-date subgroups instead of using one MAX date for different payment settlements; initial 18/20 failure retained."
+}

@@ -1,0 +1,22 @@
+{
+  "patch_archive": "C:\\Users\\local-user\\Documents\\ChatGPT\\实习\\artifacts\\acceptance\\cohort-development-001_artifacts\\patch.sql",
+  "patch_sha256": "19cc6711c05c7c52acbc85964fd18dedbdd98cac6d0fa11adbcfd2774b2f70b8",
+  "public_input_counterexample": {
+    "signup_month": "2022-07",
+    "acquisition_source": "EMAIL",
+    "valid_order_timestamps": [
+      "2020-12-15 11:03:16.417090",
+      "2022-07-25 12:29:37.818929"
+    ],
+    "calendar_month_offsets": [
+      -19,
+      0
+    ],
+    "original_literal_rule_result": 1,
+    "original_verifier_asserted_value": 0
+  },
+  "development_revision_policy": "Classify early churn only when min and max valid-order calendar-month offsets both equal 0; this excludes pre-signup purchase history without hardcoding a cohort or customer.",
+  "verifier_source_read": false,
+  "reference_solution_read": false,
+  "model_api_calls": 0
+}

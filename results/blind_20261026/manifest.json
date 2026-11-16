@@ -1,0 +1,36 @@
+{
+  "created_at": "2026-10-26T09:41:11.141368+00:00",
+  "model_requests_after_trial": 0,
+  "files": {
+    "agent.json": "02b6d87d40923bcff5fcbd489ea93e774dd1571e23384ced1f94658a237056fe",
+    "candidate.patch": "00ad5c89b971dcf984cf0551ddfc8b8f8106b2d010c6834acfb4f7beef934b04",
+    "candidate.sql": "dee655e0e60cd4fc24e34a3f3c9cb68f104eb7ec59978d57830fa0dfd0e86302",
+    "clean_blind_generated_20261026.ps1": "341715089efa06e4889680e602d8d00d5ab3250418c456d9cb2389f4ff3759b1",
+    "events.jsonl": "a2b9a8e49b7d287b7821d4dd93ce49c9f2f82e23e9f811efb66bba01a44abacd",
+    "instruction.original.md": "c204458137fd1d6354fb80cefd7e6890aa4ab12df979195ece7c67476e5d434f",
+    "launch_blind_20261026.py": "fa2e4e04e8b33b0719488bcfb8a03ab35228be4a624aab2f85882042a6954116",
+    "prepare_blind_20261026.py": "65d451752c2c0171b1bb14ef55e8611a9150dfd53eb9eea8b44a6513fa6ce79f",
+    "run_public_pytest.py": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+    "snapshot-lock.json": "e170783bb9aab524affa1705be601803b72c1d0c7bd387373326acc8a461e6de",
+    "test.original.sh": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+    "test_outputs.adapted.py": "22937b96b774053e87e7abee27ff20f7e11e5e0b82c00da93a8b0318cb908ed7",
+    "test_outputs.original.py": "7484bacc8e740261d6ce89ce01e861b7be039f984c63856d1a4cfc6074bce5db",
+    "unseen_blind_initial_bug_run_20261026.json": "06782d4edc19558b6f2fb58df803b09601a5ae2b2887638c0b32db7d71a772ba",
+    "unseen_blind_run_20261026.json": "71546c563591b555b3f54a267a35e37719df28b8809c0878b8f800130d8ca5ab",
+    "unseen_blind_selection_20261026.json": "6d842c9b2611b68b1e4f88e0ea3534c85fadaedbcd02d77dad059d7583c9cca1",
+    "unseen_blind_setup_20261026.json": "aab6aaa469eefe7b2f026063af3098a269d3a0b4086bc02e544e380631078893",
+    "verifier-fetch.json": "72411b3c0ea027e3a8b18927b389cd45c39dd3c5406db7d5f71e13900f2d2c47",
+    "verifier.json": "97d5aea019e095e9a67185e65de77834616628e0797b1569467c0d19ae220819"
+  },
+  "source_archive_sha256": "2d84c99525b9924d1764e88bd234e78bc87422497859d8b11c33497ecc701419",
+  "core_source_sha256": "49f2808e761b575163949c57e09a3b29be75a1b7aca39134269336990dad4beb",
+  "publication": {
+    "original_file_sha256": {
+      "agent.json": "1e609d12c0047dc6fcef15866f2dcd5f5242deffa09429a4385623c34a2303bb",
+      "test_outputs.adapted.py": "10d39f516957285b8f0f382a4e4a31dd0b5bcfb7c6ce145152cd23ea55e176a3",
+      "unseen_blind_run_20261026.json": "04b60959e811019729862bd419b0165f1d1ad5c406774a9fc85be0e07e4dfbc3",
+      "unseen_blind_setup_20261026.json": "340ee50a4201aad723768c7a12d2650d7ac82a69c3fc878a353f946e6c77ed10",
+      "verifier.json": "988c3f3f055bce7bec28cf68bc386caaa440828369a1f6c1ce353ee9c7bb4ba0"
+    }
+  }
+}

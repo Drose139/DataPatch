@@ -1,0 +1,92 @@
+{
+  "created_at": "2026-10-26T07:21:12.762911+00:00",
+  "zero_model_api_calls": true,
+  "before_manifest": "$PROJECT\\artifacts\\audits\\public_8_replay_before_20261026.json",
+  "before_manifest_sha256": "30ff129310e215dae31c9bb9b236f2c76151a7965cd714144b096cc9917585ea",
+  "prior_run_count": 92,
+  "new_runs": [
+    {
+      "task_id": "dbt-fix-product-metrics",
+      "run_id": "6ff144c5-b82a-5e3d-9e25-42e6ae693586",
+      "report": "public_core_recheck_20261026",
+      "status": "completed",
+      "passed": true,
+      "unexecuted": false,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\6ff144c5-b82a-5e3d-9e25-42e6ae693586.json",
+      "sha256": "bf0472f6b5ee32976792a4945691b3ac6c86128d04643aa488b06df26a104890"
+    },
+    {
+      "task_id": "dbt-fix-refund-reconciliation",
+      "run_id": "827ddf78-f2d6-5689-b2ad-a082f56e4d2c",
+      "report": "public_core_recheck_20261026",
+      "status": "completed",
+      "passed": true,
+      "unexecuted": false,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\827ddf78-f2d6-5689-b2ad-a082f56e4d2c.json",
+      "sha256": "927afde060a40921d66031342cf98677898de39f3aec265a226e3ed4b4dfa961"
+    },
+    {
+      "task_id": "dbt-fix-division-by-zero",
+      "run_id": "80aab4be-d377-51b8-8a5c-7e1a0c35ae7f",
+      "report": "public_core_recheck_20261026",
+      "status": "completed",
+      "passed": true,
+      "unexecuted": false,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\80aab4be-d377-51b8-8a5c-7e1a0c35ae7f.json",
+      "sha256": "1e4abc1b83970a8d58f445c8b456eda3b2f82e386d1e2dec6dd75ac577865eda"
+    },
+    {
+      "task_id": "dbt-fix-inventory-model",
+      "run_id": "4dd55909-2cec-52ee-8c8b-8163506bd44b",
+      "report": "public_core_recheck_20261026",
+      "status": "completed",
+      "passed": true,
+      "unexecuted": false,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\4dd55909-2cec-52ee-8c8b-8163506bd44b.json",
+      "sha256": "2af0f92cfd312fc96f5bd1fa8c918794ebf76ea6c5426221e7bdcaff236bcdae"
+    },
+    {
+      "task_id": "dbt-fix-timezone-sales",
+      "run_id": "d047fc91-346c-5418-96d2-9043c023630d",
+      "report": "public_expanded_fixes_20261026",
+      "status": "completed",
+      "passed": true,
+      "unexecuted": false,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\d047fc91-346c-5418-96d2-9043c023630d.json",
+      "sha256": "ddf0f7650569454df4f17744f109556e6b3c3a9732472d939169bd7de2c5a6e1"
+    },
+    {
+      "task_id": "dbt-fix-daily-revenue",
+      "run_id": "6705c77a-f906-5ff9-b80b-c56fdc767ee1",
+      "report": "public_expanded_fixes_20261026",
+      "status": "completed",
+      "passed": true,
+      "unexecuted": false,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\6705c77a-f906-5ff9-b80b-c56fdc767ee1.json",
+      "sha256": "64af2558d662780d94469422adeaf8df60fb8c2d717038467ecc8e286e6b09cf"
+    },
+    {
+      "task_id": "dbt-exchange-rate-settlement-date",
+      "run_id": "ede74513-9382-5479-8d0d-0d78d0b95d69",
+      "report": "public_expanded_fixes_20261026",
+      "status": "completed",
+      "passed": true,
+      "unexecuted": false,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\ede74513-9382-5479-8d0d-0d78d0b95d69.json",
+      "sha256": "de86a21d3677905c4e08530432d7325b9d9e3757aea15a56881d21ee0e0c9be6"
+    },
+    {
+      "task_id": "cohort-retention-matrix",
+      "run_id": "2d3363e9-5017-5b05-a30c-be740f9ed2d7",
+      "report": "public_expanded_fixes_20261026",
+      "status": "failed",
+      "passed": false,
+      "unexecuted": true,
+      "recorded_file": "$PROJECT\\examples\\recorded_runs\\2d3363e9-5017-5b05-a30c-be740f9ed2d7.json",
+      "sha256": "7073de53fc5f6761370513f4eadb6689d479a945d3b8fab13ac2a3b52dd414fb"
+    }
+  ],
+  "after_run_count": 100,
+  "prior_runs_unchanged": true,
+  "changed_prior_runs": []
+}

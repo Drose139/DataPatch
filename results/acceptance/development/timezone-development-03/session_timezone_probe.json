@@ -1,0 +1,12 @@
+[
+  {
+    "zone": "Asia/Shanghai",
+    "shipped_before_ordered": 39,
+    "example_sap": "2020-02-05 19:42:34"
+  },
+  {
+    "zone": "UTC",
+    "shipped_before_ordered": 0,
+    "example_sap": "2020-02-05 11:42:34"
+  }
+]

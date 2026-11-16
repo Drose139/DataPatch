@@ -1,0 +1,32 @@
+{
+  "task_id": "dbt-fix-timezone-sales",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "mode": "native-adapted-public-development-case",
+  "project_dir": "D:\\DataPatch-work\\public-expanded-dev-20261026\\timezone\\project",
+  "database_path": "D:\\DataPatch-work\\public-expanded-dev-20261026\\timezone\\database\\retail.duckdb",
+  "model": "models/intermediate/sales/int_sales__orders_enriched.sql",
+  "initialized": true,
+  "task_type": "fix-model",
+  "initialization_selectors": [
+    "int_sales__orders_enriched"
+  ],
+  "bug_overlay": "environment/int_sales__orders_enriched.sql",
+  "base_build": "selected model and ancestors",
+  "runtime": {
+    "python": "3.12.2",
+    "platform": "win32",
+    "duckdb": "1.5.6",
+    "dbt-core": "1.12.6",
+    "dbt-duckdb": "1.11.0",
+    "duckdb_timezone": "UTC"
+  },
+  "path_translations": {
+    "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-expanded-dev-20261026\\timezone\\project",
+    "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-expanded-dev-20261026\\timezone\\database\\retail.duckdb"
+  },
+  "official_harbor_result": false,
+  "hidden_verifier_used_by_agent": false,
+  "runtime_settings": {
+    "duckdb_timezone": "UTC"
+  }
+}

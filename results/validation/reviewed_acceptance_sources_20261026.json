@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "snapshot_lock_sha256": "17dd78bf8e6a5d899aa204370c34eb7615f6cad829fcd29a484602d3dc746860",
+  "input_files_checked": 2517,
+  "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+  "records": [
+    {
+      "task_id": "dbt-fix-product-metrics",
+      "patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+      "build_report_sha256": "c88b730aaf78bed47281c79a055d2f392ded85462dccc78da6a7875cd964cace",
+      "verifier_report_sha256": "71d88730567a9c7198bf0ab70a8107f013a4d01ce3c3cbe6ac6bde99cf54083d",
+      "accepted": true
+    },
+    {
+      "task_id": "dbt-fix-refund-reconciliation",
+      "patch_sha256": "249115f1c66a82cc4ce674ddd173f4db229520ad6913e30a970d2b0d7c04c73b",
+      "build_report_sha256": "39d28125599b80526f4744c2d3097fb75463129b51c8dec33f92464098a4c814",
+      "verifier_report_sha256": "a2e8c0cbcb52a38d3d13cd6093bfbe8a0d1390afa58611f393ad85a049a361f7",
+      "accepted": true
+    },
+    {
+      "task_id": "dbt-fix-division-by-zero",
+      "patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+      "build_report_sha256": "67920df25c543501ac6675ab0dbc63e39a33edad45c88cf53e0e4f6d570043d0",
+      "verifier_report_sha256": "a3f809d222e24b5dc64d2e8e21667df77340870986487572b715c9e11f56bfc5",
+      "accepted": true
+    },
+    {
+      "task_id": "dbt-fix-inventory-model",
+      "patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+      "build_report_sha256": "22a1463363925eddc17e7f7a56fa792cf698a96732a06d40348df2d6e8e31b0f",
+      "verifier_report_sha256": "411bc5bb3d981d2e566daa3734dc03af8ec26d2254833869ccadc73faf2c65dc",
+      "accepted": true
+    }
+  ]
+}

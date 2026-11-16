@@ -1,0 +1,2 @@
+# Preserve the byte hashes of archived blind-trial evidence on every checkout.
+results/blind_20261026/** -text -whitespace

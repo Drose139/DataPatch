@@ -1,0 +1,28 @@
+{
+  "task_id": "dbt-fix-inventory-model",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "mode": "native-adapted-public-development-case",
+  "project_dir": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\project",
+  "database_path": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\database\\retail.duckdb",
+  "model": "models/marts/inventory/rpt_product_inventory_metrics.sql",
+  "initialized": true,
+  "task_type": "fix-model",
+  "initialization_selectors": [
+    "rpt_product_inventory_metrics"
+  ],
+  "bug_overlay": "environment/data/rpt_product_inventory_metrics.sql",
+  "base_build": "selected model and ancestors",
+  "runtime": {
+    "python": "3.12.2",
+    "platform": "win32",
+    "duckdb": "1.5.6",
+    "dbt-core": "1.12.6",
+    "dbt-duckdb": "1.11.0"
+  },
+  "path_translations": {
+    "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\project",
+    "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\database\\retail.duckdb"
+  },
+  "official_harbor_result": false,
+  "hidden_verifier_used_by_agent": false
+}

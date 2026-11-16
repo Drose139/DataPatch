@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datapatch-agent"
+version = "0.1.0"
+description = "Evidence-driven agent for repairing and verifying dbt data models"
+requires-python = ">=3.11"
+dependencies = ["duckdb>=1.2,<2", "dbt-core>=1.9,<2", "dbt-duckdb>=1.9,<2", "fastapi>=0.115,<1", "uvicorn>=0.30,<1", "httpx>=0.27,<1", "python-dotenv>=1,<2", "pydantic>=2,<3", "jinja2>=3,<4", "pyyaml>=6,<7"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "playwright>=1.48,<2"]
+
+[project.scripts]
+datapatch = "datapatch.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+datapatch = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

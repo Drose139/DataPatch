@@ -1,0 +1,27 @@
+{
+  "task_id": "dbt-fix-product-metrics",
+  "mode": "native-path-adapted-upstream-verifier",
+  "official_harbor_result": false,
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test_outputs.py",
+  "original_sha256": "722cb0cc17a43c2d77016b93bbba435bd1d0b8f2fb0414352ada9f5cab473da0",
+  "adapted_sha256": "6202284a4633471c2d698dfb11e88d9b46172d904bccfd62b1ff1ed528f966c4",
+  "path_translation_only": true,
+  "returncode": 0,
+  "reward": 1.0,
+  "components_passed": [],
+  "components_failed": [],
+  "grading_protocol": "pytest_exit_status",
+  "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test.sh",
+  "scoring_source_sha256": "40ccf3e00f0e4a67193ac6da7453a781eb2ae53c9ee16d969cdece76d04e0cf3",
+  "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+  "pytest_counts": {
+    "passed": 11,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pytest_returncode": 0,
+  "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 11 items\n\ntest_outputs_product.py::test_product_revenue_matches_order_lines PASSED [  9%]\ntest_outputs_product.py::test_data_quality_check_2 PASSED                [ 18%]\ntest_outputs_product.py::test_units_sold_accuracy PASSED                 [ 27%]\ntest_outputs_product.py::test_order_count_accuracy PASSED                [ 36%]\ntest_outputs_product.py::test_model_structure_preserved PASSED           [ 45%]\ntest_outputs_product.py::test_variant_counts_match PASSED                [ 54%]\ntest_outputs_product.py::test_no_negative_values PASSED                  [ 63%]\ntest_outputs_product.py::test_all_products_present PASSED                [ 72%]\ntest_outputs_product.py::test_no_cancelled_orders_included PASSED        [ 81%]\ntest_outputs_product.py::test_product_count_matches_source PASSED        [ 90%]\ntest_outputs_product.py::test_avg_unit_price_formula PASSED              [100%]\n\n============================= 11 passed in 1.08s ==============================\n",
+  "stderr": ""
+}

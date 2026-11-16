@@ -1,0 +1,1651 @@
+{
+  "type": "unseen_blind_task_selection",
+  "created_at": "2026-10-26T09:12:01.560210+00:00",
+  "repository": "Snowflake-Labs/data-eng-bench",
+  "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "metadata_source": {
+    "path": "external/unseen-blind-metadata-20261026/github-tree.curl.json",
+    "sha256": "19201e8ab8f7e24e3d789f77acc714436eeadfd843fa11631ed86f21644e3e33",
+    "url": "https://api.github.com/repos/Snowflake-Labs/data-eng-bench/git/trees/a3278ad102829a6084dde086244a0ef665a8011c?recursive=1",
+    "entries": 6452,
+    "truncated": false,
+    "complete_instruction_path_set_matches_prior_pinned_metadata": true
+  },
+  "eligibility_rules": [
+    "Exclude existing eight task IDs, all prior research directories and recalled instruction-read IDs, and all actual task IDs appearing in artifacts/results",
+    "Exactly one environment SQL overlay; its basename must match exactly one existing pinned DuckDB models/ SQL path",
+    "Ignore Dockerfile and docker-compose.yaml/yml as native adapter orchestration metadata; no extra business runtime input path",
+    "Pure Dockerfile COPY source/destination paths must establish that exact single DuckDB target",
+    "Freeze lexicographically sorted eligible IDs before exactly one Random(20261026).choice call"
+  ],
+  "pre_draw_metadata_classifier_correction": {
+    "random_draws_before_correction": 0,
+    "correction": "docker-compose.yaml/yml is orchestration metadata already unused by the native adapter, not an additional business data input. The initial overly strict metadata check produced no pool; no RNG call occurred and no instruction/SQL/test/solution body was read."
+  },
+  "excluded_ids": [
+    "cohort-retention-matrix",
+    "dbt-calculate-running-balance",
+    "dbt-exchange-rate-settlement-date",
+    "dbt-fix-category-revenue",
+    "dbt-fix-customer-snapshot-and-build-dimension",
+    "dbt-fix-daily-revenue",
+    "dbt-fix-division-by-zero",
+    "dbt-fix-inventory-balance",
+    "dbt-fix-inventory-model",
+    "dbt-fix-product-metrics",
+    "dbt-fix-refund-reconciliation",
+    "dbt-fix-timezone-sales",
+    "dbt-gl-reconciliation",
+    "dbt-incremental-late-arriving-sales"
+  ],
+  "exclusion_evidence": {
+    "cohort-retention-matrix": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/cohort-development-000-public-preview.json",
+            "artifacts/acceptance/cohort-development-001.json",
+            "artifacts/acceptance/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/__pycache__/test_outputs_cohort.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/cohort-evaluation.json",
+            "artifacts/acceptance/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/cohort-logs/reward.txt",
+            "artifacts/acceptance/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/test.original.sh",
+            "artifacts/acceptance/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/test_outputs.original.py",
+            "artifacts/acceptance/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/test_outputs_cohort.py",
+            "artifacts/acceptance/cohort-development-002.json",
+            "artifacts/acceptance/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/__pycache__/test_outputs_cohort.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/cohort-evaluation.json",
+            "artifacts/acceptance/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/cohort-logs/reward.txt",
+            "artifacts/acceptance/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/test.original.sh",
+            "artifacts/acceptance/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/test_outputs.original.py",
+            "artifacts/acceptance/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/test_outputs_cohort.py",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026.json",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026.md",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/build.json",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/dependency_build.json",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/__pycache__/test_outputs_cohort.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/cohort-evaluation.json",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/cohort-logs/reward.txt",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/run_public_pytest.py",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/test.original.sh",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/test_outputs.original.py",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/test_outputs_cohort.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026.md",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/build.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/dependency_build.json",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_8_unique_retry_protocol_20261026.json",
+            "artifacts/audits/public_cohort_retry_replay_import_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/protocols/public_cohort_infra_retry_20261026.json",
+            "artifacts/qa/public_eight_ui_20261026.json",
+            "artifacts/runs/2d3363e9-5017-5b05-a30c-be740f9ed2d7/run.json",
+            "artifacts/runs/daeb2927-c9f8-59bb-a3ac-07d3b4c7bf3a/run.json",
+            "results/acceptance/development/cohort-development-000-public-preview.json",
+            "results/acceptance/development/cohort-development-001.json",
+            "results/acceptance/development/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/cohort-evaluation.json",
+            "results/acceptance/development/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/cohort-logs/reward.txt",
+            "results/acceptance/development/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/test.original.sh",
+            "results/acceptance/development/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/test_outputs.original.py",
+            "results/acceptance/development/cohort-development-001_artifacts/verifiers/cohort-retention-matrix/test_outputs_cohort.py",
+            "results/acceptance/development/cohort-development-002.json",
+            "results/acceptance/development/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/cohort-evaluation.json",
+            "results/acceptance/development/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/cohort-logs/reward.txt",
+            "results/acceptance/development/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/test.original.sh",
+            "results/acceptance/development/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/test_outputs.original.py",
+            "results/acceptance/development/cohort-development-002_artifacts/verifiers/cohort-retention-matrix/test_outputs_cohort.py",
+            "results/acceptance/public_cohort_infra_retry_20261026.json",
+            "results/acceptance/public_cohort_infra_retry_20261026.md",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/build.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/dependency_build.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/preparation/base_build.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/preparation/deps.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/preparation/fix_data.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/preparation/package-lock.original.yml",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/preparation/packages-cache-receipt.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/preparation/packages.original.yml",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/runtime_config/instruction.md",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/runtime_config/native-case.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/runtime_config/package-lock.yml",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/runtime_config/packages.yml",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/cohort-retention-matrix/runtime_config/profiles.yml",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/cohort-evaluation.json",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/cohort-logs/reward.txt",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/run_public_pytest.py",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/test.original.sh",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/test_outputs.original.py",
+            "results/acceptance/public_cohort_infra_retry_20261026_artifacts/verifiers/cohort-retention-matrix/test_outputs_cohort.py",
+            "results/acceptance/public_expanded_fixes_20261026.json",
+            "results/acceptance/public_expanded_fixes_20261026.md",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/dependency_build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/preparation/deps.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/preparation/fix_data.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/runtime_config/package-lock.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/runtime_config/packages.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/cohort-retention-matrix/runtime_config/profiles.yml",
+            "results/validation/protocols/public_cohort_infra_retry_20261026.json",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_8_unique_retry_protocol_20261026.json",
+            "results/validation/public_cohort_retry_replay_import_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_ui_20261026.json",
+            "results/validation/public_eight_unique_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-calculate-running-balance": [
+      {
+        "reason": "prior_instruction_read_recalled_by_agent",
+        "evidence": "Earlier instruction research in this collaboration; conservatively excluded"
+      }
+    ],
+    "dbt-exchange-rate-settlement-date": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/fx-development-001/protocol.json",
+            "artifacts/acceptance/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/__pycache__/test_outputs_fx.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/fx-evaluation.json",
+            "artifacts/acceptance/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/fx-logs/reward.txt",
+            "artifacts/acceptance/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/test.original.sh",
+            "artifacts/acceptance/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/test_outputs.original.py",
+            "artifacts/acceptance/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/test_outputs_fx.py",
+            "artifacts/acceptance/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/__pycache__/test_outputs_fx.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/fx-evaluation.json",
+            "artifacts/acceptance/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/fx-logs/reward.txt",
+            "artifacts/acceptance/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/test.original.sh",
+            "artifacts/acceptance/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/test_outputs.original.py",
+            "artifacts/acceptance/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/test_outputs_fx.py",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026.md",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/build.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/dependency_build.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/__pycache__/test_outputs_fx.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/fx-evaluation.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/fx-logs/reward.txt",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/run_public_pytest.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/test.original.sh",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/test_outputs.original.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/test_outputs_fx.py",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/qa/public_eight_ui_20261026.json",
+            "artifacts/runs/ede74513-9382-5479-8d0d-0d78d0b95d69/run.json",
+            "results/acceptance/development/fx-development-001/protocol.json",
+            "results/acceptance/development/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/fx-evaluation.json",
+            "results/acceptance/development/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/fx-logs/reward.txt",
+            "results/acceptance/development/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/test.original.sh",
+            "results/acceptance/development/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/test_outputs.original.py",
+            "results/acceptance/development/fx-development-001/verifiers/dbt-exchange-rate-settlement-date/test_outputs_fx.py",
+            "results/acceptance/development/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/fx-evaluation.json",
+            "results/acceptance/development/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/fx-logs/reward.txt",
+            "results/acceptance/development/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/test.original.sh",
+            "results/acceptance/development/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/test_outputs.original.py",
+            "results/acceptance/development/fx-development-002/verifiers/dbt-exchange-rate-settlement-date/test_outputs_fx.py",
+            "results/acceptance/public_cohort_infra_retry_20261026.json",
+            "results/acceptance/public_expanded_fixes_20261026.json",
+            "results/acceptance/public_expanded_fixes_20261026.md",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/dependency_build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/preparation/base_build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/preparation/deps.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/preparation/fix_data.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/runtime_config/instruction.md",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/runtime_config/native-case.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/runtime_config/package-lock.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/runtime_config/packages.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-exchange-rate-settlement-date/runtime_config/profiles.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/fx-evaluation.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/fx-logs/reward.txt",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/run_public_pytest.py",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/test.original.sh",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/test_outputs.original.py",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-exchange-rate-settlement-date/test_outputs_fx.py",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_ui_20261026.json",
+            "results/validation/public_eight_unique_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-fix-category-revenue": [
+      {
+        "reason": "previously_researched_directory",
+        "evidence": "external/public-expansion-selection/dbt-fix-category-revenue"
+      }
+    ],
+    "dbt-fix-customer-snapshot-and-build-dimension": [
+      {
+        "reason": "prior_instruction_read_recalled_by_agent",
+        "evidence": "Earlier instruction research in this collaboration; conservatively excluded"
+      }
+    ],
+    "dbt-fix-daily-revenue": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/daily-development-001/protocol.json",
+            "artifacts/acceptance/daily-development-001/verifiers/dbt-fix-daily-revenue/__pycache__/test_outputs_daily.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/daily-development-001/verifiers/dbt-fix-daily-revenue/daily-evaluation.json",
+            "artifacts/acceptance/daily-development-001/verifiers/dbt-fix-daily-revenue/daily-logs/reward.txt",
+            "artifacts/acceptance/daily-development-001/verifiers/dbt-fix-daily-revenue/test.original.sh",
+            "artifacts/acceptance/daily-development-001/verifiers/dbt-fix-daily-revenue/test_outputs.original.py",
+            "artifacts/acceptance/daily-development-001/verifiers/dbt-fix-daily-revenue/test_outputs_daily.py",
+            "artifacts/acceptance/public_cohort_infra_retry_20261026.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026.md",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/build.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/dependency_build.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/__pycache__/test_outputs_daily.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/daily-evaluation.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/daily-logs/reward.txt",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/run_public_pytest.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/test.original.sh",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/test_outputs.original.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/test_outputs_daily.py",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/qa/public_eight_ui_20261026.json",
+            "artifacts/runs/6705c77a-f906-5ff9-b80b-c56fdc767ee1/run.json",
+            "results/acceptance/development/daily-development-001/protocol.json",
+            "results/acceptance/development/daily-development-001/verifiers/dbt-fix-daily-revenue/daily-evaluation.json",
+            "results/acceptance/development/daily-development-001/verifiers/dbt-fix-daily-revenue/daily-logs/reward.txt",
+            "results/acceptance/development/daily-development-001/verifiers/dbt-fix-daily-revenue/test.original.sh",
+            "results/acceptance/development/daily-development-001/verifiers/dbt-fix-daily-revenue/test_outputs.original.py",
+            "results/acceptance/development/daily-development-001/verifiers/dbt-fix-daily-revenue/test_outputs_daily.py",
+            "results/acceptance/public_cohort_infra_retry_20261026.json",
+            "results/acceptance/public_expanded_fixes_20261026.json",
+            "results/acceptance/public_expanded_fixes_20261026.md",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/dependency_build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/preparation/base_build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/preparation/deps.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/preparation/fix_data.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/runtime_config/instruction.md",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/runtime_config/native-case.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/runtime_config/package-lock.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/runtime_config/packages.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-daily-revenue/runtime_config/profiles.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/daily-evaluation.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/daily-logs/reward.txt",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/run_public_pytest.py",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/test.original.sh",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/test_outputs.original.py",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-daily-revenue/test_outputs_daily.py",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_ui_20261026.json",
+            "results/validation/public_eight_unique_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-fix-division-by-zero": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/public_core_recheck_20261026.json",
+            "artifacts/acceptance/public_core_recheck_20261026.md",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/dependency_build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/__pycache__/test_outputs_division.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-evaluation.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.txt",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs.original.py",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs_division.py",
+            "artifacts/acceptance/public_fixes_20261026.json",
+            "artifacts/acceptance/public_fixes_20261026.md",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/dbt-fix-division-by-zero/build.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/__pycache__/test_outputs_division.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-evaluation.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.txt",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs.original.py",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs_division.py",
+            "artifacts/audits/final_agent_reports_20261026.json",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_completion_agent_reports_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/audits/public_fixes_acceptance_20261026.json",
+            "artifacts/audits/v43_contract_repair_20261026.json",
+            "artifacts/costs/cost_audit_20261025.json",
+            "artifacts/costs/public_flash_incremental_20261025.json",
+            "artifacts/costs/public_flash_round1_20261025.json",
+            "artifacts/evaluations/public_native_subset_20261025.json",
+            "artifacts/evaluations/public_native_subset_20261025.md",
+            "artifacts/evaluations/public_native_v2_20261025.json",
+            "artifacts/evaluations/public_native_v2_20261025.md",
+            "artifacts/evaluations/public_native_v31_20261025.json",
+            "artifacts/evaluations/public_native_v31_20261025.md",
+            "artifacts/evaluations/public_native_v3_20261025.json",
+            "artifacts/evaluations/public_native_v3_20261025.md",
+            "artifacts/evaluations/public_native_v4_20261025.json",
+            "artifacts/evaluations/public_native_v4_20261025.md",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.json",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.md",
+            "artifacts/evaluations/v41_flash_round1_20261025.json",
+            "artifacts/evaluations/v41_flash_round1_20261025.md",
+            "artifacts/protocols/public_native_v4_20261025.json",
+            "artifacts/protocols/v41_flash_round1_20261025.json",
+            "artifacts/qa/public_flash_ui_20261025.json",
+            "artifacts/qa/public_reviewed_ui_20261026.json",
+            "artifacts/qa/reviewed_acceptance_sources_20261026.json",
+            "artifacts/runs/68a0d40b-3dd3-5527-bc14-8b873756ebdc/run.json",
+            "artifacts/runs/803bf4f5-2496-5853-8b84-f18c10dd4ef5/run.json",
+            "artifacts/runs/80aab4be-d377-51b8-8a5c-7e1a0c35ae7f/run.json",
+            "artifacts/runs/904f8b54-db52-5508-ae97-31b6355466aa/run.json",
+            "results/acceptance/public_core_recheck_20261026.json",
+            "results/acceptance/public_core_recheck_20261026.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/dependency_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/preparation/base_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/preparation/deps.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/preparation/fix_data.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/runtime_config/instruction.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/runtime_config/native-case.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/runtime_config/package-lock.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/runtime_config/packages.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-division-by-zero/runtime_config/profiles.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-evaluation.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.txt",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs.original.py",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs_division.py",
+            "results/acceptance/public_fixes_20261026.json",
+            "results/acceptance/public_fixes_20261026.md",
+            "results/acceptance/public_fixes_20261026_artifacts/dbt-fix-division-by-zero/build.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/__pycache__/test_outputs_division.cpython-312-pytest-9.1.1.pyc",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-evaluation.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/division-logs/reward.txt",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs.original.py",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-division-by-zero/test_outputs_division.py",
+            "results/public_native_subset_20261025.json",
+            "results/public_native_subset_20261025.md",
+            "results/public_native_v2_20261025.json",
+            "results/public_native_v2_20261025.md",
+            "results/public_native_v31_20261025.json",
+            "results/public_native_v31_20261025.md",
+            "results/public_native_v3_20261025.json",
+            "results/public_native_v3_20261025.md",
+            "results/public_native_v4_20261025.json",
+            "results/public_native_v4_20261025.md",
+            "results/public_native_v4_20261025_unamended.json",
+            "results/v41_flash_round1_20261025.json",
+            "results/v41_flash_round1_20261025.md",
+            "results/validation/costs/cost_audit_20261025.json",
+            "results/validation/costs/public_flash_incremental_20261025.json",
+            "results/validation/costs/public_flash_round1_20261025.json",
+            "results/validation/final_agent_reports_20261026.json",
+            "results/validation/protocols/public_native_v4_20261025.json",
+            "results/validation/protocols/v41_flash_round1_20261025.json",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_completion_agent_reports_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_unique_20261026.json",
+            "results/validation/public_fixes_acceptance_20261026.json",
+            "results/validation/public_flash_ui_20261025.json",
+            "results/validation/public_reviewed_ui_20261026.json",
+            "results/validation/reviewed_acceptance_sources_20261026.json",
+            "results/validation/v43_contract_repair_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-fix-inventory-balance": [
+      {
+        "reason": "previously_researched_directory",
+        "evidence": "external/public-expansion-selection/dbt-fix-inventory-balance"
+      }
+    ],
+    "dbt-fix-inventory-model": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "previously_researched_directory",
+        "evidence": "external/public-expansion-selection/dbt-fix-inventory-model"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/public_core_recheck_20261026.json",
+            "artifacts/acceptance/public_core_recheck_20261026.md",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/dependency_build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/__pycache__/test_outputs_inventory.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-evaluation.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.txt",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs.original.py",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs_inventory.py",
+            "artifacts/acceptance/public_fixes_20261026.json",
+            "artifacts/acceptance/public_fixes_20261026.md",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/dbt-fix-inventory-model/build.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/__pycache__/test_outputs_inventory.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-evaluation.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.txt",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs.original.py",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs_inventory.py",
+            "artifacts/audits/final_agent_reports_20261026.json",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_completion_agent_reports_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/audits/public_fixes_acceptance_20261026.json",
+            "artifacts/audits/v43_contract_repair_20261026.json",
+            "artifacts/costs/cost_audit_20261025.json",
+            "artifacts/costs/public_flash_incremental_20261025.json",
+            "artifacts/costs/public_flash_round1_20261025.json",
+            "artifacts/evaluations/public_native_v4_20261025.json",
+            "artifacts/evaluations/public_native_v4_20261025.md",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.json",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.md",
+            "artifacts/evaluations/v41_flash_round1_20261025.json",
+            "artifacts/evaluations/v41_flash_round1_20261025.md",
+            "artifacts/protocols/public_native_v4_20261025.json",
+            "artifacts/protocols/v41_flash_round1_20261025.json",
+            "artifacts/qa/public_flash_ui_20261025.json",
+            "artifacts/qa/public_reviewed_ui_20261026.json",
+            "artifacts/qa/reviewed_acceptance_sources_20261026.json",
+            "artifacts/runs/4dd55909-2cec-52ee-8c8b-8163506bd44b/run.json",
+            "artifacts/runs/5c5d03b4-d9e8-5051-ad30-f29b178645ef/run.json",
+            "artifacts/runs/d57cbb0e-4630-5f68-8b4f-972a482f8f54/run.json",
+            "artifacts/runs/f18fa4b5-d81c-5a74-9864-4d8502b9c5b3/run.json",
+            "results/acceptance/public_core_recheck_20261026.json",
+            "results/acceptance/public_core_recheck_20261026.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/dependency_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/preparation/base_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/preparation/deps.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/preparation/fix_data.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/runtime_config/instruction.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/runtime_config/native-case.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/runtime_config/package-lock.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/runtime_config/packages.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-inventory-model/runtime_config/profiles.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-evaluation.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.txt",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs.original.py",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs_inventory.py",
+            "results/acceptance/public_fixes_20261026.json",
+            "results/acceptance/public_fixes_20261026.md",
+            "results/acceptance/public_fixes_20261026_artifacts/dbt-fix-inventory-model/build.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/__pycache__/test_outputs_inventory.cpython-312-pytest-9.1.1.pyc",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-evaluation.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/inventory-logs/reward.txt",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs.original.py",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-inventory-model/test_outputs_inventory.py",
+            "results/public_native_v4_20261025.json",
+            "results/public_native_v4_20261025.md",
+            "results/public_native_v4_20261025_unamended.json",
+            "results/v41_flash_round1_20261025.json",
+            "results/v41_flash_round1_20261025.md",
+            "results/validation/costs/cost_audit_20261025.json",
+            "results/validation/costs/public_flash_incremental_20261025.json",
+            "results/validation/costs/public_flash_round1_20261025.json",
+            "results/validation/final_agent_reports_20261026.json",
+            "results/validation/protocols/public_native_v4_20261025.json",
+            "results/validation/protocols/v41_flash_round1_20261025.json",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_completion_agent_reports_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_unique_20261026.json",
+            "results/validation/public_fixes_acceptance_20261026.json",
+            "results/validation/public_flash_ui_20261025.json",
+            "results/validation/public_reviewed_ui_20261026.json",
+            "results/validation/reviewed_acceptance_sources_20261026.json",
+            "results/validation/v43_contract_repair_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-fix-product-metrics": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "previously_researched_directory",
+        "evidence": "external/public-expansion-selection/dbt-fix-product-metrics"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/public_core_recheck_20261026.json",
+            "artifacts/acceptance/public_core_recheck_20261026.md",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/dependency_build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/__pycache__/test_outputs_product.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-evaluation.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-logs/reward.txt",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/test.original.sh",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs.original.py",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs_product.py",
+            "artifacts/acceptance/public_fixes_20261026.json",
+            "artifacts/acceptance/public_fixes_20261026.md",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/dbt-fix-product-metrics/build.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/__pycache__/test_outputs_product.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-evaluation.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-logs/reward.txt",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/test.original.sh",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs.original.py",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs_product.py",
+            "artifacts/audits/final_agent_reports_20261026.json",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_completion_agent_reports_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/audits/public_fixes_acceptance_20261026.json",
+            "artifacts/audits/v43_contract_repair_20261026.json",
+            "artifacts/costs/cost_audit_20261025.json",
+            "artifacts/costs/public_flash_incremental_20261025.json",
+            "artifacts/costs/public_flash_round1_20261025.json",
+            "artifacts/costs/public_flash_round2_20261025.json",
+            "artifacts/evaluations/public_native_v4_20261025.json",
+            "artifacts/evaluations/public_native_v4_20261025.md",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.json",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.md",
+            "artifacts/evaluations/v41_flash_round1_20261025.json",
+            "artifacts/evaluations/v41_flash_round1_20261025.md",
+            "artifacts/evaluations/v41_flash_round2_20261025.json",
+            "artifacts/evaluations/v41_flash_round2_20261025.md",
+            "artifacts/evaluations/v42_relationship_product_20261026.json",
+            "artifacts/evaluations/v42_relationship_product_20261026.md",
+            "artifacts/evaluations/v43_contract_repair_20261026.json",
+            "artifacts/evaluations/v43_contract_repair_20261026.md",
+            "artifacts/protocols/public_native_v4_20261025.json",
+            "artifacts/protocols/v41_flash_round1_20261025.json",
+            "artifacts/protocols/v41_flash_round2_20261025.json",
+            "artifacts/protocols/v42_relationship_product_20261026.json",
+            "artifacts/protocols/v43_contract_repair_20261026.json",
+            "artifacts/qa/public_flash_round2_ui_20261025.json",
+            "artifacts/qa/public_flash_ui_20261025.json",
+            "artifacts/qa/public_reviewed_ui_20261026.json",
+            "artifacts/qa/reviewed_acceptance_sources_20261026.json",
+            "artifacts/runs/2b00dac4-a0de-574a-a9ee-c2874180b528/run.json",
+            "artifacts/runs/4e97d643-006b-595f-9806-3e80fd8e1d64/run.json",
+            "artifacts/runs/6ff144c5-b82a-5e3d-9e25-42e6ae693586/run.json",
+            "artifacts/runs/7350ad5a-c727-5de1-a2ac-1a97239dd583/run.json",
+            "artifacts/runs/aad0ccff-643b-5a6d-8e6b-91142711b46d/run.json",
+            "artifacts/runs/b0a054d0-8c8d-576f-9be4-f9445f271a3a/run.json",
+            "artifacts/runs/bfd1ddf6-c4a0-56bd-9435-4003b3f1d570/run.json",
+            "results/acceptance/public_core_recheck_20261026.json",
+            "results/acceptance/public_core_recheck_20261026.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/dependency_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/preparation/base_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/preparation/deps.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/preparation/fix_data.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/runtime_config/instruction.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/runtime_config/native-case.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/runtime_config/package-lock.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/runtime_config/packages.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-product-metrics/runtime_config/profiles.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-evaluation.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-logs/reward.txt",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/test.original.sh",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs.original.py",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs_product.py",
+            "results/acceptance/public_fixes_20261026.json",
+            "results/acceptance/public_fixes_20261026.md",
+            "results/acceptance/public_fixes_20261026_artifacts/dbt-fix-product-metrics/build.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/__pycache__/test_outputs_product.cpython-312-pytest-9.1.1.pyc",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-evaluation.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/product-logs/reward.txt",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/test.original.sh",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs.original.py",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-product-metrics/test_outputs_product.py",
+            "results/public_native_v4_20261025.json",
+            "results/public_native_v4_20261025.md",
+            "results/public_native_v4_20261025_unamended.json",
+            "results/v41_flash_round1_20261025.json",
+            "results/v41_flash_round1_20261025.md",
+            "results/v41_flash_round2_20261025.json",
+            "results/v41_flash_round2_20261025.md",
+            "results/v42_relationship_product_20261026.json",
+            "results/v42_relationship_product_20261026.md",
+            "results/v43_contract_repair_20261026.json",
+            "results/v43_contract_repair_20261026.md",
+            "results/validation/costs/cost_audit_20261025.json",
+            "results/validation/costs/public_flash_incremental_20261025.json",
+            "results/validation/costs/public_flash_round1_20261025.json",
+            "results/validation/costs/public_flash_round2_20261025.json",
+            "results/validation/final_agent_reports_20261026.json",
+            "results/validation/protocols/public_native_v4_20261025.json",
+            "results/validation/protocols/v41_flash_round1_20261025.json",
+            "results/validation/protocols/v41_flash_round2_20261025.json",
+            "results/validation/protocols/v42_relationship_product_20261026.json",
+            "results/validation/protocols/v43_contract_repair_20261026.json",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_completion_agent_reports_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_unique_20261026.json",
+            "results/validation/public_fixes_acceptance_20261026.json",
+            "results/validation/public_flash_round2_ui_20261025.json",
+            "results/validation/public_flash_ui_20261025.json",
+            "results/validation/public_reviewed_ui_20261026.json",
+            "results/validation/reviewed_acceptance_sources_20261026.json",
+            "results/validation/v43_contract_repair_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-fix-refund-reconciliation": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/public_core_recheck_20261026.json",
+            "artifacts/acceptance/public_core_recheck_20261026.md",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/dependency_build.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/__pycache__/test_outputs_refund.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-evaluation.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.json",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.txt",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs.original.py",
+            "artifacts/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs_refund.py",
+            "artifacts/acceptance/public_fixes_20261026.json",
+            "artifacts/acceptance/public_fixes_20261026.md",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/dbt-fix-refund-reconciliation/build.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/__pycache__/test_outputs_refund.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-evaluation.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.json",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.txt",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs.original.py",
+            "artifacts/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs_refund.py",
+            "artifacts/audits/final_agent_reports_20261026.json",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_completion_agent_reports_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/audits/public_fixes_acceptance_20261026.json",
+            "artifacts/audits/v43_contract_repair_20261026.json",
+            "artifacts/costs/cost_audit_20261025.json",
+            "artifacts/costs/public_flash_incremental_20261025.json",
+            "artifacts/costs/public_flash_round1_20261025.json",
+            "artifacts/evaluations/public_native_subset_20261025.json",
+            "artifacts/evaluations/public_native_subset_20261025.md",
+            "artifacts/evaluations/public_native_v2_20261025.json",
+            "artifacts/evaluations/public_native_v2_20261025.md",
+            "artifacts/evaluations/public_native_v31_20261025.json",
+            "artifacts/evaluations/public_native_v31_20261025.md",
+            "artifacts/evaluations/public_native_v3_20261025.json",
+            "artifacts/evaluations/public_native_v3_20261025.md",
+            "artifacts/evaluations/public_native_v4_20261025.json",
+            "artifacts/evaluations/public_native_v4_20261025.md",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.json",
+            "artifacts/evaluations/public_native_v4_20261025_unamended.md",
+            "artifacts/evaluations/v41_flash_round1_20261025.json",
+            "artifacts/evaluations/v41_flash_round1_20261025.md",
+            "artifacts/protocols/public_native_v4_20261025.json",
+            "artifacts/protocols/v41_flash_round1_20261025.json",
+            "artifacts/qa/public_flash_ui_20261025.json",
+            "artifacts/qa/public_reviewed_ui_20261026.json",
+            "artifacts/qa/reviewed_acceptance_sources_20261026.json",
+            "artifacts/runs/18f8a616-d9f0-5850-a49a-73ab4d271eae/run.json",
+            "artifacts/runs/397ce8ec-3312-5e07-94f6-7778a0e278b1/run.json",
+            "artifacts/runs/827ddf78-f2d6-5689-b2ad-a082f56e4d2c/run.json",
+            "artifacts/runs/b0f50ae7-e5f1-55c3-8cb7-4593afcdafeb/run.json",
+            "results/acceptance/public_core_recheck_20261026.json",
+            "results/acceptance/public_core_recheck_20261026.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/dependency_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/preparation/base_build.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/preparation/deps.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/preparation/fix_data.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/runtime_config/instruction.md",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/runtime_config/native-case.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/runtime_config/package-lock.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/runtime_config/packages.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/dbt-fix-refund-reconciliation/runtime_config/profiles.yml",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-evaluation.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.json",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.txt",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs.original.py",
+            "results/acceptance/public_core_recheck_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs_refund.py",
+            "results/acceptance/public_fixes_20261026.json",
+            "results/acceptance/public_fixes_20261026.md",
+            "results/acceptance/public_fixes_20261026_artifacts/dbt-fix-refund-reconciliation/build.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/__pycache__/test_outputs_refund.cpython-312-pytest-9.1.1.pyc",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-evaluation.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.json",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/refund-logs/reward.txt",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs.original.py",
+            "results/acceptance/public_fixes_20261026_artifacts/verifiers/dbt-fix-refund-reconciliation/test_outputs_refund.py",
+            "results/public_native_subset_20261025.json",
+            "results/public_native_subset_20261025.md",
+            "results/public_native_v2_20261025.json",
+            "results/public_native_v2_20261025.md",
+            "results/public_native_v31_20261025.json",
+            "results/public_native_v31_20261025.md",
+            "results/public_native_v3_20261025.json",
+            "results/public_native_v3_20261025.md",
+            "results/public_native_v4_20261025.json",
+            "results/public_native_v4_20261025.md",
+            "results/public_native_v4_20261025_unamended.json",
+            "results/v41_flash_round1_20261025.json",
+            "results/v41_flash_round1_20261025.md",
+            "results/validation/costs/cost_audit_20261025.json",
+            "results/validation/costs/public_flash_incremental_20261025.json",
+            "results/validation/costs/public_flash_round1_20261025.json",
+            "results/validation/final_agent_reports_20261026.json",
+            "results/validation/protocols/public_native_v4_20261025.json",
+            "results/validation/protocols/v41_flash_round1_20261025.json",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_completion_agent_reports_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_unique_20261026.json",
+            "results/validation/public_fixes_acceptance_20261026.json",
+            "results/validation/public_flash_ui_20261025.json",
+            "results/validation/public_reviewed_ui_20261026.json",
+            "results/validation/reviewed_acceptance_sources_20261026.json",
+            "results/validation/v43_contract_repair_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-fix-timezone-sales": [
+      {
+        "reason": "existing_eight_public_tasks",
+        "evidence": "external/data-eng-bench-expanded/snapshot-lock.json"
+      },
+      {
+        "reason": "task_id_previously_present_in_artifacts_or_results",
+        "evidence": {
+          "files": [
+            "artifacts/acceptance/public_cohort_infra_retry_20261026.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026.md",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/build.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/dependency_build.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/__pycache__/test_outputs_timezone.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/run_public_pytest.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "artifacts/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "artifacts/acceptance/timezone-development-01/acceptance.json",
+            "artifacts/acceptance/timezone-development-01/verifiers/dbt-fix-timezone-sales/__pycache__/test_outputs_timezone.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/timezone-development-01/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "artifacts/acceptance/timezone-development-01/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "artifacts/acceptance/timezone-development-01/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "artifacts/acceptance/timezone-development-01/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "artifacts/acceptance/timezone-development-01/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "artifacts/acceptance/timezone-development-02/acceptance.json",
+            "artifacts/acceptance/timezone-development-02/verifiers/dbt-fix-timezone-sales/__pycache__/test_outputs_timezone.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/timezone-development-02/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "artifacts/acceptance/timezone-development-02/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "artifacts/acceptance/timezone-development-02/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "artifacts/acceptance/timezone-development-02/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "artifacts/acceptance/timezone-development-02/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "artifacts/acceptance/timezone-development-03/acceptance.json",
+            "artifacts/acceptance/timezone-development-03/verifiers/dbt-fix-timezone-sales/__pycache__/test_outputs_timezone.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/timezone-development-03/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "artifacts/acceptance/timezone-development-03/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "artifacts/acceptance/timezone-development-03/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "artifacts/acceptance/timezone-development-03/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "artifacts/acceptance/timezone-development-03/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "artifacts/acceptance/timezone-development-04/after-native-case.json",
+            "artifacts/acceptance/timezone-development-04/before-native-case.json",
+            "artifacts/acceptance/timezone-development-04/failure.json",
+            "artifacts/acceptance/timezone-development-05/acceptance.json",
+            "artifacts/acceptance/timezone-development-05/verifiers/dbt-fix-timezone-sales/__pycache__/test_outputs_timezone.cpython-312-pytest-9.1.1.pyc",
+            "artifacts/acceptance/timezone-development-05/verifiers/dbt-fix-timezone-sales/run_public_pytest.py",
+            "artifacts/acceptance/timezone-development-05/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "artifacts/acceptance/timezone-development-05/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "artifacts/acceptance/timezone-development-05/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "artifacts/acceptance/timezone-development-05/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "artifacts/acceptance/timezone-development-05/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "artifacts/audits/public_8_replay_import_20261026.json",
+            "artifacts/audits/public_8_unique_20261026.json",
+            "artifacts/audits/public_eight_release_20261026.json",
+            "artifacts/audits/public_eight_unique_20261026.json",
+            "artifacts/audits/timezone_upstream_policy_20261026.json",
+            "artifacts/qa/public_eight_ui_20261026.json",
+            "artifacts/runs/d047fc91-346c-5418-96d2-9043c023630d/run.json",
+            "results/acceptance/development/timezone-development-01/acceptance.json",
+            "results/acceptance/development/timezone-development-01/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "results/acceptance/development/timezone-development-01/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "results/acceptance/development/timezone-development-01/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "results/acceptance/development/timezone-development-01/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "results/acceptance/development/timezone-development-01/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "results/acceptance/development/timezone-development-02/acceptance.json",
+            "results/acceptance/development/timezone-development-02/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "results/acceptance/development/timezone-development-02/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "results/acceptance/development/timezone-development-02/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "results/acceptance/development/timezone-development-02/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "results/acceptance/development/timezone-development-02/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "results/acceptance/development/timezone-development-03/acceptance.json",
+            "results/acceptance/development/timezone-development-03/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "results/acceptance/development/timezone-development-03/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "results/acceptance/development/timezone-development-03/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "results/acceptance/development/timezone-development-03/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "results/acceptance/development/timezone-development-03/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "results/acceptance/development/timezone-development-04/after-native-case.json",
+            "results/acceptance/development/timezone-development-04/before-native-case.json",
+            "results/acceptance/development/timezone-development-04/failure.json",
+            "results/acceptance/development/timezone-development-05/acceptance.json",
+            "results/acceptance/development/timezone-development-05/verifiers/dbt-fix-timezone-sales/run_public_pytest.py",
+            "results/acceptance/development/timezone-development-05/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "results/acceptance/development/timezone-development-05/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "results/acceptance/development/timezone-development-05/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "results/acceptance/development/timezone-development-05/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "results/acceptance/development/timezone-development-05/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "results/acceptance/public_cohort_infra_retry_20261026.json",
+            "results/acceptance/public_expanded_fixes_20261026.json",
+            "results/acceptance/public_expanded_fixes_20261026.md",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/dependency_build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/preparation/base_build.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/preparation/deps.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/preparation/fix_data.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/runtime_config/instruction.md",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/runtime_config/native-case.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/runtime_config/package-lock.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/runtime_config/packages.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/dbt-fix-timezone-sales/runtime_config/profiles.yml",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/run_public_pytest.py",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/test.original.sh",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/test_outputs.original.py",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/test_outputs_timezone.py",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/timezone-evaluation.json",
+            "results/acceptance/public_expanded_fixes_20261026_artifacts/verifiers/dbt-fix-timezone-sales/timezone-logs/reward.txt",
+            "results/validation/public_8_replay_import_20261026.json",
+            "results/validation/public_8_unique_20261026.json",
+            "results/validation/public_eight_release_20261026.json",
+            "results/validation/public_eight_ui_20261026.json",
+            "results/validation/public_eight_unique_20261026.json",
+            "results/validation/timezone_upstream_policy_20261026.json"
+          ]
+        }
+      }
+    ],
+    "dbt-gl-reconciliation": [
+      {
+        "reason": "prior_instruction_read_recalled_by_agent",
+        "evidence": "Earlier instruction research in this collaboration; conservatively excluded"
+      }
+    ],
+    "dbt-incremental-late-arriving-sales": [
+      {
+        "reason": "prior_instruction_read_recalled_by_agent",
+        "evidence": "Earlier instruction research in this collaboration; conservatively excluded"
+      }
+    ]
+  },
+  "artifact_result_metadata_scan": {
+    "text_files_scanned": 1350,
+    "only_task_ID_tokens_and_file_paths_exposed": true,
+    "instruction_md_skipped": true,
+    "test_assertion_and_solution_files_not_read": true
+  },
+  "eligible_ids": [
+    "dbt-carrier-delivery-performance",
+    "dbt-fix-customer-ltv"
+  ],
+  "candidate_order": "Python lexicographic sorted task_id",
+  "seed": 20261026,
+  "algorithm": "selected = random.Random(20261026).choice(sorted(eligible_ids))",
+  "draw_count": 1,
+  "selected_id": "dbt-carrier-delivery-performance",
+  "selected_index": 0,
+  "overlay_path": "tasks/dbt-carrier-delivery-performance/environment/rpt_carrier_performance.sql",
+  "target_path": "models/marts/sales/rpt_carrier_performance.sql",
+  "selected_metadata": {
+    "task_id": "dbt-carrier-delivery-performance",
+    "environment_sql_paths": [
+      "tasks/dbt-carrier-delivery-performance/environment/rpt_carrier_performance.sql"
+    ],
+    "matching_existing_DuckDB_models": [
+      "models/marts/sales/rpt_carrier_performance.sql"
+    ],
+    "ignored_orchestration_paths": [
+      "tasks/dbt-carrier-delivery-performance/environment/docker-compose.yaml"
+    ],
+    "eligibility": "eligible",
+    "overlay_path": "tasks/dbt-carrier-delivery-performance/environment/rpt_carrier_performance.sql",
+    "target_path": "models/marts/sales/rpt_carrier_performance.sql",
+    "Dockerfile_sha256": "16deb98a50912ab9afa31c6fd5fb35009273a320175973638871bf266f4516cd",
+    "COPY_paths_only": [
+      {
+        "source": "rpt_carrier_performance.sql",
+        "destination": "/app/dbt_models_duckdb/models/marts/sales/rpt_carrier_performance.sql"
+      },
+      {
+        "source": "rpt_carrier_performance.sql",
+        "destination": "/app/dbt_models_snowflake/models/marts/sales/rpt_carrier_performance.sql"
+      }
+    ]
+  },
+  "all_task_metadata_decisions": [
+    {
+      "task_id": "cohort-retention-matrix",
+      "environment_sql_paths": [],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-abc-classification",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-basket-composition-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-calculate-running-balance",
+      "environment_sql_paths": [],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-campaign-performance",
+      "environment_sql_paths": [
+        "tasks/dbt-campaign-performance/environment/data/create_marketing_tables.sql",
+        "tasks/dbt-campaign-performance/environment/data/stg_marketing__campaigns.sql",
+        "tasks/dbt-campaign-performance/environment/data/stg_marketing__email_events.sql"
+      ],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-campaign-roi-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-carrier-delivery-performance",
+      "environment_sql_paths": [
+        "tasks/dbt-carrier-delivery-performance/environment/rpt_carrier_performance.sql"
+      ],
+      "matching_existing_DuckDB_models": [
+        "models/marts/sales/rpt_carrier_performance.sql"
+      ],
+      "ignored_orchestration_paths": [
+        "tasks/dbt-carrier-delivery-performance/environment/docker-compose.yaml"
+      ],
+      "eligibility": "eligible",
+      "overlay_path": "tasks/dbt-carrier-delivery-performance/environment/rpt_carrier_performance.sql",
+      "target_path": "models/marts/sales/rpt_carrier_performance.sql",
+      "Dockerfile_sha256": "16deb98a50912ab9afa31c6fd5fb35009273a320175973638871bf266f4516cd",
+      "COPY_paths_only": [
+        {
+          "source": "rpt_carrier_performance.sql",
+          "destination": "/app/dbt_models_duckdb/models/marts/sales/rpt_carrier_performance.sql"
+        },
+        {
+          "source": "rpt_carrier_performance.sql",
+          "destination": "/app/dbt_models_snowflake/models/marts/sales/rpt_carrier_performance.sql"
+        }
+      ]
+    },
+    {
+      "task_id": "dbt-cart-abandonment-recovery",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-channel-attribution-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-consolidate",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-coupon-effectiveness",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-acquisition-channel-performance",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-churn-cohorts",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-churn-early-warning",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-cltv-forecasting",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-cohort-retention",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-cross-sell-insights",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-geographic",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-lifecycle-journey",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-lifetime-value",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-ltv-fix",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-order-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-retention-risk",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-customer-risk-scoring",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-daily-order-summary",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-dq-macro-enforcement",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-email-campaign-tracker",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-exchange-rate-settlement-date",
+      "environment_sql_paths": [],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-cac-payback-waterfall",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-category-revenue",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-category-revenue/environment/rpt_category_performance.sql"
+      ],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-customer-churn",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-customer-ltv",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-customer-ltv/environment/dim_customers.sql"
+      ],
+      "matching_existing_DuckDB_models": [
+        "models/marts/core/dim_customers.sql"
+      ],
+      "ignored_orchestration_paths": [
+        "tasks/dbt-fix-customer-ltv/environment/docker-compose.yaml"
+      ],
+      "eligibility": "eligible",
+      "overlay_path": "tasks/dbt-fix-customer-ltv/environment/dim_customers.sql",
+      "target_path": "models/marts/core/dim_customers.sql",
+      "Dockerfile_sha256": "6c3c260370dc9e1ca3900b437f7b9175c9c360a82d12f39373ded009d585723c",
+      "COPY_paths_only": [
+        {
+          "source": "dim_customers.sql",
+          "destination": "/app/dbt_models_duckdb/models/marts/core/dim_customers.sql"
+        },
+        {
+          "source": "dim_customers.sql",
+          "destination": "/app/dbt_models_snowflake/models/marts/core/dim_customers.sql"
+        }
+      ]
+    },
+    {
+      "task_id": "dbt-fix-customer-snapshot-and-build-dimension",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-customer-snapshot-and-build-dimension/environment/data/customer_snapshot.sql"
+      ],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-daily-cohorts",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-daily-revenue",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-daily-revenue/environment/rpt_order_daily_summary.sql"
+      ],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-division-by-zero",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-division-by-zero/environment/data/rpt_customer_metrics.sql"
+      ],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-email-attribution",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-inventory-balance",
+      "environment_sql_paths": [],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-inventory-model",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-inventory-model/environment/data/rpt_product_inventory_metrics.sql"
+      ],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-marketing-attribution",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-multi-touch-attribution",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-paid-search-attribution",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-product-metrics",
+      "environment_sql_paths": [],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-refund-reconciliation",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-refund-reconciliation/environment/data/rpt_return_reconciliation.sql"
+      ],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fix-repeat-purchase-cohort-revenue",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fix-timezone-sales",
+      "environment_sql_paths": [
+        "tasks/dbt-fix-timezone-sales/environment/int_sales__orders_enriched.sql"
+      ],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-fraud-detection-model",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-fulfillment-sla",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-gl-reconciliation",
+      "environment_sql_paths": [],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-harbor-marketing-mix-model",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-harbor-product-affinity",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-harbor-warehouse-capacity",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-hr-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-incremental-late-arriving-sales",
+      "environment_sql_paths": [],
+      "eligibility": "excluded_previous_exposure"
+    },
+    {
+      "task_id": "dbt-inventory-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-inventory-stockout-risk",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-inventory-turnover-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-loyalty-points-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-monthly-channel-revenue",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-multi-warehouse-stock-rebalance",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-multicurrency-lifo",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-order-fulfillment-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-order-fulfillment-metrics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-order-interval-metrics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-order-reconciliation",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-payment-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-payment-fraud-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-price-elasticity",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-product-affinity",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-product-category-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-product-performance-metrics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-product-return-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-product-return-rate-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-product-sales-velocity",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-receivables-aging-buckets",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-retail-task-01-channel-revenue",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-retail-task-04-market-roi",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-retail-task-07-cart-recovery",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-retail-task-10-trust-risk",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-rfm-customer-segmentation",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-rfm-customer-segmentation-2",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-rfm-customer-tiering",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-sales-funnel-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-session-attribution",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-supplier-payment-optimization",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-supplier-scorecard",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-test-orders-filter",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-three-way-matching",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-warehouse-fulfillment-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-web-session-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "dbt-weekly-sales-growth",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "deferred-revenue-recognition",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "fifo-inventory-cogs",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "late-arriving-orders-reconciliation",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "marketing-campaigns-harbor",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "payment-risk-scoring",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "pos-operations",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "promotional-lift-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "shipping-fulfillment-quality-scoring",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "tier-migration-analysis",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "time-decay-attribution-model",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "web-session-quality-scoring",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    },
+    {
+      "task_id": "workforce-analytics",
+      "environment_sql_paths": [],
+      "eligibility": "ineligible",
+      "reason": "requires_exactly_one_environment_SQL_overlay"
+    }
+  ],
+  "unknown_checks": [
+    "SQL compilation and hidden dependencies unknown: no SQL body read",
+    "Business requirements, difficulty and original verification unknown: no candidate instruction/test body read",
+    "Metadata eligibility does not prove the task initializes or is solvable within the fixed model budget"
+  ],
+  "replacement_rule": "No redraw/substitution after instruction access, initialization or result. Any incompatibility/infrastructure/model failure stays with this selected task.",
+  "candidate_instruction_bodies_read": false,
+  "candidate_SQL_bodies_read": false,
+  "candidate_test_assertions_read": false,
+  "reference_solutions_read": false,
+  "no_model_API_calls": true
+}

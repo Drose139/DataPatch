@@ -1,0 +1,44 @@
+{
+  "task_id": "dbt-exchange-rate-settlement-date",
+  "mode": "native-path-adapted-upstream-verifier",
+  "official_harbor_result": false,
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-exchange-rate-settlement-date/tests/test_outputs.py",
+  "original_sha256": "73db42fa2ce386df9e9b505de609c9f8741299ec2845f1897c8be5c9f22848ba",
+  "adapted_sha256": "4a3014d8c7af3c3445e48645c065138d9cb03d620d8051f5271747f560942cd6",
+  "path_translation_only": true,
+  "returncode": 0,
+  "reward": 1.0,
+  "components_passed": [],
+  "components_failed": [],
+  "grading_protocol": "pytest_exit_status",
+  "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-exchange-rate-settlement-date/tests/test.sh",
+  "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+  "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+  "pytest_counts": {
+    "passed": 20,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pytest_returncode": 0,
+  "runtime_settings": {
+    "duckdb_timezone": "UTC"
+  },
+  "runtime_launcher": {
+    "source_path": "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\integrations\\run_public_pytest.py",
+    "archive_path": "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-exchange-rate-settlement-date\\run_public_pytest.py",
+    "sha256": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+    "scope": "Declared DuckDB connection session setting; pytest assertions and exit status unchanged"
+  },
+  "command": [
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\python.exe",
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-exchange-rate-settlement-date\\run_public_pytest.py",
+    "--duckdb-timezone",
+    "UTC",
+    "-v",
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-exchange-rate-settlement-date\\test_outputs_fx.py"
+  ],
+  "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 20 items\n\ntest_outputs_fx.py::TestStructure::test_columns_exist PASSED             [  5%]\ntest_outputs_fx.py::TestStructure::test_settlement_date_not_null PASSED  [ 10%]\ntest_outputs_fx.py::TestStructure::test_some_rows_have_different_settlement_date PASSED [ 15%]\ntest_outputs_fx.py::TestStructure::test_grain_matches_expected_keys PASSED [ 20%]\ntest_outputs_fx.py::TestFxRates::test_usd_identity PASSED                [ 25%]\ntest_outputs_fx.py::TestFxRates::test_fx_rate_matches_dim PASSED         [ 30%]\ntest_outputs_fx.py::TestFxRates::test_fx_rate_not_null PASSED            [ 35%]\ntest_outputs_fx.py::TestFxRates::test_fx_rate_fallback_for_missing_currencies PASSED [ 40%]\ntest_outputs_fx.py::TestFxRates::test_usd_fields_rounded PASSED          [ 45%]\ntest_outputs_fx.py::TestFxRates::test_non_usd_rates_not_identity_when_rate_exists PASSED [ 50%]\ntest_outputs_fx.py::TestFxRates::test_fx_rate_matches_dim_for_all_rows PASSED [ 55%]\ntest_outputs_fx.py::TestFxRates::test_usd_fx_rate_is_identity PASSED     [ 60%]\ntest_outputs_fx.py::TestFxConversion::test_usd_totals_match_expected PASSED [ 65%]\ntest_outputs_fx.py::TestFxConversion::test_uses_settlement_date_rates PASSED [ 70%]\ntest_outputs_fx.py::TestFxConversion::test_all_rows_match_expected_settlement_fx PASSED [ 75%]\ntest_outputs_fx.py::TestFxConversion::test_settlement_fx_differs_from_order_fx_for_some_groups PASSED [ 80%]\ntest_outputs_fx.py::TestFxConversion::test_fx_rate_uses_settlement_date_when_rates_differ PASSED [ 85%]\ntest_outputs_fx.py::TestFxConversion::test_fx_rate_not_equal_order_rate_when_rates_differ PASSED [ 90%]\ntest_outputs_fx.py::TestFxConversion::test_usd_metrics_follow_fx_rate PASSED [ 95%]\ntest_outputs_fx.py::TestSettlementDateFallback::test_no_payment_orders_use_order_date PASSED [100%]\n\n======================== 20 passed in 69.81s (0:01:09) ========================\n",
+  "stderr": ""
+}

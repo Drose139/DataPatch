@@ -1,0 +1,109 @@
+{
+  "browser": "Microsoft Edge via Playwright channel=msedge, headless",
+  "get_only": true,
+  "requests": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/static/style.css"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/static/app.js"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/config"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/tasks"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/runs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/tasks/revenue_fanout_dev"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/runs"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/runs/2b00dac4-a0de-574a-a9ee-c2874180b528"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:8000/api/runs/b0a054d0-8c8d-576f-9be4-f9445f271a3a"
+    }
+  ],
+  "blocked_non_get": [],
+  "page_errors": [],
+  "replays": {
+    "v42": {
+      "run_id": "2b00dac4-a0de-574a-a9ee-c2874180b528",
+      "label": "已记录真实运行回放",
+      "status": "验证未通过",
+      "metrics_cost_tooltip": "输入 201413 / 输出 13197 · 预估 $0.0763",
+      "metrics": {
+        "model_calls": 12,
+        "tool_calls": 16,
+        "prompt_tokens": 201413,
+        "completion_tokens": 13197,
+        "total_tokens": 214610,
+        "estimated_cost_usd": 0.07626,
+        "delivery_stage_entries": 1,
+        "review_calls": 1,
+        "output_limit_hits": 1,
+        "elapsed_seconds": 149.312
+      },
+      "stop_reason": "step_limit",
+      "pytest_counts": {
+        "passed": 7,
+        "failed": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "model": "deepseek-flash",
+      "saved_diff_sha256": "c150fc21d5f1ad2c033aa6a4e60d977b9e330cca96123edb039c6995bddb6e54",
+      "diff_matches_actual_patch": true,
+      "rendered_diff_line_count": 95,
+      "check_text": "✓\nfinal_build_success\n\n期望：true　实际：true\n\n检查详情\n通过\n✓\npytest_executed_tests\n\n期望：>0 (passed + failed)　实际：11\n\n检查详情\n通过\n×\npytest_no_failures\n\n期望：0　实际：4\n\n检查详情\n未通过\n✓\npytest_no_errors\n\n期望：0　实际：0\n\n检查详情\n通过\n✓\npytest_no_skips\n\n期望：0　实际：0\n\n检查详情\n通过\n×\npytest_exit_status\n\n期望：0　实际：1\n\n检查详情\n未通过",
+      "public_contracts_preserved": true
+    },
+    "v43": {
+      "run_id": "b0a054d0-8c8d-576f-9be4-f9445f271a3a",
+      "label": "真实模型运行回放 · 项目契约辅助",
+      "status": "验证通过",
+      "metrics_cost_tooltip": "输入 59094 / 输出 3361 · 预估 $0.0218",
+      "metrics": {
+        "model_calls": 4,
+        "tool_calls": 7,
+        "prompt_tokens": 59094,
+        "completion_tokens": 3361,
+        "total_tokens": 62455,
+        "estimated_cost_usd": 0.021761,
+        "elapsed_seconds": 37.094
+      },
+      "stop_reason": "step_limit",
+      "pytest_counts": {
+        "passed": 11,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "model": "deepseek-flash",
+      "saved_diff_sha256": "72ac02a5ccd40656b52b295bf528625871954514413f6f3b5939e46c67449ff6",
+      "diff_matches_actual_patch": true,
+      "rendered_diff_line_count": 95,
+      "check_text": "✓\nfinal_build_success\n\n期望：true　实际：true\n\n检查详情\n通过\n✓\npytest_executed_tests\n\n期望：>0 (passed + failed)　实际：11\n\n检查详情\n通过\n✓\npytest_no_failures\n\n期望：0　实际：0\n\n检查详情\n通过\n✓\npytest_no_errors\n\n期望：0　实际：0\n\n检查详情\n通过\n✓\npytest_no_skips\n\n期望：0　实际：0\n\n检查详情\n通过\n✓\npytest_exit_status\n\n期望：0　实际：0\n\n检查详情\n通过",
+      "public_contracts_preserved": true
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "returncode": 0,
+  "stdout": "{\"success\": true, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 32.547,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.stg_pos__transactions",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.stg_sap__vbak",
+      "status": "success",
+      "message": "OK"
+    },
+    {
+      "id": "model.retail_dw_master.int_sales__orders_enriched",
+      "status": "success",
+      "message": "OK"
+    }
+  ],
+  "process_success": true,
+  "target_model": "int_sales__orders_enriched",
+  "target_model_ids": [
+    "model.retail_dw_master.int_sales__orders_enriched"
+  ],
+  "target_model_success": true
+}

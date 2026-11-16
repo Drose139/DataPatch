@@ -1,0 +1,2273 @@
+{
+  "audit": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "checks": [
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "planned_trials_type",
+        "message": "planned_trials must be a nonnegative integer"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "trial_count",
+        "message": "Recorded trials must equal planned_trials",
+        "planned": 4,
+        "recorded": 4
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "run_ids_present",
+        "message": "Every trial needs a nonempty run_id"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "duplicate_run_id",
+        "message": "Trial run_ids must be unique",
+        "duplicates": []
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "protocol_dimensions_unique",
+        "message": "Protocol task_ids and modes must not repeat"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "protocol_planned_trials",
+        "message": "planned_trials must match task × mode × repeats",
+        "matrix_trials": 4,
+        "planned": 4
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "missing_trials",
+        "message": "Every protocol combination must be present",
+        "missing": []
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "unexpected_trials",
+        "message": "Trials must belong to the frozen protocol",
+        "unexpected": []
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "duplicate_trial",
+        "message": "A protocol combination must occur once",
+        "duplicates": []
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "verification_flag_type",
+        "message": "verification.passed must be a boolean",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "passed_incomplete_execution",
+        "message": "A passing trial must have completed execution",
+        "run_id": "refund-v41-flash-r1-verified",
+        "execution_status": "completed"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "passed_failed_build",
+        "message": "A passing trial requires a recorded successful final build",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "prompt_tokens must be a nonnegative integer",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "completion_tokens must be a nonnegative integer",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "total_tokens must be a nonnegative integer",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "model_calls must be a nonnegative integer",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "tool_calls must be a nonnegative integer",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "estimated_cost_usd must be finite and nonnegative",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "elapsed_seconds must be finite and nonnegative",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "token_sum",
+        "message": "total_tokens must equal prompt_tokens + completion_tokens",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "verification_flag_type",
+        "message": "verification.passed must be a boolean",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "passed_incomplete_execution",
+        "message": "A passing trial must have completed execution",
+        "run_id": "division-v41-flash-r1-verified",
+        "execution_status": "completed"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "passed_failed_build",
+        "message": "A passing trial requires a recorded successful final build",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "prompt_tokens must be a nonnegative integer",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "completion_tokens must be a nonnegative integer",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "total_tokens must be a nonnegative integer",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "model_calls must be a nonnegative integer",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "tool_calls must be a nonnegative integer",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "estimated_cost_usd must be finite and nonnegative",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "elapsed_seconds must be finite and nonnegative",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "token_sum",
+        "message": "total_tokens must equal prompt_tokens + completion_tokens",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "verification_flag_type",
+        "message": "verification.passed must be a boolean",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "passed_incomplete_execution",
+        "message": "A passing trial must have completed execution",
+        "run_id": "inventory-v41-flash-r1-verified",
+        "execution_status": "completed"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "passed_failed_build",
+        "message": "A passing trial requires a recorded successful final build",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "prompt_tokens must be a nonnegative integer",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "completion_tokens must be a nonnegative integer",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "total_tokens must be a nonnegative integer",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "model_calls must be a nonnegative integer",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "tool_calls must be a nonnegative integer",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "estimated_cost_usd must be finite and nonnegative",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "elapsed_seconds must be finite and nonnegative",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "token_sum",
+        "message": "total_tokens must equal prompt_tokens + completion_tokens",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "verification_flag_type",
+        "message": "verification.passed must be a boolean",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "prompt_tokens must be a nonnegative integer",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "completion_tokens must be a nonnegative integer",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "total_tokens must be a nonnegative integer",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "model_calls must be a nonnegative integer",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_counter",
+        "message": "tool_calls must be a nonnegative integer",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "estimated_cost_usd must be finite and nonnegative",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "nonnegative_measure",
+        "message": "elapsed_seconds must be finite and nonnegative",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "token_sum",
+        "message": "total_tokens must equal prompt_tokens + completion_tokens",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verifier_schema",
+        "message": "Raw verifier needs binary reward, integer returncode, and component arrays",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_components_unique",
+        "message": "A verifier component may appear once and cannot both pass and fail",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_components_match_stdout",
+        "message": "Recorded components must match the original verifier stdout",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pytest_executed",
+        "message": "Public verifier stdout must show at least one actually executed pytest test",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pass_matches_raw_verifier",
+        "message": "verification.passed requires completed execution, a successful final build, and raw all-component success",
+        "run_id": "refund-v41-flash-r1-verified",
+        "expected_passed": true
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_reward_matches_components",
+        "message": "Binary upstream reward must agree with all-component success",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.reward must match raw_verifier",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.components_passed must match raw_verifier",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.components_failed must match raw_verifier",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_execution_flag_matches_evidence",
+        "message": "valid_pytest_execution must agree with recorded execution evidence",
+        "run_id": "refund-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verifier_schema",
+        "message": "Raw verifier needs binary reward, integer returncode, and component arrays",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_components_unique",
+        "message": "A verifier component may appear once and cannot both pass and fail",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_components_match_stdout",
+        "message": "Recorded components must match the original verifier stdout",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pytest_executed",
+        "message": "Public verifier stdout must show at least one actually executed pytest test",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pass_matches_raw_verifier",
+        "message": "verification.passed requires completed execution, a successful final build, and raw all-component success",
+        "run_id": "division-v41-flash-r1-verified",
+        "expected_passed": true
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_reward_matches_components",
+        "message": "Binary upstream reward must agree with all-component success",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.reward must match raw_verifier",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.components_passed must match raw_verifier",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.components_failed must match raw_verifier",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_execution_flag_matches_evidence",
+        "message": "valid_pytest_execution must agree with recorded execution evidence",
+        "run_id": "division-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verifier_schema",
+        "message": "Raw verifier needs binary reward, integer returncode, and component arrays",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_components_unique",
+        "message": "A verifier component may appear once and cannot both pass and fail",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_components_match_stdout",
+        "message": "Recorded components must match the original verifier stdout",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pytest_executed",
+        "message": "Public verifier stdout must show at least one actually executed pytest test",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pass_matches_raw_verifier",
+        "message": "verification.passed requires completed execution, a successful final build, and raw all-component success",
+        "run_id": "inventory-v41-flash-r1-verified",
+        "expected_passed": true
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_reward_matches_components",
+        "message": "Binary upstream reward must agree with all-component success",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.reward must match raw_verifier",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.components_passed must match raw_verifier",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "verification.components_failed must match raw_verifier",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_execution_flag_matches_evidence",
+        "message": "valid_pytest_execution must agree with recorded execution evidence",
+        "run_id": "inventory-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pytest_count_schema",
+        "message": "Plain pytest grading requires actual counts, exit status and binary reward",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pytest_counts_match_stdout",
+        "message": "Plain pytest counts must agree with the actual final summary",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_reward_matches_pytest",
+        "message": "Reward must follow the pinned test.sh pytest scoring rule",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_pass_matches_raw_verifier",
+        "message": "Final delivery requires completed execution, build and raw pytest success",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_verification_matches_raw",
+        "message": "Saved reward must match raw pytest grading",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_scoring_source_hash",
+        "message": "Adapted pytest scoring must identify the original pinned scoring script",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "public_execution_flag_matches_evidence",
+        "message": "Execution flag must agree with actual pytest summary",
+        "run_id": "product-v41-flash-r1-verified"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "duplicate_summary_mode",
+        "message": "Summary modes must be unique"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "summary_matches_records",
+        "message": "Stored summary must match summarize(records)",
+        "differences": []
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "snapshot_zip_hash",
+        "message": "Source zip must match the recorded SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": ".env.example"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "Dockerfile"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "LICENSE"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "README.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "compose.yaml"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/ACCEPTANCE.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/CODE_READING.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/COSTS.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/DEMO.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/EVALUATION_AUDIT.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/EVIDENCE.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/FAILURE_ANALYSIS.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/HANDOFF.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/IMPROVEMENTS.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/INTERVIEW.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/PUBLIC_BENCHMARK.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/PUBLIC_EXPANSION.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/PUBLIC_PROJECT_GUIDE.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/PUBLIC_RUNTIME.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/RESEARCH_AGENT.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/RESEARCH_DATA.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/RESEARCH_PRODUCT_EVAL.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "docs/RESULTS.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "integrations/harbor_agent.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "pyproject.toml"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "requirements.lock"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/audit_results.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/export_public_recordings.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/export_results.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/fetch_public_benchmark.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/finalize_evaluation.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/freeze_source.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/import_recordings.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "scripts/run_public_suite.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/__init__.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/agent.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/audit.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/cli.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/config.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/context.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/dbt_runner.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/evaluation.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/evidence.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/fixtures.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/provider.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/review.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/service.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/static/app.js"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/static/index.html"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/static/style.css"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/web.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "src/datapatch/workspace.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tasks/README.md"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_agent.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_audit.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_context.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_evidence.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_fixtures.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_persistence.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_provider.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_public_adapter.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_public_recordings.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_public_suite.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_reasoning.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_review.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_review_loop.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_service.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_web.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_file_hash",
+        "message": "Manifest file content must match its SHA-256",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+        "member": "tests/test_workspace.py"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "manifest_core_hash",
+        "message": "Manifest core digest must match the actual archived Python files",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip"
+      },
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "status": "passed",
+        "code": "report_source_hash",
+        "message": "Report source hash must match the archived core",
+        "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip"
+      }
+    ],
+    "checked_report_count": 1,
+    "reports": [
+      {
+        "report": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025.json",
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "checks": [
+          {
+            "status": "passed",
+            "code": "planned_trials_type",
+            "message": "planned_trials must be a nonnegative integer"
+          },
+          {
+            "status": "passed",
+            "code": "trial_count",
+            "message": "Recorded trials must equal planned_trials",
+            "planned": 4,
+            "recorded": 4
+          },
+          {
+            "status": "passed",
+            "code": "run_ids_present",
+            "message": "Every trial needs a nonempty run_id"
+          },
+          {
+            "status": "passed",
+            "code": "duplicate_run_id",
+            "message": "Trial run_ids must be unique",
+            "duplicates": []
+          },
+          {
+            "status": "passed",
+            "code": "protocol_dimensions_unique",
+            "message": "Protocol task_ids and modes must not repeat"
+          },
+          {
+            "status": "passed",
+            "code": "protocol_planned_trials",
+            "message": "planned_trials must match task × mode × repeats",
+            "matrix_trials": 4,
+            "planned": 4
+          },
+          {
+            "status": "passed",
+            "code": "missing_trials",
+            "message": "Every protocol combination must be present",
+            "missing": []
+          },
+          {
+            "status": "passed",
+            "code": "unexpected_trials",
+            "message": "Trials must belong to the frozen protocol",
+            "unexpected": []
+          },
+          {
+            "status": "passed",
+            "code": "duplicate_trial",
+            "message": "A protocol combination must occur once",
+            "duplicates": []
+          },
+          {
+            "status": "passed",
+            "code": "verification_flag_type",
+            "message": "verification.passed must be a boolean",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "passed_incomplete_execution",
+            "message": "A passing trial must have completed execution",
+            "run_id": "refund-v41-flash-r1-verified",
+            "execution_status": "completed"
+          },
+          {
+            "status": "passed",
+            "code": "passed_failed_build",
+            "message": "A passing trial requires a recorded successful final build",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "prompt_tokens must be a nonnegative integer",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "completion_tokens must be a nonnegative integer",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "total_tokens must be a nonnegative integer",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "model_calls must be a nonnegative integer",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "tool_calls must be a nonnegative integer",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "estimated_cost_usd must be finite and nonnegative",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "elapsed_seconds must be finite and nonnegative",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "token_sum",
+            "message": "total_tokens must equal prompt_tokens + completion_tokens",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "verification_flag_type",
+            "message": "verification.passed must be a boolean",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "passed_incomplete_execution",
+            "message": "A passing trial must have completed execution",
+            "run_id": "division-v41-flash-r1-verified",
+            "execution_status": "completed"
+          },
+          {
+            "status": "passed",
+            "code": "passed_failed_build",
+            "message": "A passing trial requires a recorded successful final build",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "prompt_tokens must be a nonnegative integer",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "completion_tokens must be a nonnegative integer",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "total_tokens must be a nonnegative integer",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "model_calls must be a nonnegative integer",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "tool_calls must be a nonnegative integer",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "estimated_cost_usd must be finite and nonnegative",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "elapsed_seconds must be finite and nonnegative",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "token_sum",
+            "message": "total_tokens must equal prompt_tokens + completion_tokens",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "verification_flag_type",
+            "message": "verification.passed must be a boolean",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "passed_incomplete_execution",
+            "message": "A passing trial must have completed execution",
+            "run_id": "inventory-v41-flash-r1-verified",
+            "execution_status": "completed"
+          },
+          {
+            "status": "passed",
+            "code": "passed_failed_build",
+            "message": "A passing trial requires a recorded successful final build",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "prompt_tokens must be a nonnegative integer",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "completion_tokens must be a nonnegative integer",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "total_tokens must be a nonnegative integer",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "model_calls must be a nonnegative integer",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "tool_calls must be a nonnegative integer",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "estimated_cost_usd must be finite and nonnegative",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "elapsed_seconds must be finite and nonnegative",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "token_sum",
+            "message": "total_tokens must equal prompt_tokens + completion_tokens",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "verification_flag_type",
+            "message": "verification.passed must be a boolean",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "prompt_tokens must be a nonnegative integer",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "completion_tokens must be a nonnegative integer",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "total_tokens must be a nonnegative integer",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "model_calls must be a nonnegative integer",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_counter",
+            "message": "tool_calls must be a nonnegative integer",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "estimated_cost_usd must be finite and nonnegative",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "nonnegative_measure",
+            "message": "elapsed_seconds must be finite and nonnegative",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "token_sum",
+            "message": "total_tokens must equal prompt_tokens + completion_tokens",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verifier_schema",
+            "message": "Raw verifier needs binary reward, integer returncode, and component arrays",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_components_unique",
+            "message": "A verifier component may appear once and cannot both pass and fail",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_components_match_stdout",
+            "message": "Recorded components must match the original verifier stdout",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pytest_executed",
+            "message": "Public verifier stdout must show at least one actually executed pytest test",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pass_matches_raw_verifier",
+            "message": "verification.passed requires completed execution, a successful final build, and raw all-component success",
+            "run_id": "refund-v41-flash-r1-verified",
+            "expected_passed": true
+          },
+          {
+            "status": "passed",
+            "code": "public_reward_matches_components",
+            "message": "Binary upstream reward must agree with all-component success",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.reward must match raw_verifier",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.components_passed must match raw_verifier",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.components_failed must match raw_verifier",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_execution_flag_matches_evidence",
+            "message": "valid_pytest_execution must agree with recorded execution evidence",
+            "run_id": "refund-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verifier_schema",
+            "message": "Raw verifier needs binary reward, integer returncode, and component arrays",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_components_unique",
+            "message": "A verifier component may appear once and cannot both pass and fail",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_components_match_stdout",
+            "message": "Recorded components must match the original verifier stdout",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pytest_executed",
+            "message": "Public verifier stdout must show at least one actually executed pytest test",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pass_matches_raw_verifier",
+            "message": "verification.passed requires completed execution, a successful final build, and raw all-component success",
+            "run_id": "division-v41-flash-r1-verified",
+            "expected_passed": true
+          },
+          {
+            "status": "passed",
+            "code": "public_reward_matches_components",
+            "message": "Binary upstream reward must agree with all-component success",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.reward must match raw_verifier",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.components_passed must match raw_verifier",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.components_failed must match raw_verifier",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_execution_flag_matches_evidence",
+            "message": "valid_pytest_execution must agree with recorded execution evidence",
+            "run_id": "division-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verifier_schema",
+            "message": "Raw verifier needs binary reward, integer returncode, and component arrays",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_components_unique",
+            "message": "A verifier component may appear once and cannot both pass and fail",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_components_match_stdout",
+            "message": "Recorded components must match the original verifier stdout",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pytest_executed",
+            "message": "Public verifier stdout must show at least one actually executed pytest test",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pass_matches_raw_verifier",
+            "message": "verification.passed requires completed execution, a successful final build, and raw all-component success",
+            "run_id": "inventory-v41-flash-r1-verified",
+            "expected_passed": true
+          },
+          {
+            "status": "passed",
+            "code": "public_reward_matches_components",
+            "message": "Binary upstream reward must agree with all-component success",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.reward must match raw_verifier",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.components_passed must match raw_verifier",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "verification.components_failed must match raw_verifier",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_execution_flag_matches_evidence",
+            "message": "valid_pytest_execution must agree with recorded execution evidence",
+            "run_id": "inventory-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pytest_count_schema",
+            "message": "Plain pytest grading requires actual counts, exit status and binary reward",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pytest_counts_match_stdout",
+            "message": "Plain pytest counts must agree with the actual final summary",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_reward_matches_pytest",
+            "message": "Reward must follow the pinned test.sh pytest scoring rule",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_pass_matches_raw_verifier",
+            "message": "Final delivery requires completed execution, build and raw pytest success",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_verification_matches_raw",
+            "message": "Saved reward must match raw pytest grading",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_scoring_source_hash",
+            "message": "Adapted pytest scoring must identify the original pinned scoring script",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "public_execution_flag_matches_evidence",
+            "message": "Execution flag must agree with actual pytest summary",
+            "run_id": "product-v41-flash-r1-verified"
+          },
+          {
+            "status": "passed",
+            "code": "duplicate_summary_mode",
+            "message": "Summary modes must be unique"
+          },
+          {
+            "status": "passed",
+            "code": "summary_matches_records",
+            "message": "Stored summary must match summarize(records)",
+            "differences": []
+          },
+          {
+            "status": "passed",
+            "code": "snapshot_zip_hash",
+            "message": "Source zip must match the recorded SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": ".env.example"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "Dockerfile"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "LICENSE"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "README.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "compose.yaml"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/ACCEPTANCE.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/CODE_READING.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/COSTS.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/DEMO.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/EVALUATION_AUDIT.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/EVIDENCE.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/FAILURE_ANALYSIS.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/HANDOFF.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/IMPROVEMENTS.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/INTERVIEW.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/PUBLIC_BENCHMARK.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/PUBLIC_EXPANSION.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/PUBLIC_PROJECT_GUIDE.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/PUBLIC_RUNTIME.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/RESEARCH_AGENT.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/RESEARCH_DATA.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/RESEARCH_PRODUCT_EVAL.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "docs/RESULTS.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "integrations/harbor_agent.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "pyproject.toml"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "requirements.lock"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/audit_results.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/export_public_recordings.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/export_results.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/fetch_public_benchmark.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/finalize_evaluation.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/freeze_source.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/import_recordings.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "scripts/run_public_suite.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/__init__.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/agent.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/audit.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/cli.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/config.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/context.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/dbt_runner.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/evaluation.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/evidence.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/fixtures.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/provider.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/review.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/service.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/static/app.js"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/static/index.html"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/static/style.css"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/web.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "src/datapatch/workspace.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tasks/README.md"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_agent.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_audit.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_context.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_evidence.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_fixtures.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_persistence.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_provider.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_public_adapter.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_public_recordings.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_public_suite.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_reasoning.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_review.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_review_loop.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_service.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_web.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_file_hash",
+            "message": "Manifest file content must match its SHA-256",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip",
+            "member": "tests/test_workspace.py"
+          },
+          {
+            "status": "passed",
+            "code": "manifest_core_hash",
+            "message": "Manifest core digest must match the actual archived Python files",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip"
+          },
+          {
+            "status": "passed",
+            "code": "report_source_hash",
+            "message": "Report source hash must match the archived core",
+            "snapshot": "$PROJECT\\artifacts\\evaluations\\v41_flash_round1_20261025_source.zip"
+          }
+        ]
+      }
+    ],
+    "excluded_reports": []
+  }
+}

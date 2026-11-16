@@ -1,0 +1,7 @@
+{
+  "command": ".venv/Scripts/python.exe -m pytest -q --ignore=tests/test_fixtures.py",
+  "result": "136 passed, 1 warning in 17.94s",
+  "model_api_calls": 0,
+  "warning": "Starlette TestClient httpx deprecation",
+  "core_source_sha256": "13a729eefb5907437bda7dfdc215c44fb73593e2a59c6eef730b9e1f3c2775ba"
+}

@@ -1,0 +1,328 @@
+{
+  "run_id": "bfd1ddf6-c4a0-56bd-9435-4003b3f1d570",
+  "source_run_id": "public_fixes_20261026:dbt-fix-product-metrics",
+  "task_id": "dbt-fix-product-metrics",
+  "task": {
+    "id": "dbt-fix-product-metrics",
+    "title": "公开项目 · 已审阅成品 · Product Performance Metrics",
+    "description": "# Product Performance Metrics\n\nBuild a product performance summary from sales data. Create a model called `fct_product_metrics` that aggregates key performance indicators for each product.\n\n## Database Backend\n\nThis task supports both DuckDB and Snowflake. **Run `echo $DB_TYPE` in a shell BEFORE you write any code or spawn any subagents — the live env determines which backend the verifier runs against.** Do NOT assume a default from this prose. Both `/app/dbt_models_duckdb/` and `/app/dbt_models_snowflake/` exist on disk; the verifier only checks the project matching the live `$DB_TYPE`.\n\n### DuckDB\n- Set `DB_TYPE=duckdb`\n- Database path: `$DUCKDB_PATH` (default: `/app/database/retail.duckdb`)\n\n### Snowflake\n- Set `DB_TYPE=snowflake`\n- Environment variables (pre-configured):\n  - `SNOWFLAKE_ACCOUNT`\n  - `SNOWFLAKE_USER`\n  - `SNOWFLAKE_PASSWORD`\n  - `SNOWFLAKE_DATABASE` - The clone database to use\n  - `SNOWFLAKE_SCHEMA`\n  - `SNOWFLAKE_WAREHOUSE`\n  - `SNOWFLAKE_ROLE` (optional)\n\n**Note**: For Snowflake, the entrypoint automatically creates a clone database and sets `SNOWFLAKE_DATABASE`. The clone is destroyed when the task completes.\n\n## dbt Profile Setup\n\nYou must configure dbt to connect to the database:\n- Create a `profiles.yml` in the dbt project directory with profile name `retail_dw_master`\n- Set `DBT_PROFILES_DIR` environment variable to the directory containing `profiles.yml`\n\n### DuckDB Profile\nConfigure with `type: duckdb` and the database path from `$DUCKDB_PATH`.\n\n### Snowflake Profile\nConfigure with `type: snowflake` using password authentication:\n- Use the environment variables for account, user, password, database, schema, warehouse, and role\n- Set the profile's `schema:` to `$SNOWFLAKE_SCHEMA` — do NOT leave it blank. A blank or omitted schema makes Snowflake silently default to `PUBLIC`, so your models get built in the wrong schema and the verifier cannot find them.\n\n## Model Location\n\nCreate the model at `models/marts/product/fct_product_metrics.sql` in the dbt project directory:\n- DuckDB: `/app/dbt_models_duckdb/models/marts/product/fct_product_metrics.sql`\n- Snowflake: `/app/dbt_models_snowflake/models/marts/product/fct_product_metrics.sql`\n\n## Requirements\n\nExplore the staging models in the dbt project to find relevant tables for products, variants, orders, and order line items. You will need to understand the relationships between these tables and determine which columns to use.\n\nThe output model should provide a comprehensive product-level summary including identification fields, order counts, unit volumes, revenue, average pricing, and variant information.\n\n**Order filtering**: Exclude orders with status `CANCELLED`, `RETURNED`, or `FAILED`. All other order statuses represent valid completed sales.\n\nOutput columns: `product_id`, `product_name`, `category`, `total_orders`, `units_sold`, `product_revenue`, `avg_unit_price`, `total_variants`\n\n**Important**: `avg_unit_price` must be calculated as total revenue divided by total units sold (i.e., `product_revenue / units_sold` -- a weighted average, not a simple `AVG(unit_price)`).\n\nAll products should appear in the output, even those without any sales. Materialize as a table and sort by revenue descending.\n\n## Guidelines\n\n- Pay attention to the grain of your model -- joining across multiple dimensions can cause fan-out issues\n",
+    "split": "public-development"
+  },
+  "provider": "operator_reviewed",
+  "model": "未调用模型",
+  "mode": "reviewed_patch",
+  "patch_origin": "operator_reviewed",
+  "report_type": "reviewed_patch_acceptance",
+  "status": "completed",
+  "archived": true,
+  "recording_source": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。",
+  "execution_backend": "native_trusted",
+  "metrics": {
+    "elapsed_seconds": 145.875,
+    "model_calls": 0,
+    "tool_calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "estimated_cost_usd": 0
+  },
+  "recorded_operations": [
+    "dbt target build",
+    "original upstream pytest"
+  ],
+  "zero_model_api_calls": true,
+  "events": [
+    {
+      "seq": 1,
+      "type": "status",
+      "content": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。"
+    },
+    {
+      "seq": 2,
+      "type": "tool",
+      "name": "已记录 dbt 构建",
+      "arguments": {
+        "select": "fct_product_metrics"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 19.454,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.fct_product_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "fct_product_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.fct_product_metrics"
+        ],
+        "target_model_success": true
+      }
+    },
+    {
+      "seq": 3,
+      "type": "validation",
+      "name": "已记录上游原 pytest",
+      "result": {
+        "task_id": "dbt-fix-product-metrics",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test_outputs.py",
+        "original_sha256": "722cb0cc17a43c2d77016b93bbba435bd1d0b8f2fb0414352ada9f5cab473da0",
+        "adapted_sha256": "6202284a4633471c2d698dfb11e88d9b46172d904bccfd62b1ff1ed528f966c4",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [],
+        "components_failed": [],
+        "grading_protocol": "pytest_exit_status",
+        "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test.sh",
+        "scoring_source_sha256": "40ccf3e00f0e4a67193ac6da7453a781eb2ae53c9ee16d969cdece76d04e0cf3",
+        "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+        "pytest_counts": {
+          "passed": 11,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "pytest_returncode": 0,
+        "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 11 items\n\ntest_outputs_product.py::test_product_revenue_matches_order_lines PASSED [  9%]\ntest_outputs_product.py::test_data_quality_check_2 PASSED                [ 18%]\ntest_outputs_product.py::test_units_sold_accuracy PASSED                 [ 27%]\ntest_outputs_product.py::test_order_count_accuracy PASSED                [ 36%]\ntest_outputs_product.py::test_model_structure_preserved PASSED           [ 45%]\ntest_outputs_product.py::test_variant_counts_match PASSED                [ 54%]\ntest_outputs_product.py::test_no_negative_values PASSED                  [ 63%]\ntest_outputs_product.py::test_all_products_present PASSED                [ 72%]\ntest_outputs_product.py::test_no_cancelled_orders_included PASSED        [ 81%]\ntest_outputs_product.py::test_product_count_matches_source PASSED        [ 90%]\ntest_outputs_product.py::test_avg_unit_price_formula PASSED              [100%]\n\n============================= 11 passed in 1.08s ==============================\n",
+        "stderr": ""
+      }
+    },
+    {
+      "seq": 4,
+      "type": "final",
+      "content": "成品补丁验收通过。"
+    }
+  ],
+  "diff": "--- /dev/null\n+++ b/models/marts/product/fct_product_metrics.sql\n@@ -0,0 +1,126 @@\n+-- operator_reviewed\n+-- Reviewed delivery artifact; not a new autonomous model run.\n+{{ config(\n+    materialized='table',\n+    tags=['product', 'marts', 'metrics']\n+) }}\n+\n+/*\n+    fct_product_metrics\n+    ------------------------------------------------------------------\n+    Grain: one row per product (products dimension grain).\n+\n+    Sales metrics come from order line items joined to their order header,\n+    excluding CANCELLED / RETURNED / FAILED orders (all other statuses are\n+    valid completed sales). Revenue uses the stored line_total monetary\n+    total of each order line (already net of line discounts, consistent\n+    with the order header SUBTOTAL), not a re-derived gross amount.\n+\n+    Variant information is aggregated to product level before joining so\n+    the product grain is not fanned out.\n+*/\n+\n+with products as (\n+\n+    select\n+        product_id,\n+        product_name,\n+        primary_category_id\n+    from {{ ref('stg_product__products') }}\n+    qualify row_number() over (\n+        partition by product_id\n+        order by updated_at desc nulls last, created_at desc nulls last\n+    ) = 1\n+\n+),\n+\n+categories as (\n+\n+    select\n+        category_id,\n+        category_name\n+    from {{ ref('stg_product__product_categories') }}\n+    qualify row_number() over (\n+        partition by category_id\n+        order by updated_at desc nulls last, created_at desc nulls last\n+    ) = 1\n+\n+),\n+\n+variants as (\n+\n+    select\n+        product_id,\n+        count(distinct variant_id) as total_variants\n+    from {{ ref('stg_product__product_variants') }}\n+    where product_id is not null\n+    group by 1\n+\n+),\n+\n+variant_products as (\n+\n+    -- Deduplicate repeated copies of the same mapping; conflicting mappings\n+    -- cannot identify a product and must not multiply the sales facts.\n+    select variant_id, min(product_id) as product_id\n+    from {{ ref('stg_product__product_variants') }}\n+    group by variant_id\n+    having count(distinct product_id) = 1\n+       and count(product_id) = count(*)\n+\n+),\n+\n+valid_order_lines as (\n+\n+    select\n+        -- Keep an existing direct product; rescue orphan keys only through\n+        -- an unambiguous variant whose product also exists in the dimension.\n+        coalesce(p_direct.product_id, p_variant.product_id) as product_id,\n+        ol.order_id,\n+        ol.quantity_ordered,\n+        ol.line_total\n+    from {{ ref('stg_orders__order_lines') }} ol\n+    join {{ ref('stg_orders__orders') }} o\n+        on ol.order_id = o.order_id\n+    left join variant_products vp\n+        on ol.variant_id = vp.variant_id\n+    left join products p_direct\n+        on ol.product_id = p_direct.product_id\n+    left join products p_variant\n+        on vp.product_id = p_variant.product_id\n+    where o.status not in ('CANCELLED', 'RETURNED', 'FAILED')\n+\n+),\n+\n+sales as (\n+\n+    select\n+        product_id,\n+        count(distinct order_id) as total_orders,\n+        coalesce(sum(quantity_ordered), 0) as units_sold,\n+        coalesce(sum(line_total), 0) as product_revenue\n+    from valid_order_lines\n+    group by 1\n+\n+)\n+\n+select\n+    p.product_id,\n+    p.product_name,\n+    c.category_name as category,\n+    coalesce(s.total_orders, 0) as total_orders,\n+    coalesce(s.units_sold, 0) as units_sold,\n+    coalesce(s.product_revenue, 0) as product_revenue,\n+    case\n+        when coalesce(s.units_sold, 0) > 0 then s.product_revenue / s.units_sold\n+        else null\n+    end as avg_unit_price,\n+    coalesce(v.total_variants, 0) as total_variants\n+from products p\n+left join sales s\n+    on p.product_id = s.product_id\n+left join categories c\n+    on p.primary_category_id = c.category_id\n+left join variants v\n+    on p.product_id = v.product_id\n+order by product_revenue desc\n",
+  "applied_sql": "-- operator_reviewed\n-- Reviewed delivery artifact; not a new autonomous model run.\n{{ config(\n    materialized='table',\n    tags=['product', 'marts', 'metrics']\n) }}\n\n/*\n    fct_product_metrics\n    ------------------------------------------------------------------\n    Grain: one row per product (products dimension grain).\n\n    Sales metrics come from order line items joined to their order header,\n    excluding CANCELLED / RETURNED / FAILED orders (all other statuses are\n    valid completed sales). Revenue uses the stored line_total monetary\n    total of each order line (already net of line discounts, consistent\n    with the order header SUBTOTAL), not a re-derived gross amount.\n\n    Variant information is aggregated to product level before joining so\n    the product grain is not fanned out.\n*/\n\nwith products as (\n\n    select\n        product_id,\n        product_name,\n        primary_category_id\n    from {{ ref('stg_product__products') }}\n    qualify row_number() over (\n        partition by product_id\n        order by updated_at desc nulls last, created_at desc nulls last\n    ) = 1\n\n),\n\ncategories as (\n\n    select\n        category_id,\n        category_name\n    from {{ ref('stg_product__product_categories') }}\n    qualify row_number() over (\n        partition by category_id\n        order by updated_at desc nulls last, created_at desc nulls last\n    ) = 1\n\n),\n\nvariants as (\n\n    select\n        product_id,\n        count(distinct variant_id) as total_variants\n    from {{ ref('stg_product__product_variants') }}\n    where product_id is not null\n    group by 1\n\n),\n\nvariant_products as (\n\n    -- Deduplicate repeated copies of the same mapping; conflicting mappings\n    -- cannot identify a product and must not multiply the sales facts.\n    select variant_id, min(product_id) as product_id\n    from {{ ref('stg_product__product_variants') }}\n    group by variant_id\n    having count(distinct product_id) = 1\n       and count(product_id) = count(*)\n\n),\n\nvalid_order_lines as (\n\n    select\n        -- Keep an existing direct product; rescue orphan keys only through\n        -- an unambiguous variant whose product also exists in the dimension.\n        coalesce(p_direct.product_id, p_variant.product_id) as product_id,\n        ol.order_id,\n        ol.quantity_ordered,\n        ol.line_total\n    from {{ ref('stg_orders__order_lines') }} ol\n    join {{ ref('stg_orders__orders') }} o\n        on ol.order_id = o.order_id\n    left join variant_products vp\n        on ol.variant_id = vp.variant_id\n    left join products p_direct\n        on ol.product_id = p_direct.product_id\n    left join products p_variant\n        on vp.product_id = p_variant.product_id\n    where o.status not in ('CANCELLED', 'RETURNED', 'FAILED')\n\n),\n\nsales as (\n\n    select\n        product_id,\n        count(distinct order_id) as total_orders,\n        coalesce(sum(quantity_ordered), 0) as units_sold,\n        coalesce(sum(line_total), 0) as product_revenue\n    from valid_order_lines\n    group by 1\n\n)\n\nselect\n    p.product_id,\n    p.product_name,\n    c.category_name as category,\n    coalesce(s.total_orders, 0) as total_orders,\n    coalesce(s.units_sold, 0) as units_sold,\n    coalesce(s.product_revenue, 0) as product_revenue,\n    case\n        when coalesce(s.units_sold, 0) > 0 then s.product_revenue / s.units_sold\n        else null\n    end as avg_unit_price,\n    coalesce(v.total_variants, 0) as total_variants\nfrom products p\nleft join sales s\n    on p.product_id = s.product_id\nleft join categories c\n    on p.primary_category_id = c.category_id\nleft join variants v\n    on p.product_id = v.product_id\norder by product_revenue desc\n",
+  "checks": [
+    {
+      "name": "final_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "target_model_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "pytest_executed_tests",
+      "passed": true,
+      "expected": ">0 (passed + failed)",
+      "actual": 11
+    },
+    {
+      "name": "pytest_no_failures",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_no_errors",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_no_skips",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_exit_status",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    }
+  ],
+  "verification": {
+    "passed": true,
+    "original_tests_passed": true,
+    "reward": 1.0,
+    "grading_protocol": "pytest_exit_status",
+    "checks": [
+      {
+        "name": "final_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "target_model_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "pytest_executed_tests",
+        "passed": true,
+        "expected": ">0 (passed + failed)",
+        "actual": 11
+      },
+      {
+        "name": "pytest_no_failures",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_no_errors",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_no_skips",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_exit_status",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      }
+    ]
+  },
+  "final_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 19.454,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.fct_product_metrics",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "fct_product_metrics",
+    "target_model_ids": [
+      "model.retail_dw_master.fct_product_metrics"
+    ],
+    "target_model_success": true
+  },
+  "raw_verifier": {
+    "task_id": "dbt-fix-product-metrics",
+    "mode": "native-path-adapted-upstream-verifier",
+    "official_harbor_result": false,
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test_outputs.py",
+    "original_sha256": "722cb0cc17a43c2d77016b93bbba435bd1d0b8f2fb0414352ada9f5cab473da0",
+    "adapted_sha256": "6202284a4633471c2d698dfb11e88d9b46172d904bccfd62b1ff1ed528f966c4",
+    "path_translation_only": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "components_passed": [],
+    "components_failed": [],
+    "grading_protocol": "pytest_exit_status",
+    "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test.sh",
+    "scoring_source_sha256": "40ccf3e00f0e4a67193ac6da7453a781eb2ae53c9ee16d969cdece76d04e0cf3",
+    "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+    "pytest_counts": {
+      "passed": 11,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pytest_returncode": 0,
+    "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 11 items\n\ntest_outputs_product.py::test_product_revenue_matches_order_lines PASSED [  9%]\ntest_outputs_product.py::test_data_quality_check_2 PASSED                [ 18%]\ntest_outputs_product.py::test_units_sold_accuracy PASSED                 [ 27%]\ntest_outputs_product.py::test_order_count_accuracy PASSED                [ 36%]\ntest_outputs_product.py::test_model_structure_preserved PASSED           [ 45%]\ntest_outputs_product.py::test_variant_counts_match PASSED                [ 54%]\ntest_outputs_product.py::test_no_negative_values PASSED                  [ 63%]\ntest_outputs_product.py::test_all_products_present PASSED                [ 72%]\ntest_outputs_product.py::test_no_cancelled_orders_included PASSED        [ 81%]\ntest_outputs_product.py::test_product_count_matches_source PASSED        [ 90%]\ntest_outputs_product.py::test_avg_unit_price_formula PASSED              [100%]\n\n============================= 11 passed in 1.08s ==============================\n",
+    "stderr": ""
+  },
+  "preparation": {
+    "task_id": "dbt-fix-product-metrics",
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "mode": "native-adapted-public-development-case",
+    "project_dir": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\product\\project",
+    "database_path": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\product\\database\\retail.duckdb",
+    "model": "models/marts/product/fct_product_metrics.sql",
+    "initialized": true,
+    "task_type": "create-model",
+    "initialization_selectors": [
+      "stg_orders__order_lines",
+      "stg_orders__orders",
+      "stg_product__product_variants",
+      "stg_product__products"
+    ],
+    "base_build": "declared staging inputs and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0"
+    },
+    "path_translations": {
+      "/app/dbt_models_duckdb": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\product\\project",
+      "/app/database/retail.duckdb": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\product\\database\\retail.duckdb"
+    },
+    "official_harbor_result": false,
+    "hidden_verifier_used_by_agent": false
+  },
+  "patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+  "applied_patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+  "source_integrity": {
+    "task_id": "dbt-fix-product-metrics",
+    "patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+    "build_report_sha256": "c88b730aaf78bed47281c79a055d2f392ded85462dccc78da6a7875cd964cace",
+    "verifier_report_sha256": "71d88730567a9c7198bf0ab70a8107f013a4d01ce3c3cbe6ac6bde99cf54083d",
+    "accepted": true
+  },
+  "input_snapshot": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "snapshot_lock": "$PROJECT\\external\\data-eng-bench\\snapshot-lock.json",
+    "snapshot_lock_sha256": "17dd78bf8e6a5d899aa204370c34eb7615f6cad829fcd29a484602d3dc746860",
+    "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+    "database_bytes": 488910848
+  },
+  "input_files": [
+    {
+      "path": "tasks/dbt-fix-product-metrics/environment/Dockerfile",
+      "sha256": "02dd6aaed5521786eae26e416c1242cb4b001e12818b4dc88512eb05c362fca6",
+      "bytes": 55
+    },
+    {
+      "path": "tasks/dbt-fix-product-metrics/instruction.md",
+      "sha256": "2eee9535f22a638d689f1f837e00fa0048a43b2f791317558a4e56a398503da4",
+      "bytes": 3357
+    },
+    {
+      "path": "tasks/dbt-fix-product-metrics/task.toml",
+      "sha256": "878488ba355b0528a3ef33f087ad54ee3fd1d642faa6562aeed6c00fb2d40f79",
+      "bytes": 1213
+    }
+  ],
+  "public_benchmark": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "official_harbor_result": false,
+    "setting": "native-adapted-public-development-case"
+  },
+  "source_artifacts": {
+    "report": "$PROJECT\\results\\acceptance\\public_fixes_20261026.json",
+    "patch": "$PROJECT\\examples\\public_fixes\\dbt-fix-product-metrics.sql",
+    "applied_sql": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\product\\project\\models\\marts\\product\\fct_product_metrics.sql",
+    "build_report": "$PROJECT\\artifacts\\acceptance\\public_fixes_20261026_artifacts\\dbt-fix-product-metrics\\build.json",
+    "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_fixes_20261026_artifacts\\verifiers\\dbt-fix-product-metrics\\product-evaluation.json",
+    "instruction": "$PROJECT\\external\\data-eng-bench\\tasks\\dbt-fix-product-metrics\\instruction.md"
+  },
+  "final_answer": "成品补丁已通过实际目标构建和上游原 pytest。未调用模型；自主 Agent 历史成绩另行保留。"
+}

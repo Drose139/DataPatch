@@ -1,0 +1,8 @@
+retail_dw_master:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: 'D:/DataPatch-work/public-core-acceptance-20261026/refund/database/retail.duckdb'
+      schema: main
+      threads: 4

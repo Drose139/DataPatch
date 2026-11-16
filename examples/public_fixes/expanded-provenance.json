@@ -1,0 +1,46 @@
+{
+  "dbt-fix-timezone-sales": {
+    "patch_origin": "operator_reviewed",
+    "patch_sha256": "6b31024ac3a6607b96478910246cdaf922030202f761011692adbe17c2cae328",
+    "source_repository": "Snowflake-Labs/data-eng-bench",
+    "source_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_case": "D:\\DataPatch-work\\public-expanded-dev-20261026\\timezone",
+    "origin": "Public mixed timestamp formats and documented five-hour shift; development compile/session-timezone failures retained; explicit UTC environment adaptation",
+    "project_model_api_calls": 0,
+    "reference_solution_read": false,
+    "autonomous_agent_trial": false
+  },
+  "dbt-fix-daily-revenue": {
+    "patch_origin": "operator_reviewed",
+    "patch_sha256": "f0ff4288c19eabab606c2e7642b53550a8c7cb591b010b42fef0358271c86f99",
+    "source_repository": "Snowflake-Labs/data-eng-bench",
+    "source_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_case": "D:\\DataPatch-work\\public-expanded-dev-20261026\\daily",
+    "origin": "Public date coverage and cumulative revenue contract; original source orders preserved",
+    "project_model_api_calls": 0,
+    "reference_solution_read": false,
+    "autonomous_agent_trial": false
+  },
+  "dbt-exchange-rate-settlement-date": {
+    "patch_origin": "operator_reviewed",
+    "patch_sha256": "4d4523660113a878ae9b2c2a3c3ae021410f886a29e847180415206353f554bc",
+    "source_repository": "Snowflake-Labs/data-eng-bench",
+    "source_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_case": "D:\\DataPatch-work\\public-expanded-dev-20261026\\fx",
+    "origin": "Public settlement-date FX contract; development 18/20 retained; settlement-day subgroups retained after independent acceptance feedback",
+    "project_model_api_calls": 0,
+    "reference_solution_read": false,
+    "autonomous_agent_trial": false
+  },
+  "cohort-retention-matrix": {
+    "patch_origin": "operator_reviewed",
+    "patch_sha256": "710afaf955d0bc5d71dd8c44cbf1d45ba7505e392339b5947cd5d1e2fe4184ca",
+    "source_repository": "Snowflake-Labs/data-eng-bench",
+    "source_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_case": "D:\\DataPatch-work\\public-expanded-dev-20261026\\cohort",
+    "origin": "Public signup cohort contract; development 23/24 retained; generic early-churn rule clarified using pre-signup purchase counterexample",
+    "project_model_api_calls": 0,
+    "reference_solution_read": false,
+    "autonomous_agent_trial": false
+  }
+}

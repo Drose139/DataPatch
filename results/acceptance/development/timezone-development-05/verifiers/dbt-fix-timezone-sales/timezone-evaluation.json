@@ -1,0 +1,44 @@
+{
+  "task_id": "dbt-fix-timezone-sales",
+  "mode": "native-path-adapted-upstream-verifier",
+  "official_harbor_result": false,
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test_outputs.py",
+  "original_sha256": "3ec550c99ecf13bf299acffeb776db07c5d899c6f50322681da7e267dde40e6f",
+  "adapted_sha256": "b6d0587d69a7362a24563783169ac6f2b2cad57f957d747346e657bad48486bb",
+  "path_translation_only": true,
+  "returncode": 0,
+  "reward": 1.0,
+  "components_passed": [],
+  "components_failed": [],
+  "grading_protocol": "pytest_exit_status",
+  "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test.sh",
+  "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+  "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+  "pytest_counts": {
+    "passed": 10,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pytest_returncode": 0,
+  "runtime_settings": {
+    "duckdb_timezone": "UTC"
+  },
+  "runtime_launcher": {
+    "source_path": "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\integrations\\run_public_pytest.py",
+    "archive_path": "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\timezone-development-05\\verifiers\\dbt-fix-timezone-sales\\run_public_pytest.py",
+    "sha256": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+    "scope": "Declared DuckDB connection session setting; pytest assertions and exit status unchanged"
+  },
+  "command": [
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\python.exe",
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\timezone-development-05\\verifiers\\dbt-fix-timezone-sales\\run_public_pytest.py",
+    "--duckdb-timezone",
+    "UTC",
+    "-v",
+    "C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\artifacts\\acceptance\\timezone-development-05\\verifiers\\dbt-fix-timezone-sales\\test_outputs_timezone.py"
+  ],
+  "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: C:\\Userslocal-user\\Documents\\ChatGPT\\\u5b9e\u4e60\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 10 items\n\ntest_outputs_timezone.py::test_int_sales_orders_enriched_exists PASSED   [ 10%]\ntest_outputs_timezone.py::test_int_sales_has_data PASSED                 [ 20%]\ntest_outputs_timezone.py::test_sap_timestamps_handling PASSED            [ 30%]\ntest_outputs_timezone.py::test_timezone_alignment_consistency PASSED     [ 40%]\ntest_outputs_timezone.py::test_daily_aggregation_consistency PASSED      [ 50%]\ntest_outputs_timezone.py::test_all_timestamps_have_time_component PASSED [ 60%]\ntest_outputs_timezone.py::test_source_system_distribution PASSED         [ 70%]\ntest_outputs_timezone.py::test_no_null_timestamps_for_completed_orders PASSED [ 80%]\ntest_outputs_timezone.py::test_timestamp_ordering PASSED                 [ 90%]\ntest_outputs_timezone.py::test_model_structure_preserved PASSED          [100%]\n\n============================= 10 passed in 57.60s =============================\n",
+  "stderr": ""
+}

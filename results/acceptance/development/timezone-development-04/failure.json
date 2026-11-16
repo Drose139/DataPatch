@@ -1,0 +1,15 @@
+{
+  "type": "reviewed_patch_development_infrastructure_failure",
+  "task_id": "dbt-fix-timezone-sales",
+  "zero_model_api_calls": true,
+  "stage": "download_original_verifier",
+  "error_type": "urllib.error.URLError",
+  "error": "[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)",
+  "pytest_executed": false,
+  "runtime_settings": {
+    "duckdb_timezone": "UTC"
+  },
+  "dependency_build_success": true,
+  "project_quality_build_success": false,
+  "patch_sha256": "6b31024ac3a6607b96478910246cdaf922030202f761011692adbe17c2cae328"
+}

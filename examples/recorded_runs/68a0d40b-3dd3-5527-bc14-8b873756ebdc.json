@@ -1,0 +1,433 @@
+{
+  "run_id": "68a0d40b-3dd3-5527-bc14-8b873756ebdc",
+  "source_run_id": "public_fixes_20261026:dbt-fix-division-by-zero",
+  "task_id": "dbt-fix-division-by-zero",
+  "task": {
+    "id": "dbt-fix-division-by-zero",
+    "title": "公开项目 · 已审阅成品 · Fix and Enhance Customer Metrics Model",
+    "description": "# Fix and Enhance Customer Metrics Model\n\n## Objective\n\nFix a dbt model with data quality issues in customer metrics and add new analytical columns.\n\n## Background\n\nThe `rpt_customer_metrics` model has bugs causing invalid values (infinity, NaN). Additionally, we need new metrics for customer segmentation, churn prediction, and peer comparison.\n\n## Your Task\n\nFix the `rpt_customer_metrics.sql` model to produce correct output with all required new columns.\n\n- DuckDB: `/app/dbt_models_duckdb/models/marts/customer/rpt_customer_metrics.sql`\n- Snowflake: `/app/dbt_models_snowflake/models/marts/customer/rpt_customer_metrics.sql`\n\n## Database Backend\n\nThis task supports both DuckDB and Snowflake. **Run `echo $DB_TYPE` in a shell BEFORE you write any code or spawn any subagents — the live env determines which backend the verifier runs against.** Do NOT assume a default from this prose. Both `/app/dbt_models_duckdb/` and `/app/dbt_models_snowflake/` exist on disk; the verifier only checks the project matching the live `$DB_TYPE`.\n\n### DuckDB\n- Set `DB_TYPE=duckdb`\n- Database path: `$DUCKDB_PATH` (default: `/app/database/retail.duckdb`)\n\n### Snowflake\n- Set `DB_TYPE=snowflake`\n- Environment variables (pre-configured):\n  - `SNOWFLAKE_ACCOUNT`\n  - `SNOWFLAKE_USER`\n  - `SNOWFLAKE_PASSWORD`\n  - `SNOWFLAKE_DATABASE` - The clone database to use\n  - `SNOWFLAKE_SCHEMA`\n  - `SNOWFLAKE_WAREHOUSE`\n  - `SNOWFLAKE_ROLE` (optional)\n\n**Note**: For Snowflake, the entrypoint automatically creates a clone database and sets `SNOWFLAKE_DATABASE`. The clone is destroyed when the task completes.\n\n## dbt Profile Setup\n\nYou must configure dbt to connect to the database:\n- Create a `profiles.yml` in the dbt project directory with profile name `retail_dw_master`\n- Set `DBT_PROFILES_DIR` environment variable to the directory containing `profiles.yml`\n\n### DuckDB Profile\nConfigure with `type: duckdb` and the database path from `$DUCKDB_PATH`.\n\n### Snowflake Profile\nConfigure with `type: snowflake` using password authentication:\n- Use the environment variables for account, user, password, database, schema, warehouse, and role\n- Set the profile's `schema:` to `$SNOWFLAKE_SCHEMA` — do NOT leave it blank. A blank or omitted schema makes Snowflake silently default to `PUBLIC`, so your models get built in the wrong schema and the verifier cannot find them.\n\n## Data Sources\n\nThe model uses the staging table:\n- **int_sales__orders_enriched** - Contains order-level data with customer_id, grand_total, ordered_at, and status columns. Explore to understand available columns.\n\n## Current Issues\n\nThe existing model has problems that need to be resolved:\n\n1. Division by zero errors producing `inf` and `nan` values in calculated columns\n2. NULL customer_id records not excluded from the source query\n3. Incorrect filtering (WHERE total_revenue > 0) excludes valid customers\n4. Missing columns required for customer segmentation and analytics\n\n## Tasks\n\n### 1. Fix Existing Bugs\n\nThe model produces `inf` and `nan` values. Fix all division-by-zero issues using NULLIF or similar patterns.\n\nAlso exclude records where `customer_id` is NULL from the source query.\n\n### 2. Add Customer Engagement Score\n\nAdd a new column `customer_engagement_score` (0-100) that combines multiple factors:\n\n| Factor    | Weight | Calculation                                               |\n| --------- | ------ | --------------------------------------------------------- |\n| Recency   | 30%    | `min(1.0, max(0, (365 - days_since_last_order) / 365))` |\n| Frequency | 35%    | `min(1.0, max(0, orders_per_month / 5.0))`              |\n| Monetary  | 35%    | Use PERCENT_RANK() on total_revenue                       |\n\nFormula: `(recency_factor * 0.30 + frequency_factor * 0.35 + monetary_factor * 0.35) * 100`\n\nEnsure the score is bounded between 0 and 100. For engagement score inputs, treat NULL values as 0, **except `days_since_last_order`** where NULL means no recent order — treat as 365 days (so recency factor = 0). Use `COALESCE(days_since_last_order, 365)` in the recency calculation.\n\n### 3. Add Customer Lifetime Value Tier\n\nAdd a new column `ltv_tier` that categorizes customers using waterfall logic (check in order):\n\n| Tier     | Criteria                                                                  |\n| -------- | ------------------------------------------------------------------------- |\n| vip      | revenue_percentile >= 0.95 AND orders_last_90d > 0 AND total_orders >= 10 |\n| platinum | revenue_percentile >= 0.90 AND orders_last_180d > 0                       |\n| gold     | revenue_percentile >= 0.75 OR avg_order_value > 500                       |\n| silver   | total_orders >= 3 AND total_revenue > 100                                 |\n| bronze   | total_orders >= 1 AND total_revenue > 50                                  |\n| at_risk  | total_orders > 0 AND days_since_last_order > 365                          |\n| inactive | All others                                                                |\n\nUse `revenue_percentile` calculated with PERCENT_RANK() on total_revenue. Treat NULL percentiles as 0.\n\n### 4. Add Churn Risk Score\n\nAdd a new column `churn_risk_score` (0-100) that predicts customer churn:\n\n| Factor            | Weight | Calculation                                        |\n| ----------------- | ------ | -------------------------------------------------- |\n| Days inactive     | 40%    | `min(1.0, max(0, COALESCE(days_since_last_order, 365) / 365))`  |\n| Declining orders  | 30%    | `1.0 - min(1.0, max(0, order_frequency_trend))`                 |\n| Declining revenue | 30%    | `1.0 - min(1.0, max(0, revenue_velocity_ratio))`                |\n\nFormula: `(inactive_factor * 0.40 + declining_orders_factor * 0.30 + declining_revenue_factor * 0.30) * 100`\n\nHigher score = higher churn risk. Bound between 0-100. Note: NULL handling for churn risk differs from engagement score — customers with unknown `days_since_last_order` should be treated as maximally inactive: use `COALESCE(days_since_last_order, 365)` so NULL yields inactive_factor = 1.0 (not 0).\n\n### 5. Add Customer Peer Comparison Metrics\n\nAdd columns that compare each customer to their peers:\n\n| Column                    | Description                                                        |\n| ------------------------- | ------------------------------------------------------------------ |\n| customer_value_rank       | Rank by total_revenue (highest = 1) using DENSE_RANK               |\n| customer_value_percentile | PERCENT_RANK by total_revenue (higher revenue = higher percentile) |\n| above_median_revenue      | 1 if total_revenue > median, else 0                                |\n\n## Expected Output\n\n| Column                    | Type    | Description                                                  |\n| ------------------------- | ------- | ------------------------------------------------------------ |\n| customer_id               | varchar | Unique customer identifier                                   |\n| total_orders              | integer | Total number of orders placed by the customer                |\n| total_revenue             | decimal | Total revenue generated by the customer                      |\n| first_order_date          | date    | Date of the customer's first order                           |\n| last_order_date           | date    | Date of the customer's most recent order                     |\n| days_since_last_order     | integer | Days since most recent order (relative to the most recent order date in the data) |\n| orders_last_30d           | integer | Number of orders in the last 30 days (relative to the most recent order date in the data) |\n| orders_last_90d           | integer | Number of orders in the last 90 days (relative to the most recent order date in the data) |\n| orders_last_180d          | integer | Number of orders in the last 180 days (relative to the most recent order date in the data) |\n| revenue_last_30d          | decimal | Revenue generated in the last 30 days (relative to the most recent order date in the data) |\n| revenue_last_90d          | decimal | Revenue generated in the last 90 days (relative to the most recent order date in the data) |\n| avg_order_value           | decimal | Average revenue per order                                    |\n| orders_per_month          | decimal | Average number of orders per month (relative to the most recent order date in the data) |\n| revenue_velocity_ratio    | decimal | Recent revenue vs historical revenue ratio                   |\n| order_frequency_trend     | decimal | Trend metric indicating increase/decrease in order frequency |\n| customer_engagement_score | decimal | Customer engagement composite score (0-100)                  |\n| churn_risk_score          | decimal | Churn risk prediction score (0-100)                          |\n| customer_value_rank       | integer | Rank by total revenue (1 = highest)                          |\n| customer_value_percentile | decimal | Percentile by total revenue                                  |\n| above_median_revenue      | integer | 1 if above median revenue, 0 otherwise                       |\n| ltv_tier                  | varchar | Customer lifetime value tier classification                  |\n\n## Success Criteria\n\n1. Model compiles and runs without errors\n2. No infinity or NaN values in any numeric columns\n3. Row count matches the number of distinct non-NULL customers in the source\n4. All new columns exist with correct calculations\n5. Engagement and churn scores bounded 0-100\n6. LTV tier waterfall logic produces valid tier names with reasonable distribution\n\n## Guidelines\n\n- Use Jinja conditionals (`{% if target.type == 'duckdb' %}...{% else %}...{% endif %}`) for syntax that differs between backends\n- Key differences: DuckDB uses `date_diff()` and `INTERVAL '30' day`; Snowflake uses `DATEDIFF()` and `DATEADD()`\n- `PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY col) OVER ()` works in DuckDB but NOT in Snowflake; use a subquery or `MEDIAN()` for Snowflake\n- Use `MAX(ordered_at)` from the source data as the reference date for all time-based calculations (do NOT use `CURRENT_DATE` — the data may not extend to the present day)\n",
+    "split": "public-development"
+  },
+  "provider": "operator_reviewed",
+  "model": "未调用模型",
+  "mode": "reviewed_patch",
+  "patch_origin": "operator_reviewed",
+  "report_type": "reviewed_patch_acceptance",
+  "status": "completed",
+  "archived": true,
+  "recording_source": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。",
+  "execution_backend": "native_trusted",
+  "metrics": {
+    "elapsed_seconds": 149.437,
+    "model_calls": 0,
+    "tool_calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "estimated_cost_usd": 0
+  },
+  "recorded_operations": [
+    "dbt target build",
+    "original upstream pytest"
+  ],
+  "zero_model_api_calls": true,
+  "events": [
+    {
+      "seq": 1,
+      "type": "status",
+      "content": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。"
+    },
+    {
+      "seq": 2,
+      "type": "tool",
+      "name": "已记录 dbt 构建",
+      "arguments": {
+        "select": "rpt_customer_metrics"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 18.906,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.rpt_customer_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_customer_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_customer_metrics"
+        ],
+        "target_model_success": true
+      }
+    },
+    {
+      "seq": 3,
+      "type": "validation",
+      "name": "已记录上游原 pytest",
+      "result": {
+        "task_id": "dbt-fix-division-by-zero",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-division-by-zero/tests/test_outputs.py",
+        "original_sha256": "3e47cc9167605bde35138bfe57f33987fc63775d791c8d7c7518638b52e80418",
+        "adapted_sha256": "a2cca9adbce595762432dc921f7e689c3edd5694e7fc3907ee8953e9e5483f05",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_ltv_tier_exists",
+          "component_5_ltv_tier_valid_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_8_new_columns_exist",
+          "component_9_engagement_score_formula",
+          "component_10_churn_risk_score_formula",
+          "component_11_engagement_score_bounds",
+          "component_12_churn_risk_score_bounds",
+          "component_13_customer_value_rank",
+          "component_14_above_median_revenue",
+          "component_15_ltv_tier_waterfall_logic"
+        ],
+        "components_failed": [],
+        "grading_protocol": "component_reward_json",
+        "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m06:00:19  Running with dbt=1.12.6\n\u001b[0m06:00:26  Installing dbt-labs/dbt_utils\n\u001b[0m06:00:30  Installed from version 1.3.3\n\u001b[0m06:00:30  Updated version available: 1.4.1\n\u001b[0m06:00:30  \n\u001b[0m06:00:30  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_customer_metrics\nSTDOUT: \u001b[0m06:00:38  Running with dbt=1.12.6\n\u001b[0m06:00:38  Registered adapter: duckdb=1.11.0\n\u001b[0m06:00:42  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.ga\n\u001b[0m06:00:44  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:00:44  \n\u001b[0m06:00:44  Concurrency: 4 threads (target='dev')\n\u001b[0m06:00:44  \n\u001b[0m06:00:46  1 of 1 START sql table model main.rpt_customer_metrics ......................... [RUN]\n\u001b[0m06:00:46  1 of 1 OK created sql table model main.rpt_customer_metrics .................... [\u001b[32mOK\u001b[0m in 0.28s]\n\u001b[0m06:00:46  \n\u001b[0m06:00:46  Finished running 1 table model in 0 hours 0 minutes and 1.94 seconds (1.94s).\n\u001b[0m06:00:47  \n\u001b[0m06:00:47  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:00:47  \n\u001b[0m06:00:47  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_ltv_tier_exists\nPASS: component_5_ltv_tier_valid_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nPASS: component_8_new_columns_exist\nPASS: component_9_engagement_score_formula\nPASS: component_10_churn_risk_score_formula\nPASS: component_11_engagement_score_bounds\nPASS: component_12_churn_risk_score_bounds\nPASS: component_13_customer_value_rank\nPASS: component_14_above_median_revenue\nPASS: component_15_ltv_tier_waterfall_logic\n\nFinal Score: 1.0\n.\n1 passed in 44.28s\n",
+        "stderr": ""
+      }
+    },
+    {
+      "seq": 4,
+      "type": "final",
+      "content": "成品补丁验收通过。"
+    }
+  ],
+  "diff": "--- a/models/marts/customer/rpt_customer_metrics.sql\n+++ b/models/marts/customer/rpt_customer_metrics.sql\n@@ -1,3 +1,5 @@\n+-- operator_reviewed\n+-- Reviewed delivery artifact; not a new autonomous model run.\n {{\n     config(\n         materialized='table',\n@@ -8,46 +10,192 @@\n /*\n     Customer Metrics Report\n     Ticket: DATA-6001 - Model producing invalid values\n+\n+    Fixes:\n+      1. All divisions guarded with NULLIF (no inf/nan)\n+      2. NULL customer_id excluded from source\n+      3. Removed the `total_revenue > 0` filter that dropped valid customers\n+      4. Time windows are relative to MAX(ordered_at) in the data, not CURRENT_DATE\n+\n+    New analytics:\n+      - customer_engagement_score (0-100)\n+      - churn_risk_score (0-100)\n+      - customer_value_rank / customer_value_percentile / above_median_revenue\n+      - ltv_tier (waterfall: vip > platinum > gold > silver > bronze > at_risk > inactive)\n */\n \n-with customer_orders as (\n+with source_orders as (\n+\n     select\n         customer_id,\n+        grand_total,\n+        ordered_at,\n+        status\n+    from {{ ref('int_sales__orders_enriched') }}\n+    where customer_id is not null\n+      and status != 'CANCELLED'\n+\n+),\n+\n+reference_date as (\n+\n+    -- Reference date = most recent order date in the data (never CURRENT_DATE)\n+    select\n+        max(ordered_at) as ref_ts,\n+        cast(max(ordered_at) as date) as ref_date\n+    from {{ ref('int_sales__orders_enriched') }}\n+\n+),\n+\n+customer_orders as (\n+\n+    select\n+        o.customer_id,\n         count(*) as total_orders,\n-        sum(grand_total) as total_revenue,\n-        min(ordered_at) as first_order_date,\n-        max(ordered_at) as last_order_date,\n-        count(case when ordered_at >= current_date - interval '30' day then 1 end) as orders_last_30d,\n-        count(case when ordered_at >= current_date - interval '90' day then 1 end) as orders_last_90d,\n-        sum(case when ordered_at >= current_date - interval '30' day then grand_total else 0 end) as revenue_last_30d,\n-        sum(case when ordered_at >= current_date - interval '90' day then grand_total else 0 end) as revenue_last_90d\n-    from {{ ref('int_sales__orders_enriched') }}\n-    where status != 'CANCELLED'\n-    group by customer_id\n+        sum(o.grand_total) as total_revenue,\n+        cast(min(o.ordered_at) as date) as first_order_date,\n+        cast(max(o.ordered_at) as date) as last_order_date,\n+        {% if target.type == 'duckdb' %}\n+        count(case when o.ordered_at >= r.ref_ts - interval '30' day then 1 end) as orders_last_30d,\n+        count(case when o.ordered_at >= r.ref_ts - interval '90' day then 1 end) as orders_last_90d,\n+        count(case when o.ordered_at >= r.ref_ts - interval '180' day then 1 end) as orders_last_180d,\n+        sum(case when o.ordered_at >= r.ref_ts - interval '30' day then o.grand_total else 0 end) as revenue_last_30d,\n+        sum(case when o.ordered_at >= r.ref_ts - interval '90' day then o.grand_total else 0 end) as revenue_last_90d,\n+        {% else %}\n+        count(case when o.ordered_at >= dateadd('day', -30, r.ref_ts) then 1 end) as orders_last_30d,\n+        count(case when o.ordered_at >= dateadd('day', -90, r.ref_ts) then 1 end) as orders_last_90d,\n+        count(case when o.ordered_at >= dateadd('day', -180, r.ref_ts) then 1 end) as orders_last_180d,\n+        sum(case when o.ordered_at >= dateadd('day', -30, r.ref_ts) then o.grand_total else 0 end) as revenue_last_30d,\n+        sum(case when o.ordered_at >= dateadd('day', -90, r.ref_ts) then o.grand_total else 0 end) as revenue_last_90d,\n+        {% endif %}\n+        r.ref_date\n+    from source_orders o\n+    cross join reference_date r\n+    group by o.customer_id, r.ref_date\n+\n ),\n \n customer_metrics as (\n+\n     select\n         customer_id,\n         total_orders,\n         total_revenue,\n         first_order_date,\n         last_order_date,\n+        {% if target.type == 'duckdb' %}\n+        cast(date_diff('day', last_order_date, ref_date) as integer) as days_since_last_order,\n+        {% else %}\n+        cast(datediff('day', last_order_date, ref_date) as integer) as days_since_last_order,\n+        {% endif %}\n         orders_last_30d,\n         orders_last_90d,\n+        orders_last_180d,\n         revenue_last_30d,\n         revenue_last_90d,\n \n-        total_revenue / total_orders as avg_order_value,\n-\n-        total_orders / date_diff('month', first_order_date, current_date) as orders_per_month,\n-\n-        revenue_last_30d / revenue_last_90d as revenue_velocity_ratio,\n-\n-        orders_last_30d / orders_last_90d as order_frequency_trend\n+        -- revenue per order (denominator is always >= 1, NULLIF kept for safety)\n+        total_revenue / nullif(total_orders, 0) as avg_order_value,\n+\n+        -- orders per month over the customer's observed lifetime\n+        {% if target.type == 'duckdb' %}\n+        total_orders / nullif(date_diff('month', first_order_date, ref_date), 0) as orders_per_month,\n+        {% else %}\n+        total_orders / nullif(datediff('month', first_order_date, ref_date), 0) as orders_per_month,\n+        {% endif %}\n+\n+        revenue_last_30d / nullif(revenue_last_90d, 0) as revenue_velocity_ratio,\n+\n+        orders_last_30d / nullif(orders_last_90d, 0) as order_frequency_trend\n \n     from customer_orders\n-    where total_revenue > 0\n+\n+),\n+\n+-- median revenue of the whole population (scalar aggregate: works on DuckDB and Snowflake)\n+median_revenue as (\n+\n+    select\n+        median(cast(total_revenue as double)) as median_total_revenue\n+    from customer_metrics\n+\n+),\n+\n+scored as (\n+\n+    select\n+        m.*,\n+        md.median_total_revenue,\n+\n+        -- peer comparison\n+        percent_rank() over (order by m.total_revenue asc) as revenue_percentile,\n+        dense_rank() over (order by m.total_revenue desc) as customer_value_rank\n+\n+    from customer_metrics m\n+    cross join median_revenue md\n+\n+),\n+\n+final as (\n+\n+    select\n+        s.customer_id,\n+        s.total_orders,\n+        s.total_revenue,\n+        s.first_order_date,\n+        s.last_order_date,\n+        s.days_since_last_order,\n+        s.orders_last_30d,\n+        s.orders_last_90d,\n+        s.orders_last_180d,\n+        s.revenue_last_30d,\n+        s.revenue_last_90d,\n+        s.avg_order_value,\n+        s.orders_per_month,\n+        s.revenue_velocity_ratio,\n+        s.order_frequency_trend,\n+\n+        -- Engagement score (0-100): recency 30%, frequency 35%, monetary 35%\n+        -- NULL days_since_last_order -> 365 days (recency factor = 0); other NULLs -> 0\n+        least(100.0, greatest(0.0,\n+            (\n+                least(1.0, greatest(0.0, (365 - coalesce(s.days_since_last_order, 365)) / 365.0)) * 0.30\n+              + least(1.0, greatest(0.0, coalesce(s.orders_per_month, 0) / 5.0)) * 0.35\n+              + coalesce(s.revenue_percentile, 0) * 0.35\n+            ) * 100.0\n+        )) as customer_engagement_score,\n+\n+        -- Churn risk score (0-100): inactivity 40%, declining orders 30%, declining revenue 30%\n+        -- NULL days_since_last_order -> treated as maximally inactive (factor 1.0)\n+        least(100.0, greatest(0.0,\n+            (\n+                least(1.0, greatest(0.0, coalesce(s.days_since_last_order, 365) / 365.0)) * 0.40\n+              + (1.0 - least(1.0, greatest(0.0, coalesce(s.order_frequency_trend, 0)))) * 0.30\n+              + (1.0 - least(1.0, greatest(0.0, coalesce(s.revenue_velocity_ratio, 0)))) * 0.30\n+            ) * 100.0\n+        )) as churn_risk_score,\n+\n+        s.customer_value_rank,\n+        s.revenue_percentile as customer_value_percentile,\n+        case when s.total_revenue > s.median_total_revenue then 1 else 0 end as above_median_revenue,\n+\n+        -- LTV tier waterfall (order matters)\n+        case\n+            when coalesce(s.revenue_percentile, 0) >= 0.95\n+                 and s.orders_last_90d > 0\n+                 and s.total_orders >= 10 then 'vip'\n+            when coalesce(s.revenue_percentile, 0) >= 0.90\n+                 and s.orders_last_180d > 0 then 'platinum'\n+            when coalesce(s.revenue_percentile, 0) >= 0.75\n+                 or s.avg_order_value > 500 then 'gold'\n+            when s.total_orders >= 3 and s.total_revenue > 100 then 'silver'\n+            when s.total_orders >= 1 and s.total_revenue > 50 then 'bronze'\n+            when s.total_orders > 0 and s.days_since_last_order > 365 then 'at_risk'\n+            else 'inactive'\n+        end as ltv_tier\n+\n+    from scored s\n+\n )\n \n-select * from customer_metrics\n+select * from final\n",
+  "applied_sql": "-- operator_reviewed\n-- Reviewed delivery artifact; not a new autonomous model run.\n{{\n    config(\n        materialized='table',\n        tags=['mart', 'customer', 'metrics']\n    )\n}}\n\n/*\n    Customer Metrics Report\n    Ticket: DATA-6001 - Model producing invalid values\n\n    Fixes:\n      1. All divisions guarded with NULLIF (no inf/nan)\n      2. NULL customer_id excluded from source\n      3. Removed the `total_revenue > 0` filter that dropped valid customers\n      4. Time windows are relative to MAX(ordered_at) in the data, not CURRENT_DATE\n\n    New analytics:\n      - customer_engagement_score (0-100)\n      - churn_risk_score (0-100)\n      - customer_value_rank / customer_value_percentile / above_median_revenue\n      - ltv_tier (waterfall: vip > platinum > gold > silver > bronze > at_risk > inactive)\n*/\n\nwith source_orders as (\n\n    select\n        customer_id,\n        grand_total,\n        ordered_at,\n        status\n    from {{ ref('int_sales__orders_enriched') }}\n    where customer_id is not null\n      and status != 'CANCELLED'\n\n),\n\nreference_date as (\n\n    -- Reference date = most recent order date in the data (never CURRENT_DATE)\n    select\n        max(ordered_at) as ref_ts,\n        cast(max(ordered_at) as date) as ref_date\n    from {{ ref('int_sales__orders_enriched') }}\n\n),\n\ncustomer_orders as (\n\n    select\n        o.customer_id,\n        count(*) as total_orders,\n        sum(o.grand_total) as total_revenue,\n        cast(min(o.ordered_at) as date) as first_order_date,\n        cast(max(o.ordered_at) as date) as last_order_date,\n        {% if target.type == 'duckdb' %}\n        count(case when o.ordered_at >= r.ref_ts - interval '30' day then 1 end) as orders_last_30d,\n        count(case when o.ordered_at >= r.ref_ts - interval '90' day then 1 end) as orders_last_90d,\n        count(case when o.ordered_at >= r.ref_ts - interval '180' day then 1 end) as orders_last_180d,\n        sum(case when o.ordered_at >= r.ref_ts - interval '30' day then o.grand_total else 0 end) as revenue_last_30d,\n        sum(case when o.ordered_at >= r.ref_ts - interval '90' day then o.grand_total else 0 end) as revenue_last_90d,\n        {% else %}\n        count(case when o.ordered_at >= dateadd('day', -30, r.ref_ts) then 1 end) as orders_last_30d,\n        count(case when o.ordered_at >= dateadd('day', -90, r.ref_ts) then 1 end) as orders_last_90d,\n        count(case when o.ordered_at >= dateadd('day', -180, r.ref_ts) then 1 end) as orders_last_180d,\n        sum(case when o.ordered_at >= dateadd('day', -30, r.ref_ts) then o.grand_total else 0 end) as revenue_last_30d,\n        sum(case when o.ordered_at >= dateadd('day', -90, r.ref_ts) then o.grand_total else 0 end) as revenue_last_90d,\n        {% endif %}\n        r.ref_date\n    from source_orders o\n    cross join reference_date r\n    group by o.customer_id, r.ref_date\n\n),\n\ncustomer_metrics as (\n\n    select\n        customer_id,\n        total_orders,\n        total_revenue,\n        first_order_date,\n        last_order_date,\n        {% if target.type == 'duckdb' %}\n        cast(date_diff('day', last_order_date, ref_date) as integer) as days_since_last_order,\n        {% else %}\n        cast(datediff('day', last_order_date, ref_date) as integer) as days_since_last_order,\n        {% endif %}\n        orders_last_30d,\n        orders_last_90d,\n        orders_last_180d,\n        revenue_last_30d,\n        revenue_last_90d,\n\n        -- revenue per order (denominator is always >= 1, NULLIF kept for safety)\n        total_revenue / nullif(total_orders, 0) as avg_order_value,\n\n        -- orders per month over the customer's observed lifetime\n        {% if target.type == 'duckdb' %}\n        total_orders / nullif(date_diff('month', first_order_date, ref_date), 0) as orders_per_month,\n        {% else %}\n        total_orders / nullif(datediff('month', first_order_date, ref_date), 0) as orders_per_month,\n        {% endif %}\n\n        revenue_last_30d / nullif(revenue_last_90d, 0) as revenue_velocity_ratio,\n\n        orders_last_30d / nullif(orders_last_90d, 0) as order_frequency_trend\n\n    from customer_orders\n\n),\n\n-- median revenue of the whole population (scalar aggregate: works on DuckDB and Snowflake)\nmedian_revenue as (\n\n    select\n        median(cast(total_revenue as double)) as median_total_revenue\n    from customer_metrics\n\n),\n\nscored as (\n\n    select\n        m.*,\n        md.median_total_revenue,\n\n        -- peer comparison\n        percent_rank() over (order by m.total_revenue asc) as revenue_percentile,\n        dense_rank() over (order by m.total_revenue desc) as customer_value_rank\n\n    from customer_metrics m\n    cross join median_revenue md\n\n),\n\nfinal as (\n\n    select\n        s.customer_id,\n        s.total_orders,\n        s.total_revenue,\n        s.first_order_date,\n        s.last_order_date,\n        s.days_since_last_order,\n        s.orders_last_30d,\n        s.orders_last_90d,\n        s.orders_last_180d,\n        s.revenue_last_30d,\n        s.revenue_last_90d,\n        s.avg_order_value,\n        s.orders_per_month,\n        s.revenue_velocity_ratio,\n        s.order_frequency_trend,\n\n        -- Engagement score (0-100): recency 30%, frequency 35%, monetary 35%\n        -- NULL days_since_last_order -> 365 days (recency factor = 0); other NULLs -> 0\n        least(100.0, greatest(0.0,\n            (\n                least(1.0, greatest(0.0, (365 - coalesce(s.days_since_last_order, 365)) / 365.0)) * 0.30\n              + least(1.0, greatest(0.0, coalesce(s.orders_per_month, 0) / 5.0)) * 0.35\n              + coalesce(s.revenue_percentile, 0) * 0.35\n            ) * 100.0\n        )) as customer_engagement_score,\n\n        -- Churn risk score (0-100): inactivity 40%, declining orders 30%, declining revenue 30%\n        -- NULL days_since_last_order -> treated as maximally inactive (factor 1.0)\n        least(100.0, greatest(0.0,\n            (\n                least(1.0, greatest(0.0, coalesce(s.days_since_last_order, 365) / 365.0)) * 0.40\n              + (1.0 - least(1.0, greatest(0.0, coalesce(s.order_frequency_trend, 0)))) * 0.30\n              + (1.0 - least(1.0, greatest(0.0, coalesce(s.revenue_velocity_ratio, 0)))) * 0.30\n            ) * 100.0\n        )) as churn_risk_score,\n\n        s.customer_value_rank,\n        s.revenue_percentile as customer_value_percentile,\n        case when s.total_revenue > s.median_total_revenue then 1 else 0 end as above_median_revenue,\n\n        -- LTV tier waterfall (order matters)\n        case\n            when coalesce(s.revenue_percentile, 0) >= 0.95\n                 and s.orders_last_90d > 0\n                 and s.total_orders >= 10 then 'vip'\n            when coalesce(s.revenue_percentile, 0) >= 0.90\n                 and s.orders_last_180d > 0 then 'platinum'\n            when coalesce(s.revenue_percentile, 0) >= 0.75\n                 or s.avg_order_value > 500 then 'gold'\n            when s.total_orders >= 3 and s.total_revenue > 100 then 'silver'\n            when s.total_orders >= 1 and s.total_revenue > 50 then 'bronze'\n            when s.total_orders > 0 and s.days_since_last_order > 365 then 'at_risk'\n            else 'inactive'\n        end as ltv_tier\n\n    from scored s\n\n)\n\nselect * from final\n",
+  "checks": [
+    {
+      "name": "final_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "target_model_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "component_1_model_compiles",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_2_no_inf_nan_values",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_3_row_count",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_4_ltv_tier_exists",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_5_ltv_tier_valid_values",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_6_uses_window_function",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_7_tier_distribution",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_8_new_columns_exist",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_9_engagement_score_formula",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_10_churn_risk_score_formula",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_11_engagement_score_bounds",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_12_churn_risk_score_bounds",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_13_customer_value_rank",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_14_above_median_revenue",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    },
+    {
+      "name": "component_15_ltv_tier_waterfall_logic",
+      "passed": true,
+      "source": "saved original upstream pytest"
+    }
+  ],
+  "verification": {
+    "passed": true,
+    "original_tests_passed": true,
+    "reward": 1.0,
+    "grading_protocol": "component_reward_json",
+    "checks": [
+      {
+        "name": "final_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "target_model_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "component_1_model_compiles",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_2_no_inf_nan_values",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_3_row_count",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_4_ltv_tier_exists",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_5_ltv_tier_valid_values",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_6_uses_window_function",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_7_tier_distribution",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_8_new_columns_exist",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_9_engagement_score_formula",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_10_churn_risk_score_formula",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_11_engagement_score_bounds",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_12_churn_risk_score_bounds",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_13_customer_value_rank",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_14_above_median_revenue",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      },
+      {
+        "name": "component_15_ltv_tier_waterfall_logic",
+        "passed": true,
+        "source": "saved original upstream pytest"
+      }
+    ]
+  },
+  "final_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 18.906,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.rpt_customer_metrics",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "rpt_customer_metrics",
+    "target_model_ids": [
+      "model.retail_dw_master.rpt_customer_metrics"
+    ],
+    "target_model_success": true
+  },
+  "raw_verifier": {
+    "task_id": "dbt-fix-division-by-zero",
+    "mode": "native-path-adapted-upstream-verifier",
+    "official_harbor_result": false,
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-division-by-zero/tests/test_outputs.py",
+    "original_sha256": "3e47cc9167605bde35138bfe57f33987fc63775d791c8d7c7518638b52e80418",
+    "adapted_sha256": "a2cca9adbce595762432dc921f7e689c3edd5694e7fc3907ee8953e9e5483f05",
+    "path_translation_only": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "components_passed": [
+      "component_1_model_compiles",
+      "component_2_no_inf_nan_values",
+      "component_3_row_count",
+      "component_4_ltv_tier_exists",
+      "component_5_ltv_tier_valid_values",
+      "component_6_uses_window_function",
+      "component_7_tier_distribution",
+      "component_8_new_columns_exist",
+      "component_9_engagement_score_formula",
+      "component_10_churn_risk_score_formula",
+      "component_11_engagement_score_bounds",
+      "component_12_churn_risk_score_bounds",
+      "component_13_customer_value_rank",
+      "component_14_above_median_revenue",
+      "component_15_ltv_tier_waterfall_logic"
+    ],
+    "components_failed": [],
+    "grading_protocol": "component_reward_json",
+    "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m06:00:19  Running with dbt=1.12.6\n\u001b[0m06:00:26  Installing dbt-labs/dbt_utils\n\u001b[0m06:00:30  Installed from version 1.3.3\n\u001b[0m06:00:30  Updated version available: 1.4.1\n\u001b[0m06:00:30  \n\u001b[0m06:00:30  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_customer_metrics\nSTDOUT: \u001b[0m06:00:38  Running with dbt=1.12.6\n\u001b[0m06:00:38  Registered adapter: duckdb=1.11.0\n\u001b[0m06:00:42  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.ga\n\u001b[0m06:00:44  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:00:44  \n\u001b[0m06:00:44  Concurrency: 4 threads (target='dev')\n\u001b[0m06:00:44  \n\u001b[0m06:00:46  1 of 1 START sql table model main.rpt_customer_metrics ......................... [RUN]\n\u001b[0m06:00:46  1 of 1 OK created sql table model main.rpt_customer_metrics .................... [\u001b[32mOK\u001b[0m in 0.28s]\n\u001b[0m06:00:46  \n\u001b[0m06:00:46  Finished running 1 table model in 0 hours 0 minutes and 1.94 seconds (1.94s).\n\u001b[0m06:00:47  \n\u001b[0m06:00:47  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:00:47  \n\u001b[0m06:00:47  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_ltv_tier_exists\nPASS: component_5_ltv_tier_valid_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nPASS: component_8_new_columns_exist\nPASS: component_9_engagement_score_formula\nPASS: component_10_churn_risk_score_formula\nPASS: component_11_engagement_score_bounds\nPASS: component_12_churn_risk_score_bounds\nPASS: component_13_customer_value_rank\nPASS: component_14_above_median_revenue\nPASS: component_15_ltv_tier_waterfall_logic\n\nFinal Score: 1.0\n.\n1 passed in 44.28s\n",
+    "stderr": ""
+  },
+  "preparation": {
+    "task_id": "dbt-fix-division-by-zero",
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "mode": "native-adapted-public-development-case",
+    "project_dir": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\division\\project",
+    "database_path": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\division\\database\\retail.duckdb",
+    "model": "models/marts/customer/rpt_customer_metrics.sql",
+    "initialized": true,
+    "task_type": "fix-model",
+    "initialization_selectors": [
+      "rpt_customer_metrics"
+    ],
+    "base_build": "selected model and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0"
+    },
+    "path_translations": {
+      "/app/dbt_models_duckdb": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\division\\project",
+      "/app/database/retail.duckdb": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\division\\database\\retail.duckdb"
+    },
+    "official_harbor_result": false,
+    "hidden_verifier_used_by_agent": false
+  },
+  "patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+  "applied_patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+  "source_integrity": {
+    "task_id": "dbt-fix-division-by-zero",
+    "patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+    "build_report_sha256": "67920df25c543501ac6675ab0dbc63e39a33edad45c88cf53e0e4f6d570043d0",
+    "verifier_report_sha256": "a3f809d222e24b5dc64d2e8e21667df77340870986487572b715c9e11f56bfc5",
+    "accepted": true
+  },
+  "input_snapshot": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "snapshot_lock": "$PROJECT\\external\\data-eng-bench\\snapshot-lock.json",
+    "snapshot_lock_sha256": "17dd78bf8e6a5d899aa204370c34eb7615f6cad829fcd29a484602d3dc746860",
+    "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+    "database_bytes": 488910848
+  },
+  "input_files": [
+    {
+      "path": "tasks/dbt-fix-division-by-zero/environment/Dockerfile",
+      "sha256": "84e19e16dee6bf2b185dc7f7bd1ae5b32c542142a92e11dcdacf9420fc38a5f5",
+      "bytes": 314
+    },
+    {
+      "path": "tasks/dbt-fix-division-by-zero/environment/data/rpt_customer_metrics.sql",
+      "sha256": "7d0cd9778c9c405d93547bc7775c5974dcce2762c1aa7c6bd4d5102cabd99dbc",
+      "bytes": 1601
+    },
+    {
+      "path": "tasks/dbt-fix-division-by-zero/instruction.md",
+      "sha256": "d0eb0021ae39e5292f716a6503ae1a53e283772b7166acee23937acad99227b6",
+      "bytes": 10227
+    },
+    {
+      "path": "tasks/dbt-fix-division-by-zero/task.toml",
+      "sha256": "a78bffe51bac58a52cc55d65da7b5158ebd2e0caa707871bf2a468643c92c68a",
+      "bytes": 1196
+    }
+  ],
+  "public_benchmark": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "official_harbor_result": false,
+    "setting": "native-adapted-public-development-case"
+  },
+  "source_artifacts": {
+    "report": "$PROJECT\\results\\acceptance\\public_fixes_20261026.json",
+    "patch": "$PROJECT\\examples\\public_fixes\\dbt-fix-division-by-zero.sql",
+    "applied_sql": "$PROJECT\\external\\native-cases\\public-fixes-20261026\\division\\project\\models\\marts\\customer\\rpt_customer_metrics.sql",
+    "build_report": "$PROJECT\\artifacts\\acceptance\\public_fixes_20261026_artifacts\\dbt-fix-division-by-zero\\build.json",
+    "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_fixes_20261026_artifacts\\verifiers\\dbt-fix-division-by-zero\\division-evaluation.json",
+    "instruction": "$PROJECT\\external\\data-eng-bench\\tasks\\dbt-fix-division-by-zero\\instruction.md",
+    "original_buggy_sql": "$PROJECT\\external\\data-eng-bench\\tasks\\dbt-fix-division-by-zero\\environment\\data\\rpt_customer_metrics.sql"
+  },
+  "final_answer": "成品补丁已通过实际目标构建和上游原 pytest。未调用模型；自主 Agent 历史成绩另行保留。"
+}

@@ -1,0 +1,574 @@
+{
+  "run_id": "d047fc91-346c-5418-96d2-9043c023630d",
+  "source_run_id": "public_expanded_fixes_20261026:dbt-fix-timezone-sales",
+  "task_id": "dbt-fix-timezone-sales",
+  "task": {
+    "id": "dbt-fix-timezone-sales",
+    "title": "公开项目 · 已审阅成品 · dbt: Fix Sales Data Issue",
+    "description": "# dbt: Fix Sales Data Issue\n\n## Objective\n\nFix a dbt model with data inconsistencies in sales reporting.\n\n## Background\n\nThe data warehouse consolidates orders from multiple systems (SAP and POS). The operations team has reported that daily sales aggregations are incorrect, particularly around midnight hours.\n\n## Your Task\n\nFix the `int_sales__orders_enriched.sql` model to produce correct output.\n\n- DuckDB: `/app/dbt_models_duckdb/models/intermediate/sales/int_sales__orders_enriched.sql`\n- Snowflake: `/app/dbt_models_snowflake/models/intermediate/sales/int_sales__orders_enriched.sql`\n\n## Database Backend\n\nThis task supports both DuckDB and Snowflake. **Run `echo $DB_TYPE` in a shell BEFORE you write any code or spawn any subagents — the live env determines which backend the verifier runs against.** Do NOT assume a default from this prose. Both `/app/dbt_models_duckdb/` and `/app/dbt_models_snowflake/` exist on disk; the verifier only checks the project matching the live `$DB_TYPE`.\n\n### DuckDB\n- Set `DB_TYPE=duckdb`\n- Database path: `$DUCKDB_PATH` (default: `/app/database/retail.duckdb`)\n\n### Snowflake\n- Set `DB_TYPE=snowflake`\n- Environment variables (pre-configured):\n  - `SNOWFLAKE_ACCOUNT`\n  - `SNOWFLAKE_USER`\n  - `SNOWFLAKE_PASSWORD`\n  - `SNOWFLAKE_DATABASE` - The clone database to use\n  - `SNOWFLAKE_SCHEMA`\n  - `SNOWFLAKE_WAREHOUSE`\n  - `SNOWFLAKE_ROLE` (optional)\n\n**Note**: For Snowflake, the entrypoint automatically creates a clone database and sets `SNOWFLAKE_DATABASE`. The clone is destroyed when the task completes.\n\n## dbt Profile Setup\n\nYou must configure dbt to connect to the database:\n- Create a `profiles.yml` in the dbt project directory with profile name `retail_dw_master`\n- Set `DBT_PROFILES_DIR` environment variable to the directory containing `profiles.yml`\n\n### DuckDB Profile\nConfigure with `type: duckdb` and the database path from `$DUCKDB_PATH`.\n\n### Snowflake Profile\nConfigure with `type: snowflake` using password authentication:\n- Use the environment variables for account, user, password, database, schema, warehouse, and role\n- Set the profile's `schema:` to `$SNOWFLAKE_SCHEMA` — do NOT leave it blank. A blank or omitted schema makes Snowflake silently default to `PUBLIC`, so your models get built in the wrong schema and the verifier cannot find them.\n\n## The Bug\n\nData from different source systems is being processed inconsistently. Investigation shows that timestamps from POS and SAP systems are not aligned properly, causing incorrect aggregations when combining the data.\n\n**Hints**:\n1. The two source systems may store timestamps in different timezones. There is a 5-hour difference between the systems. You can solve this by either:\n   - Adjusting POS timestamps forward 5 hours, OR\n   - Adjusting SAP timestamps backward 5 hours, OR\n   - Any other adjustment that results in both systems being aligned (5-hour total correction)\n\n2. The timestamp fields in the staging tables use **MIXED formats** - the data quality is inconsistent. You'll find:\n   - Standard SQL format: `YYYY-MM-DD HH:MM:SS`\n   - American format: `mm/dd/yyyy` or `mm/dd/yyyy HH:MM:SS` (e.g., `07/23/2020`, `11/27/2023`)\n   - European format: `dd/mm/yyyy` or `dd/mm/yyyy HH:MM:SS`\n   - Compact format: `YYYYMMDD`\n   - Unix timestamps: numeric values (seconds since epoch)\n\n   You'll need to handle all these formats. Try American format before European format.\n\n## Data Sources\n\n- **stg_sap__vbak** - SAP order data with timestamps, amounts, and status fields. Explore the table to understand available columns.\n- **stg_pos__transactions** - POS transaction data with timestamps, amounts, and status fields. Explore the table to understand available columns.\n\n## Success Criteria\n\n- Output produces correct aggregations\n- All tests pass\n\n## Notes\n\n- Do NOT modify staging models\n- Do NOT change model materialization (keep as view)\n- Preserve all output columns\n\n## Guidelines\n\n- DuckDB and Snowflake have different function names for timestamp parsing, regex, and type casting. Use Jinja conditionals (`{% if target.type == 'snowflake' %}`) to handle backend-specific SQL where needed. For example, Snowflake uses `TRY_TO_TIMESTAMP(...)` while DuckDB uses `TRY_CAST(... AS TIMESTAMP)` or `strptime(...)`. Snowflake's `REGEXP_REPLACE` does global replacement by default (no `'g'` flag), while DuckDB requires `'g'`.\n",
+    "split": "public-development"
+  },
+  "provider": "operator_reviewed",
+  "model": "未调用模型",
+  "mode": "reviewed_patch",
+  "patch_origin": "operator_reviewed",
+  "report_type": "reviewed_patch_acceptance",
+  "status": "completed",
+  "archived": true,
+  "recording_source": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。验收策略 upstream_harness：当前候选物化和上游原 pytest 是必需门槛。附加 dbt build 未通过；完整失败结果保留在项目质量和执行轨迹中，不属于当前策略的验收门槛。",
+  "execution_backend": "native_trusted",
+  "metrics": {
+    "elapsed_seconds": 247.125,
+    "model_calls": 0,
+    "tool_calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "estimated_cost_usd": 0
+  },
+  "recorded_operations": [
+    "dbt current candidate and ancestor run",
+    "dbt target build",
+    "original upstream pytest"
+  ],
+  "zero_model_api_calls": true,
+  "events": [
+    {
+      "seq": 1,
+      "type": "status",
+      "content": "已审阅补丁实际 dbt 构建与上游原 pytest 验收回放；operator_reviewed；未调用模型；该成品验收不属于自主 Agent 成绩。验收策略 upstream_harness：当前候选物化和上游原 pytest 是必需门槛。附加 dbt build 未通过；完整失败结果保留在项目质量和执行轨迹中，不属于当前策略的验收门槛。"
+    },
+    {
+      "type": "tool",
+      "name": "已记录当前候选及祖先物化",
+      "arguments": {
+        "command": "run",
+        "select": "+int_sales__orders_enriched"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 32.547,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.stg_pos__transactions",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_sap__vbak",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.int_sales__orders_enriched",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "int_sales__orders_enriched",
+        "target_model_ids": [
+          "model.retail_dw_master.int_sales__orders_enriched"
+        ],
+        "target_model_success": true
+      },
+      "seq": 2
+    },
+    {
+      "seq": 3,
+      "type": "tool",
+      "name": "已记录 dbt 构建",
+      "arguments": {
+        "select": "int_sales__orders_enriched"
+      },
+      "result": {
+        "success": false,
+        "returncode": 1,
+        "stdout": "06:56:29  2 of 4 FAIL 177 not_null_int_sales__orders_enriched_order_id ................... [FAIL 177 in 0.18s]\n06:56:29  3 of 4 FAIL 1308 unique_int_sales__orders_enriched_order_id .................... [FAIL 1308 in 0.19s]\n06:56:31  [ERROR]: in test not_null_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:56:31    Got 177 results, configured to fail if != 0\n06:56:31  [ERROR]: in test unique_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:56:31    Got 1308 results, configured to fail if != 0\n{\"success\": false, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 30.219,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.int_sales__orders_enriched",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "test.retail_dw_master.not_null_int_sales__orders_enriched_order_id.b8d5c9c519",
+            "status": "fail",
+            "message": "Got 177 results, configured to fail if != 0"
+          },
+          {
+            "id": "test.retail_dw_master.unique_int_sales__orders_enriched_order_id.46af3607b7",
+            "status": "fail",
+            "message": "Got 1308 results, configured to fail if != 0"
+          },
+          {
+            "id": "test.retail_dw_master.relationships_fct_sales_order_id__order_id__ref_int_sales__orders_enriched_.6c7ba54305",
+            "status": "skipped",
+            "message": "None"
+          }
+        ],
+        "process_success": false,
+        "target_model": "int_sales__orders_enriched",
+        "target_model_ids": [
+          "model.retail_dw_master.int_sales__orders_enriched"
+        ],
+        "target_model_success": true
+      }
+    },
+    {
+      "seq": 4,
+      "type": "validation",
+      "name": "已记录上游原 pytest",
+      "result": {
+        "task_id": "dbt-fix-timezone-sales",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test_outputs.py",
+        "original_sha256": "3ec550c99ecf13bf299acffeb776db07c5d899c6f50322681da7e267dde40e6f",
+        "adapted_sha256": "1c4c110aa35849ca290aa26955518d1aadfd76d6f8659f18ebdde517f20b5c1e",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [],
+        "components_failed": [],
+        "grading_protocol": "pytest_exit_status",
+        "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test.sh",
+        "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+        "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+        "pytest_counts": {
+          "passed": 10,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "pytest_returncode": 0,
+        "runtime_settings": {
+          "duckdb_timezone": "UTC"
+        },
+        "runtime_launcher": {
+          "source_path": "$PROJECT\\integrations\\run_public_pytest.py",
+          "archive_path": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-timezone-sales\\run_public_pytest.py",
+          "sha256": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+          "scope": "Declared DuckDB connection session setting; pytest assertions and exit status unchanged"
+        },
+        "command": [
+          "$PROJECT\\.venv\\Scripts\\python.exe",
+          "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-timezone-sales\\run_public_pytest.py",
+          "--duckdb-timezone",
+          "UTC",
+          "-v",
+          "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-timezone-sales\\test_outputs_timezone.py"
+        ],
+        "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 10 items\n\ntest_outputs_timezone.py::test_int_sales_orders_enriched_exists PASSED   [ 10%]\ntest_outputs_timezone.py::test_int_sales_has_data PASSED                 [ 20%]\ntest_outputs_timezone.py::test_sap_timestamps_handling PASSED            [ 30%]\ntest_outputs_timezone.py::test_timezone_alignment_consistency PASSED     [ 40%]\ntest_outputs_timezone.py::test_daily_aggregation_consistency PASSED      [ 50%]\ntest_outputs_timezone.py::test_all_timestamps_have_time_component PASSED [ 60%]\ntest_outputs_timezone.py::test_source_system_distribution PASSED         [ 70%]\ntest_outputs_timezone.py::test_no_null_timestamps_for_completed_orders PASSED [ 80%]\ntest_outputs_timezone.py::test_timestamp_ordering PASSED                 [ 90%]\ntest_outputs_timezone.py::test_model_structure_preserved PASSED          [100%]\n\n============================= 10 passed in 50.97s =============================\n",
+        "stderr": ""
+      }
+    },
+    {
+      "seq": 5,
+      "type": "final",
+      "content": "成品补丁验收通过。"
+    }
+  ],
+  "diff": "--- a/models/intermediate/sales/int_sales__orders_enriched.sql\n+++ b/models/intermediate/sales/int_sales__orders_enriched.sql\n@@ -1,14 +1,24 @@\n-{{\n-    config(\n-        materialized='view',\n-        tags=['intermediate', 'sales']\n-    )\n-}}\n+-- operator_reviewed: repair from the public ticket and initial DuckDB model.\n+-- Preserve all source rows, output columns, amounts and view materialization.\n+-- Interpret epoch values in the warehouse session clock, like parsed strings;\n+-- align POS wall-clock timestamps to the SAP clock with the stated +5h.\n+{{ config(materialized='view', tags=['intermediate', 'sales']) }}\n \n {% set clean_currency = \"regexp_replace(CAST(%s AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2)\" %}\n \n+{% set timestamp_expression %}\n+    coalesce(\n+        try_cast(nullif(trim(cast(timestamp_value as varchar)), '') as timestamp),\n+        try_strptime(trim(cast(timestamp_value as varchar)), '%m/%d/%Y %H:%M:%S'),\n+        try_strptime(trim(cast(timestamp_value as varchar)), '%m/%d/%Y'),\n+        try_strptime(trim(cast(timestamp_value as varchar)), '%d/%m/%Y %H:%M:%S'),\n+        try_strptime(trim(cast(timestamp_value as varchar)), '%d/%m/%Y'),\n+        try_strptime(trim(cast(timestamp_value as varchar)), '%Y%m%d'),\n+        cast(to_timestamp(try_cast(nullif(trim(cast(timestamp_value as varchar)), '') as double)) as timestamp)\n+    )\n+{% endset %}\n+\n with sap_orders as (\n-\n     select\n         order_id,\n         order_number,\n@@ -25,16 +35,14 @@\n         status,\n         payment_status,\n         fulfillment_status,\n-        TRY_CASE(ordered_at AS timestamp) as ordered_at,\n-        TRY_CASE(shipped_at AS timestamp) as shipped_at,\n-        TRY_CASE(delivered_at AS timestamp) as delivered_at,\n-        TRY_CASE(cancelled_at AS timestamp) as cancelled_at,    \n+        {{ timestamp_expression | replace('timestamp_value', 'ordered_at') }} as ordered_at,\n+        {{ timestamp_expression | replace('timestamp_value', 'shipped_at') }} as shipped_at,\n+        {{ timestamp_expression | replace('timestamp_value', 'delivered_at') }} as delivered_at,\n+        {{ timestamp_expression | replace('timestamp_value', 'cancelled_at') }} as cancelled_at\n     from {{ ref('stg_sap__vbak') }}\n-\n ),\n \n pos_orders as (\n-\n     select\n         order_id,\n         order_number,\n@@ -51,24 +59,20 @@\n         status,\n         payment_status,\n         fulfillment_status,\n-        {{ parse_timestamp % ('ordered_at', 'ordered_at', 'ordered_at', 'ordered_at', 'ordered_at', 'ordered_at', 'ordered_at') }} as ordered_at,\n-        {{ parse_timestamp % ('shipped_at', 'shipped_at', 'shipped_at', 'shipped_at', 'shipped_at', 'shipped_at', 'shipped_at') }} as shipped_at,\n-        {{ parse_timestamp % ('delivered_at', 'delivered_at', 'delivered_at', 'delivered_at', 'delivered_at', 'delivered_at', 'delivered_at') }} as delivered_at,\n-        {{ parse_timestamp % ('cancelled_at', 'cancelled_at', 'cancelled_at', 'cancelled_at', 'cancelled_at', 'cancelled_at', 'cancelled_at') }} as cancelled_at\n+        {{ timestamp_expression | replace('timestamp_value', 'ordered_at') }} + interval '5 hours' as ordered_at,\n+        {{ timestamp_expression | replace('timestamp_value', 'shipped_at') }} + interval '5 hours' as shipped_at,\n+        {{ timestamp_expression | replace('timestamp_value', 'delivered_at') }} + interval '5 hours' as delivered_at,\n+        {{ timestamp_expression | replace('timestamp_value', 'cancelled_at') }} + interval '5 hours' as cancelled_at\n     from {{ ref('stg_pos__transactions') }}\n-\n ),\n \n all_orders as (\n-\n     select * from sap_orders\n     union all\n     select * from pos_orders\n-\n ),\n \n final as (\n-\n     select\n         order_id,\n         order_number,\n@@ -77,52 +81,28 @@\n         source_system,\n         currency_code,\n         exchange_rate,\n-\n-        -- Order amounts\n         subtotal,\n         discount_total,\n         shipping_total,\n         tax_total,\n         grand_total,\n-\n-        -- Calculated fields\n-        (subtotal - discount_total) as net_subtotal,\n-        case\n-            when subtotal > 0 then (discount_total / subtotal)\n-            else 0\n-        end as discount_rate,\n-\n-        -- Status fields\n+        subtotal - discount_total as net_subtotal,\n+        case when subtotal > 0 then discount_total / subtotal else 0 end as discount_rate,\n         status,\n         payment_status,\n         fulfillment_status,\n-\n-        -- Timestamps\n         ordered_at,\n         shipped_at,\n         delivered_at,\n         cancelled_at,\n-\n-        -- Derived flags\n-        case\n-            when cancelled_at is not null then true\n-            else false\n-        end as is_cancelled,\n-\n-        case\n-            when delivered_at is not null then true\n-            else false\n-        end as is_delivered,\n-\n-        -- Calculate fulfillment time in days\n+        cancelled_at is not null as is_cancelled,\n+        delivered_at is not null as is_delivered,\n         case\n             when delivered_at is not null and ordered_at is not null\n             then date_diff('day', ordered_at, delivered_at)\n             else null\n         end as days_to_fulfill\n-\n     from all_orders\n-\n )\n \n-select * from final+select * from final\n",
+  "applied_sql": "-- operator_reviewed: repair from the public ticket and initial DuckDB model.\n-- Preserve all source rows, output columns, amounts and view materialization.\n-- Interpret epoch values in the warehouse session clock, like parsed strings;\n-- align POS wall-clock timestamps to the SAP clock with the stated +5h.\n{{ config(materialized='view', tags=['intermediate', 'sales']) }}\n\n{% set clean_currency = \"regexp_replace(CAST(%s AS VARCHAR), '[^0-9.-]', '', 'g')::decimal(18,2)\" %}\n\n{% set timestamp_expression %}\n    coalesce(\n        try_cast(nullif(trim(cast(timestamp_value as varchar)), '') as timestamp),\n        try_strptime(trim(cast(timestamp_value as varchar)), '%m/%d/%Y %H:%M:%S'),\n        try_strptime(trim(cast(timestamp_value as varchar)), '%m/%d/%Y'),\n        try_strptime(trim(cast(timestamp_value as varchar)), '%d/%m/%Y %H:%M:%S'),\n        try_strptime(trim(cast(timestamp_value as varchar)), '%d/%m/%Y'),\n        try_strptime(trim(cast(timestamp_value as varchar)), '%Y%m%d'),\n        cast(to_timestamp(try_cast(nullif(trim(cast(timestamp_value as varchar)), '') as double)) as timestamp)\n    )\n{% endset %}\n\nwith sap_orders as (\n    select\n        order_id,\n        order_number,\n        customer_id,\n        order_type,\n        'SAP' as source_system,\n        currency_code,\n        exchange_rate,\n        {{ clean_currency % 'subtotal' }} as subtotal,\n        {{ clean_currency % 'discount_total' }} as discount_total,\n        {{ clean_currency % 'shipping_total' }} as shipping_total,\n        {{ clean_currency % 'tax_total' }} as tax_total,\n        {{ clean_currency % 'grand_total' }} as grand_total,\n        status,\n        payment_status,\n        fulfillment_status,\n        {{ timestamp_expression | replace('timestamp_value', 'ordered_at') }} as ordered_at,\n        {{ timestamp_expression | replace('timestamp_value', 'shipped_at') }} as shipped_at,\n        {{ timestamp_expression | replace('timestamp_value', 'delivered_at') }} as delivered_at,\n        {{ timestamp_expression | replace('timestamp_value', 'cancelled_at') }} as cancelled_at\n    from {{ ref('stg_sap__vbak') }}\n),\n\npos_orders as (\n    select\n        order_id,\n        order_number,\n        customer_id,\n        order_type,\n        'POS' as source_system,\n        currency_code,\n        exchange_rate,\n        {{ clean_currency % 'subtotal' }} as subtotal,\n        {{ clean_currency % 'discount_total' }} as discount_total,\n        {{ clean_currency % 'shipping_total' }} as shipping_total,\n        {{ clean_currency % 'tax_total' }} as tax_total,\n        {{ clean_currency % 'grand_total' }} as grand_total,\n        status,\n        payment_status,\n        fulfillment_status,\n        {{ timestamp_expression | replace('timestamp_value', 'ordered_at') }} + interval '5 hours' as ordered_at,\n        {{ timestamp_expression | replace('timestamp_value', 'shipped_at') }} + interval '5 hours' as shipped_at,\n        {{ timestamp_expression | replace('timestamp_value', 'delivered_at') }} + interval '5 hours' as delivered_at,\n        {{ timestamp_expression | replace('timestamp_value', 'cancelled_at') }} + interval '5 hours' as cancelled_at\n    from {{ ref('stg_pos__transactions') }}\n),\n\nall_orders as (\n    select * from sap_orders\n    union all\n    select * from pos_orders\n),\n\nfinal as (\n    select\n        order_id,\n        order_number,\n        customer_id,\n        order_type,\n        source_system,\n        currency_code,\n        exchange_rate,\n        subtotal,\n        discount_total,\n        shipping_total,\n        tax_total,\n        grand_total,\n        subtotal - discount_total as net_subtotal,\n        case when subtotal > 0 then discount_total / subtotal else 0 end as discount_rate,\n        status,\n        payment_status,\n        fulfillment_status,\n        ordered_at,\n        shipped_at,\n        delivered_at,\n        cancelled_at,\n        cancelled_at is not null as is_cancelled,\n        delivered_at is not null as is_delivered,\n        case\n            when delivered_at is not null and ordered_at is not null\n            then date_diff('day', ordered_at, delivered_at)\n            else null\n        end as days_to_fulfill\n    from all_orders\n)\n\nselect * from final\n",
+  "checks": [
+    {
+      "name": "target_materialization_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "dependency_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "dependency_target_model_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "pytest_executed_tests",
+      "passed": true,
+      "expected": ">0 (passed + failed)",
+      "actual": 10
+    },
+    {
+      "name": "pytest_no_failures",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_no_errors",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_no_skips",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "name": "pytest_exit_status",
+      "passed": true,
+      "expected": 0,
+      "actual": 0
+    }
+  ],
+  "verification": {
+    "passed": true,
+    "acceptance_policy": "upstream_harness",
+    "build_required": false,
+    "target_materialization_success": true,
+    "dependency_build_success": true,
+    "original_tests_passed": true,
+    "reward": 1.0,
+    "grading_protocol": "pytest_exit_status",
+    "checks": [
+      {
+        "name": "target_materialization_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "dependency_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "dependency_target_model_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "pytest_executed_tests",
+        "passed": true,
+        "expected": ">0 (passed + failed)",
+        "actual": 10
+      },
+      {
+        "name": "pytest_no_failures",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_no_errors",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_no_skips",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      },
+      {
+        "name": "pytest_exit_status",
+        "passed": true,
+        "expected": 0,
+        "actual": 0
+      }
+    ]
+  },
+  "final_build": {
+    "success": false,
+    "returncode": 1,
+    "stdout": "06:56:29  2 of 4 FAIL 177 not_null_int_sales__orders_enriched_order_id ................... [FAIL 177 in 0.18s]\n06:56:29  3 of 4 FAIL 1308 unique_int_sales__orders_enriched_order_id .................... [FAIL 1308 in 0.19s]\n06:56:31  [ERROR]: in test not_null_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:56:31    Got 177 results, configured to fail if != 0\n06:56:31  [ERROR]: in test unique_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:56:31    Got 1308 results, configured to fail if != 0\n{\"success\": false, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 30.219,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.int_sales__orders_enriched",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "test.retail_dw_master.not_null_int_sales__orders_enriched_order_id.b8d5c9c519",
+        "status": "fail",
+        "message": "Got 177 results, configured to fail if != 0"
+      },
+      {
+        "id": "test.retail_dw_master.unique_int_sales__orders_enriched_order_id.46af3607b7",
+        "status": "fail",
+        "message": "Got 1308 results, configured to fail if != 0"
+      },
+      {
+        "id": "test.retail_dw_master.relationships_fct_sales_order_id__order_id__ref_int_sales__orders_enriched_.6c7ba54305",
+        "status": "skipped",
+        "message": "None"
+      }
+    ],
+    "process_success": false,
+    "target_model": "int_sales__orders_enriched",
+    "target_model_ids": [
+      "model.retail_dw_master.int_sales__orders_enriched"
+    ],
+    "target_model_success": true
+  },
+  "raw_verifier": {
+    "task_id": "dbt-fix-timezone-sales",
+    "mode": "native-path-adapted-upstream-verifier",
+    "official_harbor_result": false,
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test_outputs.py",
+    "original_sha256": "3ec550c99ecf13bf299acffeb776db07c5d899c6f50322681da7e267dde40e6f",
+    "adapted_sha256": "1c4c110aa35849ca290aa26955518d1aadfd76d6f8659f18ebdde517f20b5c1e",
+    "path_translation_only": true,
+    "returncode": 0,
+    "reward": 1.0,
+    "components_passed": [],
+    "components_failed": [],
+    "grading_protocol": "pytest_exit_status",
+    "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test.sh",
+    "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+    "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+    "pytest_counts": {
+      "passed": 10,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pytest_returncode": 0,
+    "runtime_settings": {
+      "duckdb_timezone": "UTC"
+    },
+    "runtime_launcher": {
+      "source_path": "$PROJECT\\integrations\\run_public_pytest.py",
+      "archive_path": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-timezone-sales\\run_public_pytest.py",
+      "sha256": "e33c2857f9ab4c57e749254fa7952b1eb60ed9549283c9aeff98162db0042f5a",
+      "scope": "Declared DuckDB connection session setting; pytest assertions and exit status unchanged"
+    },
+    "command": [
+      "$PROJECT\\.venv\\Scripts\\python.exe",
+      "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-timezone-sales\\run_public_pytest.py",
+      "--duckdb-timezone",
+      "UTC",
+      "-v",
+      "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-timezone-sales\\test_outputs_timezone.py"
+    ],
+    "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 10 items\n\ntest_outputs_timezone.py::test_int_sales_orders_enriched_exists PASSED   [ 10%]\ntest_outputs_timezone.py::test_int_sales_has_data PASSED                 [ 20%]\ntest_outputs_timezone.py::test_sap_timestamps_handling PASSED            [ 30%]\ntest_outputs_timezone.py::test_timezone_alignment_consistency PASSED     [ 40%]\ntest_outputs_timezone.py::test_daily_aggregation_consistency PASSED      [ 50%]\ntest_outputs_timezone.py::test_all_timestamps_have_time_component PASSED [ 60%]\ntest_outputs_timezone.py::test_source_system_distribution PASSED         [ 70%]\ntest_outputs_timezone.py::test_no_null_timestamps_for_completed_orders PASSED [ 80%]\ntest_outputs_timezone.py::test_timestamp_ordering PASSED                 [ 90%]\ntest_outputs_timezone.py::test_model_structure_preserved PASSED          [100%]\n\n============================= 10 passed in 50.97s =============================\n",
+    "stderr": ""
+  },
+  "preparation": {
+    "task_id": "dbt-fix-timezone-sales",
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "mode": "native-adapted-public-development-case",
+    "project_dir": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\timezone\\project",
+    "database_path": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\timezone\\database\\retail.duckdb",
+    "model": "models/intermediate/sales/int_sales__orders_enriched.sql",
+    "initialized": true,
+    "task_type": "fix-model",
+    "initialization_selectors": [
+      "int_sales__orders_enriched"
+    ],
+    "bug_overlay": "environment/int_sales__orders_enriched.sql",
+    "base_build": "selected model and ancestors",
+    "runtime": {
+      "python": "3.12.2",
+      "platform": "win32",
+      "duckdb": "1.5.6",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.0",
+      "duckdb_timezone": "UTC"
+    },
+    "path_translations": {
+      "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\timezone\\project",
+      "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\timezone\\database\\retail.duckdb"
+    },
+    "official_harbor_result": false,
+    "hidden_verifier_used_by_agent": false,
+    "runtime_settings": {
+      "duckdb_timezone": "UTC"
+    }
+  },
+  "patch_sha256": "6b31024ac3a6607b96478910246cdaf922030202f761011692adbe17c2cae328",
+  "applied_patch_sha256": "6b31024ac3a6607b96478910246cdaf922030202f761011692adbe17c2cae328",
+  "source_integrity": {
+    "task_id": "dbt-fix-timezone-sales",
+    "patch_sha256": "6b31024ac3a6607b96478910246cdaf922030202f761011692adbe17c2cae328",
+    "build_report_sha256": "14e21d4a4a28139278890d553c92d04cac4c997e6a703c9b109a6a7daeb6acbb",
+    "verifier_report_sha256": "c216b54ed6079e70d4638be97d1bea98238d848f8ae555552cf0d05b6ec1ebbf",
+    "accepted": true,
+    "dependency_build_report_sha256": "6254bdfcdf566db906e6d8d4230fd25c0aad619d54908c1f7baf506db420e37f"
+  },
+  "input_snapshot": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "snapshot_lock": "$PROJECT\\external\\data-eng-bench-expanded\\snapshot-lock.json",
+    "snapshot_lock_sha256": "71a7ab40f08c89d01f401f5aa85663a050c3b017480c35dd46b9cf2037029bd0",
+    "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+    "database_bytes": 488910848
+  },
+  "input_files": [
+    {
+      "path": "tasks/dbt-fix-timezone-sales/environment/Dockerfile",
+      "sha256": "c4aff2720c2010f3ec896bac5804e81e86ba1da14a7d61055c93d0b4edc28e66",
+      "bytes": 338
+    },
+    {
+      "path": "tasks/dbt-fix-timezone-sales/environment/int_sales__orders_enriched.sql",
+      "sha256": "57b80843d6dd9c8cefe5e79dc8a4dbbe4a2e0dc420680c02cc9e06e09e7aa322",
+      "bytes": 3624
+    },
+    {
+      "path": "tasks/dbt-fix-timezone-sales/instruction.md",
+      "sha256": "c2601e9d6646c3820f0bf756287ead27b9183dd6cb5344d30dc3b8e3909ff279",
+      "bytes": 4360
+    },
+    {
+      "path": "tasks/dbt-fix-timezone-sales/task.toml",
+      "sha256": "e6fb5abda99c3e446eab3989d445ffdfa17725fbfabfad46b59c4ed48b455923",
+      "bytes": 1191
+    }
+  ],
+  "public_benchmark": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "official_harbor_result": false,
+    "setting": "native-adapted-public-development-case"
+  },
+  "source_artifacts": {
+    "report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026.json",
+    "patch": "$PROJECT\\examples\\public_fixes\\dbt-fix-timezone-sales.sql",
+    "applied_sql": "D:\\DataPatch-work\\public-expanded-acceptance-20261026\\timezone\\project\\models\\intermediate\\sales\\int_sales__orders_enriched.sql",
+    "build_report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\dbt-fix-timezone-sales\\build.json",
+    "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\verifiers\\dbt-fix-timezone-sales\\timezone-evaluation.json",
+    "instruction": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\dbt-fix-timezone-sales\\instruction.md",
+    "original_buggy_sql": "$PROJECT\\external\\data-eng-bench-expanded\\tasks\\dbt-fix-timezone-sales\\environment\\int_sales__orders_enriched.sql",
+    "dependency_build_report": "$PROJECT\\artifacts\\acceptance\\public_expanded_fixes_20261026_artifacts\\dbt-fix-timezone-sales\\dependency_build.json"
+  },
+  "final_answer": "成品补丁已通过当前候选物化和上游原 pytest。验收策略 upstream_harness：当前候选物化和上游原 pytest 是必需门槛。附加 dbt build 未通过；完整失败结果保留在项目质量和执行轨迹中，不属于当前策略的验收门槛。未调用模型；自主 Agent 历史成绩另行保留。",
+  "final_dependency_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 32.547,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.stg_pos__transactions",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.stg_sap__vbak",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.int_sales__orders_enriched",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "int_sales__orders_enriched",
+    "target_model_ids": [
+      "model.retail_dw_master.int_sales__orders_enriched"
+    ],
+    "target_model_success": true
+  },
+  "acceptance_policy": "upstream_harness",
+  "final_materialization": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 32.547,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.stg_pos__transactions",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.stg_sap__vbak",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "model.retail_dw_master.int_sales__orders_enriched",
+        "status": "success",
+        "message": "OK"
+      }
+    ],
+    "process_success": true,
+    "target_model": "int_sales__orders_enriched",
+    "target_model_ids": [
+      "model.retail_dw_master.int_sales__orders_enriched"
+    ],
+    "target_model_success": true
+  },
+  "project_quality": {
+    "build": {
+      "success": false,
+      "returncode": 1,
+      "stdout": "06:56:29  2 of 4 FAIL 177 not_null_int_sales__orders_enriched_order_id ................... [FAIL 177 in 0.18s]\n06:56:29  3 of 4 FAIL 1308 unique_int_sales__orders_enriched_order_id .................... [FAIL 1308 in 0.19s]\n06:56:31  [ERROR]: in test not_null_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:56:31    Got 177 results, configured to fail if != 0\n06:56:31  [ERROR]: in test unique_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:56:31    Got 1308 results, configured to fail if != 0\n{\"success\": false, \"exception\": null}\n",
+      "stderr": "",
+      "elapsed_seconds": 30.219,
+      "nodes": [
+        {
+          "id": "model.retail_dw_master.int_sales__orders_enriched",
+          "status": "success",
+          "message": "OK"
+        },
+        {
+          "id": "test.retail_dw_master.not_null_int_sales__orders_enriched_order_id.b8d5c9c519",
+          "status": "fail",
+          "message": "Got 177 results, configured to fail if != 0"
+        },
+        {
+          "id": "test.retail_dw_master.unique_int_sales__orders_enriched_order_id.46af3607b7",
+          "status": "fail",
+          "message": "Got 1308 results, configured to fail if != 0"
+        },
+        {
+          "id": "test.retail_dw_master.relationships_fct_sales_order_id__order_id__ref_int_sales__orders_enriched_.6c7ba54305",
+          "status": "skipped",
+          "message": "None"
+        }
+      ],
+      "process_success": false,
+      "target_model": "int_sales__orders_enriched",
+      "target_model_ids": [
+        "model.retail_dw_master.int_sales__orders_enriched"
+      ],
+      "target_model_success": true
+    },
+    "build_required": false,
+    "role": "additional project dbt checks; not the upstream harness gate"
+  },
+  "extra_quality": [
+    {
+      "name": "final_build_success",
+      "passed": false,
+      "expected": true,
+      "actual": false,
+      "required": false
+    },
+    {
+      "name": "target_model_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true,
+      "required": false
+    }
+  ]
+}

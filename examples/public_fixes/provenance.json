@@ -1,0 +1,38 @@
+{
+  "dbt-fix-refund-reconciliation": {
+    "target": "models/marts/sales/rpt_return_reconciliation.sql",
+    "source_case": "refund-v41-flash-r1",
+    "source_sql_sha256": "84fac0295d3e4d242e12198bc7481ce7c264440468e4c76e949f76e4c6049ed0",
+    "patch_sha256": "249115f1c66a82cc4ce674ddd173f4db229520ad6913e30a970d2b0d7c04c73b",
+    "origin": "actual Flash candidate, reviewed without modification",
+    "reviewed": true,
+    "api_calls_for_this_patch": 0
+  },
+  "dbt-fix-division-by-zero": {
+    "target": "models/marts/customer/rpt_customer_metrics.sql",
+    "source_case": "division-v41-flash-r1",
+    "source_sql_sha256": "7a4bf42d0a3a5366be33210770b33f36bfc61aa05a28bbb485e5cf22e38dbf90",
+    "patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+    "origin": "actual Flash candidate, reviewed without modification",
+    "reviewed": true,
+    "api_calls_for_this_patch": 0
+  },
+  "dbt-fix-inventory-model": {
+    "target": "models/marts/inventory/rpt_product_inventory_metrics.sql",
+    "source_case": "inventory-v41-flash-r1",
+    "source_sql_sha256": "ab45cd1f843f943cb7d88b57544a42ea58b04f8a1ef2d6038a68e0db356593c5",
+    "patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+    "origin": "actual Flash candidate, reviewed without modification",
+    "reviewed": true,
+    "api_calls_for_this_patch": 0
+  },
+  "dbt-fix-product-metrics": {
+    "target": "models/marts/product/fct_product_metrics.sql",
+    "source_case": "product-v41-flash-r2",
+    "source_sql_sha256": "940f829a639716ef0df30510f3c81f97cdb40940f3054b35b21bee7dc208f97a",
+    "patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+    "origin": "actual Flash candidate plus operator-reviewed repair: preserve valid direct product, recover orphan through unambiguous variant mapped to an existing product",
+    "reviewed": true,
+    "api_calls_for_this_patch": 0
+  }
+}

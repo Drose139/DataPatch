@@ -1,0 +1,839 @@
+{
+  "type": "reviewed_patch_acceptance",
+  "report_type": "reviewed_patch_acceptance",
+  "name": "public_core_recheck_20261026",
+  "created_at": "2026-10-26T06:41:38.768820+00:00",
+  "patch_origin": "operator_reviewed",
+  "zero_api_calls": true,
+  "zero_model_api_calls": true,
+  "api_call_definition": "Model generation requests; benchmark/verifier file downloads are not model API calls",
+  "planned_tasks": 4,
+  "protocol": {
+    "task_ids": [
+      "dbt-fix-product-metrics",
+      "dbt-fix-refund-reconciliation",
+      "dbt-fix-division-by-zero",
+      "dbt-fix-inventory-model"
+    ],
+    "patch_origin": "operator_reviewed",
+    "acceptance_policy": "dbt_build",
+    "build_required": true,
+    "dependency_materialization": "run +target after applying candidate, then build target only",
+    "automatic_retries": false,
+    "verifier_feedback_to_agent": false
+  },
+  "input_snapshot": {
+    "repository": "Snowflake-Labs/data-eng-bench",
+    "commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "snapshot_lock": "$PROJECT\\external\\data-eng-bench-expanded\\snapshot-lock.json",
+    "snapshot_lock_sha256": "71a7ab40f08c89d01f401f5aa85663a050c3b017480c35dd46b9cf2037029bd0",
+    "database_sha256": "bd2bb1b3a7cf62aa94c191527aa30db5bf415aea97db718a1e0c11c59fc2ec2d",
+    "database_bytes": 488910848
+  },
+  "records": [
+    {
+      "task_id": "dbt-fix-product-metrics",
+      "patch_origin": "operator_reviewed",
+      "zero_api_calls": true,
+      "patch_source": "$PROJECT\\examples\\public_fixes\\dbt-fix-product-metrics.sql",
+      "patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+      "model_path": "models/marts/product/fct_product_metrics.sql",
+      "case_directory": "D:\\DataPatch-work\\public-core-acceptance-20261026\\product",
+      "status": "completed",
+      "dependency_build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 33.516,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.stg_product__product_variants",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_product__product_categories",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_orders__orders",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_orders__order_lines",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_product__products",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.fct_product_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "fct_product_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.fct_product_metrics"
+        ],
+        "target_model_success": true
+      },
+      "build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 32.016,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.fct_product_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "fct_product_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.fct_product_metrics"
+        ],
+        "target_model_success": true
+      },
+      "verification": {
+        "passed": true,
+        "acceptance_policy": "dbt_build",
+        "build_required": true,
+        "target_materialization_success": true,
+        "dependency_build_success": true,
+        "original_tests_passed": true,
+        "reward": 1.0,
+        "grading_protocol": "pytest_exit_status"
+      },
+      "errors": [],
+      "input_files": [
+        {
+          "path": "tasks/dbt-fix-product-metrics/environment/Dockerfile",
+          "sha256": "02dd6aaed5521786eae26e416c1242cb4b001e12818b4dc88512eb05c362fca6",
+          "bytes": 55
+        },
+        {
+          "path": "tasks/dbt-fix-product-metrics/instruction.md",
+          "sha256": "2eee9535f22a638d689f1f837e00fa0048a43b2f791317558a4e56a398503da4",
+          "bytes": 3357
+        },
+        {
+          "path": "tasks/dbt-fix-product-metrics/task.toml",
+          "sha256": "878488ba355b0528a3ef33f087ad54ee3fd1d642faa6562aeed6c00fb2d40f79",
+          "bytes": 1213
+        }
+      ],
+      "preparation": {
+        "task_id": "dbt-fix-product-metrics",
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "mode": "native-adapted-public-development-case",
+        "project_dir": "D:\\DataPatch-work\\public-core-acceptance-20261026\\product\\project",
+        "database_path": "D:\\DataPatch-work\\public-core-acceptance-20261026\\product\\database\\retail.duckdb",
+        "model": "models/marts/product/fct_product_metrics.sql",
+        "initialized": true,
+        "task_type": "create-model",
+        "initialization_selectors": [
+          "stg_orders__order_lines",
+          "stg_orders__orders",
+          "stg_product__product_variants",
+          "stg_product__products"
+        ],
+        "bug_overlay": null,
+        "base_build": "declared staging inputs and ancestors",
+        "runtime": {
+          "python": "3.12.2",
+          "platform": "win32",
+          "duckdb": "1.5.6",
+          "dbt-core": "1.12.6",
+          "dbt-duckdb": "1.11.0"
+        },
+        "path_translations": {
+          "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\product\\project",
+          "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\product\\database\\retail.duckdb"
+        },
+        "official_harbor_result": false,
+        "hidden_verifier_used_by_agent": false
+      },
+      "applied_patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+      "project_quality": {
+        "build": {
+          "success": true,
+          "returncode": 0,
+          "stdout": "{\"success\": true, \"exception\": null}\n",
+          "stderr": "",
+          "elapsed_seconds": 32.016,
+          "nodes": [
+            {
+              "id": "model.retail_dw_master.fct_product_metrics",
+              "status": "success",
+              "message": "OK"
+            }
+          ],
+          "process_success": true,
+          "target_model": "fct_product_metrics",
+          "target_model_ids": [
+            "model.retail_dw_master.fct_product_metrics"
+          ],
+          "target_model_success": true
+        },
+        "build_required": true,
+        "role": "required acceptance gate"
+      },
+      "artifacts": {
+        "build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-product-metrics\\build.json",
+        "dependency_build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-product-metrics\\dependency_build.json",
+        "verifier_directory": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-product-metrics",
+        "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-product-metrics\\product-evaluation.json"
+      },
+      "raw_verifier": {
+        "task_id": "dbt-fix-product-metrics",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test_outputs.py",
+        "original_sha256": "722cb0cc17a43c2d77016b93bbba435bd1d0b8f2fb0414352ada9f5cab473da0",
+        "adapted_sha256": "bf611db752df89a3cf0788af844ba2ed5cc747e89ead4e0d537c946051202542",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [],
+        "components_failed": [],
+        "grading_protocol": "pytest_exit_status",
+        "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-product-metrics/tests/test.sh",
+        "scoring_source_sha256": "40ccf3e00f0e4a67193ac6da7453a781eb2ae53c9ee16d969cdece76d04e0cf3",
+        "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+        "pytest_counts": {
+          "passed": 11,
+          "failed": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "pytest_returncode": 0,
+        "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- $PROJECT\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: $PROJECT\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 11 items\n\ntest_outputs_product.py::test_product_revenue_matches_order_lines PASSED [  9%]\ntest_outputs_product.py::test_data_quality_check_2 PASSED                [ 18%]\ntest_outputs_product.py::test_units_sold_accuracy PASSED                 [ 27%]\ntest_outputs_product.py::test_order_count_accuracy PASSED                [ 36%]\ntest_outputs_product.py::test_model_structure_preserved PASSED           [ 45%]\ntest_outputs_product.py::test_variant_counts_match PASSED                [ 54%]\ntest_outputs_product.py::test_no_negative_values PASSED                  [ 63%]\ntest_outputs_product.py::test_all_products_present PASSED                [ 72%]\ntest_outputs_product.py::test_no_cancelled_orders_included PASSED        [ 81%]\ntest_outputs_product.py::test_product_count_matches_source PASSED        [ 90%]\ntest_outputs_product.py::test_avg_unit_price_formula PASSED              [100%]\n\n============================= 11 passed in 1.07s ==============================\n",
+        "stderr": ""
+      },
+      "elapsed_seconds": 206.843
+    },
+    {
+      "task_id": "dbt-fix-refund-reconciliation",
+      "patch_origin": "operator_reviewed",
+      "zero_api_calls": true,
+      "patch_source": "$PROJECT\\examples\\public_fixes\\dbt-fix-refund-reconciliation.sql",
+      "patch_sha256": "249115f1c66a82cc4ce674ddd173f4db229520ad6913e30a970d2b0d7c04c73b",
+      "model_path": "models/marts/sales/rpt_return_reconciliation.sql",
+      "case_directory": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund",
+      "status": "completed",
+      "dependency_build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 32.094,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.stg_orders__returns",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_orders__return_lines",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.rpt_return_reconciliation",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_return_reconciliation",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_return_reconciliation"
+        ],
+        "target_model_success": true
+      },
+      "build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 32.282,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.rpt_return_reconciliation",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_return_reconciliation",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_return_reconciliation"
+        ],
+        "target_model_success": true
+      },
+      "verification": {
+        "passed": true,
+        "acceptance_policy": "dbt_build",
+        "build_required": true,
+        "target_materialization_success": true,
+        "dependency_build_success": true,
+        "original_tests_passed": true,
+        "reward": 1.0,
+        "grading_protocol": "component_reward_json"
+      },
+      "errors": [],
+      "input_files": [
+        {
+          "path": "tasks/dbt-fix-refund-reconciliation/environment/Dockerfile",
+          "sha256": "4205ca0475b2a00d0b2ea742bfe17de7c578de4a4da01a23f3327dbbe02cb2d1",
+          "bytes": 328
+        },
+        {
+          "path": "tasks/dbt-fix-refund-reconciliation/environment/data/rpt_return_reconciliation.sql",
+          "sha256": "bea7982354b4a54a6c5a2ce0e255036977c31abb168ffc90935c784207c74b19",
+          "bytes": 1830
+        },
+        {
+          "path": "tasks/dbt-fix-refund-reconciliation/instruction.md",
+          "sha256": "35d7ba11e3a09e3c49747e57b559d416cf5bccba45c617784b6e374984b02db1",
+          "bytes": 5653
+        },
+        {
+          "path": "tasks/dbt-fix-refund-reconciliation/task.toml",
+          "sha256": "a4508534371a712c999a17022b05d2c0d4a0d8aae197b6da976f0c65b2dee208",
+          "bytes": 1218
+        }
+      ],
+      "preparation": {
+        "task_id": "dbt-fix-refund-reconciliation",
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "mode": "native-adapted-public-development-case",
+        "project_dir": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\project",
+        "database_path": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\database\\retail.duckdb",
+        "model": "models/marts/sales/rpt_return_reconciliation.sql",
+        "initialized": true,
+        "task_type": "fix-model",
+        "initialization_selectors": [
+          "rpt_return_reconciliation"
+        ],
+        "bug_overlay": "environment/data/rpt_return_reconciliation.sql",
+        "base_build": "selected model and ancestors",
+        "runtime": {
+          "python": "3.12.2",
+          "platform": "win32",
+          "duckdb": "1.5.6",
+          "dbt-core": "1.12.6",
+          "dbt-duckdb": "1.11.0"
+        },
+        "path_translations": {
+          "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\project",
+          "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\database\\retail.duckdb"
+        },
+        "official_harbor_result": false,
+        "hidden_verifier_used_by_agent": false
+      },
+      "applied_patch_sha256": "249115f1c66a82cc4ce674ddd173f4db229520ad6913e30a970d2b0d7c04c73b",
+      "project_quality": {
+        "build": {
+          "success": true,
+          "returncode": 0,
+          "stdout": "{\"success\": true, \"exception\": null}\n",
+          "stderr": "",
+          "elapsed_seconds": 32.282,
+          "nodes": [
+            {
+              "id": "model.retail_dw_master.rpt_return_reconciliation",
+              "status": "success",
+              "message": "OK"
+            }
+          ],
+          "process_success": true,
+          "target_model": "rpt_return_reconciliation",
+          "target_model_ids": [
+            "model.retail_dw_master.rpt_return_reconciliation"
+          ],
+          "target_model_success": true
+        },
+        "build_required": true,
+        "role": "required acceptance gate"
+      },
+      "artifacts": {
+        "build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-refund-reconciliation\\build.json",
+        "dependency_build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-refund-reconciliation\\dependency_build.json",
+        "verifier_directory": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-refund-reconciliation",
+        "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-refund-reconciliation\\refund-evaluation.json"
+      },
+      "raw_verifier": {
+        "task_id": "dbt-fix-refund-reconciliation",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-refund-reconciliation/tests/test_outputs.py",
+        "original_sha256": "071dc4cf774ddd7c603eaa03744b3133f1dee664cf3425b3d5991724bdbf7502",
+        "adapted_sha256": "d6b8e2183e684774d850fd98ff70f40cc936d0160731b22265e14913e6b7bf28",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_required_columns",
+          "component_5_valid_tier_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_8_waterfall_tier_logic",
+          "component_9_refund_completion_rate_formula",
+          "component_10_no_inf_nan_all_numeric_columns",
+          "component_11_tier_boundary_testing",
+          "component_12_days_non_negative",
+          "component_13_total_processing_days_consistency"
+        ],
+        "components_failed": [],
+        "grading_protocol": "component_reward_json",
+        "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m06:48:27  Running with dbt=1.12.6\n\u001b[0m06:48:32  Installing dbt-labs/dbt_utils\n\u001b[0m06:48:36  Installed from version 1.3.3\n\u001b[0m06:48:36  Updated version available: 1.4.1\n\u001b[0m06:48:36  \n\u001b[0m06:48:36  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_return_reconciliation\nSTDOUT: \u001b[0m06:48:46  Running with dbt=1.12.6\n\u001b[0m06:48:47  Registered adapter: duckdb=1.11.0\n\u001b[0m06:48:54  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging.sap\n\u001b[0m06:48:59  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:48:59  \n\u001b[0m06:48:59  Concurrency: 4 threads (target='dev')\n\u001b[0m06:48:59  \n\u001b[0m06:49:02  1 of 1 START sql table model main.rpt_return_reconciliation .................... [RUN]\n\u001b[0m06:49:03  1 of 1 OK created sql table model main.rpt_return_reconciliation ............... [\u001b[32mOK\u001b[0m in 0.48s]\n\u001b[0m06:49:03  \n\u001b[0m06:49:03  Finished running 1 table model in 0 hours 0 minutes and 4.05 seconds (4.05s).\n\u001b[0m06:49:06  \n\u001b[0m06:49:06  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:49:06  \n\u001b[0m06:49:06  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_required_columns\nPASS: component_5_valid_tier_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nPASS: component_8_waterfall_tier_logic\nPASS: component_9_refund_completion_rate_formula\nPASS: component_10_no_inf_nan_all_numeric_columns\nPASS: component_11_tier_boundary_testing\nPASS: component_12_days_non_negative\nPASS: component_13_total_processing_days_consistency\n\nFinal Score: 1.0\n.\n1 passed in 61.36s (0:01:01)\n",
+        "stderr": ""
+      },
+      "elapsed_seconds": 254.672
+    },
+    {
+      "task_id": "dbt-fix-division-by-zero",
+      "patch_origin": "operator_reviewed",
+      "zero_api_calls": true,
+      "patch_source": "$PROJECT\\examples\\public_fixes\\dbt-fix-division-by-zero.sql",
+      "patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+      "model_path": "models/marts/customer/rpt_customer_metrics.sql",
+      "case_directory": "D:\\DataPatch-work\\public-core-acceptance-20261026\\division",
+      "status": "completed",
+      "dependency_build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 32.343,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.stg_pos__transactions",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_sap__vbak",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.int_sales__orders_enriched",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.rpt_customer_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_customer_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_customer_metrics"
+        ],
+        "target_model_success": true
+      },
+      "build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 31.0,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.rpt_customer_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_customer_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_customer_metrics"
+        ],
+        "target_model_success": true
+      },
+      "verification": {
+        "passed": true,
+        "acceptance_policy": "dbt_build",
+        "build_required": true,
+        "target_materialization_success": true,
+        "dependency_build_success": true,
+        "original_tests_passed": true,
+        "reward": 1.0,
+        "grading_protocol": "component_reward_json"
+      },
+      "errors": [],
+      "input_files": [
+        {
+          "path": "tasks/dbt-fix-division-by-zero/environment/Dockerfile",
+          "sha256": "84e19e16dee6bf2b185dc7f7bd1ae5b32c542142a92e11dcdacf9420fc38a5f5",
+          "bytes": 314
+        },
+        {
+          "path": "tasks/dbt-fix-division-by-zero/environment/data/rpt_customer_metrics.sql",
+          "sha256": "7d0cd9778c9c405d93547bc7775c5974dcce2762c1aa7c6bd4d5102cabd99dbc",
+          "bytes": 1601
+        },
+        {
+          "path": "tasks/dbt-fix-division-by-zero/instruction.md",
+          "sha256": "d0eb0021ae39e5292f716a6503ae1a53e283772b7166acee23937acad99227b6",
+          "bytes": 10227
+        },
+        {
+          "path": "tasks/dbt-fix-division-by-zero/task.toml",
+          "sha256": "a78bffe51bac58a52cc55d65da7b5158ebd2e0caa707871bf2a468643c92c68a",
+          "bytes": 1196
+        }
+      ],
+      "preparation": {
+        "task_id": "dbt-fix-division-by-zero",
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "mode": "native-adapted-public-development-case",
+        "project_dir": "D:\\DataPatch-work\\public-core-acceptance-20261026\\division\\project",
+        "database_path": "D:\\DataPatch-work\\public-core-acceptance-20261026\\division\\database\\retail.duckdb",
+        "model": "models/marts/customer/rpt_customer_metrics.sql",
+        "initialized": true,
+        "task_type": "fix-model",
+        "initialization_selectors": [
+          "rpt_customer_metrics"
+        ],
+        "bug_overlay": "environment/data/rpt_customer_metrics.sql",
+        "base_build": "selected model and ancestors",
+        "runtime": {
+          "python": "3.12.2",
+          "platform": "win32",
+          "duckdb": "1.5.6",
+          "dbt-core": "1.12.6",
+          "dbt-duckdb": "1.11.0"
+        },
+        "path_translations": {
+          "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\division\\project",
+          "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\division\\database\\retail.duckdb"
+        },
+        "official_harbor_result": false,
+        "hidden_verifier_used_by_agent": false
+      },
+      "applied_patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+      "project_quality": {
+        "build": {
+          "success": true,
+          "returncode": 0,
+          "stdout": "{\"success\": true, \"exception\": null}\n",
+          "stderr": "",
+          "elapsed_seconds": 31.0,
+          "nodes": [
+            {
+              "id": "model.retail_dw_master.rpt_customer_metrics",
+              "status": "success",
+              "message": "OK"
+            }
+          ],
+          "process_success": true,
+          "target_model": "rpt_customer_metrics",
+          "target_model_ids": [
+            "model.retail_dw_master.rpt_customer_metrics"
+          ],
+          "target_model_success": true
+        },
+        "build_required": true,
+        "role": "required acceptance gate"
+      },
+      "artifacts": {
+        "build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-division-by-zero\\build.json",
+        "dependency_build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-division-by-zero\\dependency_build.json",
+        "verifier_directory": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-division-by-zero",
+        "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-division-by-zero\\division-evaluation.json"
+      },
+      "raw_verifier": {
+        "task_id": "dbt-fix-division-by-zero",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-division-by-zero/tests/test_outputs.py",
+        "original_sha256": "3e47cc9167605bde35138bfe57f33987fc63775d791c8d7c7518638b52e80418",
+        "adapted_sha256": "635b122c6d6114590af211f54e5832f60f4470d90512bc89788a42bfc6c540f3",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_ltv_tier_exists",
+          "component_5_ltv_tier_valid_values",
+          "component_6_uses_window_function",
+          "component_7_tier_distribution",
+          "component_8_new_columns_exist",
+          "component_9_engagement_score_formula",
+          "component_10_churn_risk_score_formula",
+          "component_11_engagement_score_bounds",
+          "component_12_churn_risk_score_bounds",
+          "component_13_customer_value_rank",
+          "component_14_above_median_revenue",
+          "component_15_ltv_tier_waterfall_logic"
+        ],
+        "components_failed": [],
+        "grading_protocol": "component_reward_json",
+        "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m06:52:44  Running with dbt=1.12.6\n\u001b[0m06:52:49  Installing dbt-labs/dbt_utils\n\u001b[0m06:52:53  Installed from version 1.3.3\n\u001b[0m06:52:53  Updated version available: 1.4.1\n\u001b[0m06:52:53  \n\u001b[0m06:52:53  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_customer_metrics\nSTDOUT: \u001b[0m06:53:02  Running with dbt=1.12.6\n\u001b[0m06:53:03  Registered adapter: duckdb=1.11.0\n\u001b[0m06:53:11  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.intermediate\n\u001b[0m06:53:16  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:53:16  \n\u001b[0m06:53:16  Concurrency: 4 threads (target='dev')\n\u001b[0m06:53:16  \n\u001b[0m06:53:19  1 of 1 START sql table model main.rpt_customer_metrics ......................... [RUN]\n\u001b[0m06:53:20  1 of 1 OK created sql table model main.rpt_customer_metrics .................... [\u001b[32mOK\u001b[0m in 0.50s]\n\u001b[0m06:53:20  \n\u001b[0m06:53:20  Finished running 1 table model in 0 hours 0 minutes and 3.98 seconds (3.98s).\n\u001b[0m06:53:22  \n\u001b[0m06:53:22  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:53:22  \n\u001b[0m06:53:22  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_ltv_tier_exists\nPASS: component_5_ltv_tier_valid_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nPASS: component_8_new_columns_exist\nPASS: component_9_engagement_score_formula\nPASS: component_10_churn_risk_score_formula\nPASS: component_11_engagement_score_bounds\nPASS: component_12_churn_risk_score_bounds\nPASS: component_13_customer_value_rank\nPASS: component_14_above_median_revenue\nPASS: component_15_ltv_tier_waterfall_logic\n\nFinal Score: 1.0\n.\n1 passed in 64.04s (0:01:04)\n",
+        "stderr": ""
+      },
+      "elapsed_seconds": 258.766
+    },
+    {
+      "task_id": "dbt-fix-inventory-model",
+      "patch_origin": "operator_reviewed",
+      "zero_api_calls": true,
+      "patch_source": "$PROJECT\\examples\\public_fixes\\dbt-fix-inventory-model.sql",
+      "patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+      "model_path": "models/marts/inventory/rpt_product_inventory_metrics.sql",
+      "case_directory": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory",
+      "status": "completed",
+      "dependency_build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 31.062,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.stg_inventory__inventory_levels",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.stg_inventory__inventory_transactions",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_product_inventory_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_product_inventory_metrics"
+        ],
+        "target_model_success": true
+      },
+      "build": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 29.562,
+        "nodes": [
+          {
+            "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+            "status": "success",
+            "message": "OK"
+          }
+        ],
+        "process_success": true,
+        "target_model": "rpt_product_inventory_metrics",
+        "target_model_ids": [
+          "model.retail_dw_master.rpt_product_inventory_metrics"
+        ],
+        "target_model_success": true
+      },
+      "verification": {
+        "passed": true,
+        "acceptance_policy": "dbt_build",
+        "build_required": true,
+        "target_materialization_success": true,
+        "dependency_build_success": true,
+        "original_tests_passed": true,
+        "reward": 1.0,
+        "grading_protocol": "component_reward_json"
+      },
+      "errors": [],
+      "input_files": [
+        {
+          "path": "tasks/dbt-fix-inventory-model/environment/Dockerfile",
+          "sha256": "d1c2a56480a4172d9c7441257f78254d435431b65e9d499b25a7a5f336f73364",
+          "bytes": 352
+        },
+        {
+          "path": "tasks/dbt-fix-inventory-model/environment/data/rpt_product_inventory_metrics.sql",
+          "sha256": "1bb5a50d75d7e0a6f0874f497a663d0c12b4cfe4fde0203ec72a281a52b2b013",
+          "bytes": 5717
+        },
+        {
+          "path": "tasks/dbt-fix-inventory-model/instruction.md",
+          "sha256": "35dc801b240758441b6c4806756767d1cf11221d509544af7c57c2743fd6aaa0",
+          "bytes": 4742
+        },
+        {
+          "path": "tasks/dbt-fix-inventory-model/task.toml",
+          "sha256": "3e7580224321a343786f9a3c41231152baee013fb2725564f0f1e5a628cde450",
+          "bytes": 1062
+        }
+      ],
+      "preparation": {
+        "task_id": "dbt-fix-inventory-model",
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "mode": "native-adapted-public-development-case",
+        "project_dir": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\project",
+        "database_path": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\database\\retail.duckdb",
+        "model": "models/marts/inventory/rpt_product_inventory_metrics.sql",
+        "initialized": true,
+        "task_type": "fix-model",
+        "initialization_selectors": [
+          "rpt_product_inventory_metrics"
+        ],
+        "bug_overlay": "environment/data/rpt_product_inventory_metrics.sql",
+        "base_build": "selected model and ancestors",
+        "runtime": {
+          "python": "3.12.2",
+          "platform": "win32",
+          "duckdb": "1.5.6",
+          "dbt-core": "1.12.6",
+          "dbt-duckdb": "1.11.0"
+        },
+        "path_translations": {
+          "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\project",
+          "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\inventory\\database\\retail.duckdb"
+        },
+        "official_harbor_result": false,
+        "hidden_verifier_used_by_agent": false
+      },
+      "applied_patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+      "project_quality": {
+        "build": {
+          "success": true,
+          "returncode": 0,
+          "stdout": "{\"success\": true, \"exception\": null}\n",
+          "stderr": "",
+          "elapsed_seconds": 29.562,
+          "nodes": [
+            {
+              "id": "model.retail_dw_master.rpt_product_inventory_metrics",
+              "status": "success",
+              "message": "OK"
+            }
+          ],
+          "process_success": true,
+          "target_model": "rpt_product_inventory_metrics",
+          "target_model_ids": [
+            "model.retail_dw_master.rpt_product_inventory_metrics"
+          ],
+          "target_model_success": true
+        },
+        "build_required": true,
+        "role": "required acceptance gate"
+      },
+      "artifacts": {
+        "build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-inventory-model\\build.json",
+        "dependency_build_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\dbt-fix-inventory-model\\dependency_build.json",
+        "verifier_directory": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-inventory-model",
+        "verifier_report": "$PROJECT\\artifacts\\acceptance\\public_core_recheck_20261026_artifacts\\verifiers\\dbt-fix-inventory-model\\inventory-evaluation.json"
+      },
+      "raw_verifier": {
+        "task_id": "dbt-fix-inventory-model",
+        "mode": "native-path-adapted-upstream-verifier",
+        "official_harbor_result": false,
+        "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+        "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-inventory-model/tests/test_outputs.py",
+        "original_sha256": "a5ce852b9507c04c4235ff8a0c6b5b37a24eda0693e19c2ad0e77355d09a5f37",
+        "adapted_sha256": "7d18289c578cdd8cde4d6bf97374bd182a0187ef135934072629ea8843e45304",
+        "path_translation_only": true,
+        "returncode": 0,
+        "reward": 1.0,
+        "components_passed": [
+          "component_1_model_compiles",
+          "component_2_no_inf_nan_values",
+          "component_3_row_count",
+          "component_4_tier_column_exists",
+          "component_5_velocity_score_exists",
+          "component_6_valid_tier_values",
+          "component_7_uses_percent_rank",
+          "component_8_distribution",
+          "component_9_critical_tier_logic",
+          "component_10_healthy_tier_logic",
+          "component_11_velocity_score_range",
+          "component_12_velocity_score_formula"
+        ],
+        "components_failed": [],
+        "grading_protocol": "component_reward_json",
+        "stdout": "CMD: dbt run -s rpt_product_inventory_metrics\nSTDOUT: \u001b[0m06:56:51  Running with dbt=1.12.6\n\u001b[0m06:56:52  Registered adapter: duckdb=1.11.0\n\u001b[0m06:56:59  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.legacy\n\u001b[0m06:57:03  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:57:03  \n\u001b[0m06:57:03  Concurrency: 4 threads (target='dev')\n\u001b[0m06:57:03  \n\u001b[0m06:57:07  1 of 1 START sql view model main.rpt_product_inventory_metrics ................. [RUN]\n\u001b[0m06:57:07  1 of 1 OK created sql view model main.rpt_product_inventory_metrics ............ [\u001b[32mOK\u001b[0m in 0.34s]\n\u001b[0m06:57:07  \n\u001b[0m06:57:07  Finished running 1 view model in 0 hours 0 minutes and 3.52 seconds (3.52s).\n\u001b[0m06:57:10  \n\u001b[0m06:57:10  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:57:10  \n\u001b[0m06:57:10  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_tier_column_exists\nPASS: component_5_velocity_score_exists\nPASS: component_6_valid_tier_values\nPASS: component_7_uses_percent_rank\nPASS: component_8_distribution\nPASS: component_9_critical_tier_logic\nPASS: component_10_healthy_tier_logic\nPASS: component_11_velocity_score_range\nPASS: component_12_velocity_score_formula\n\nFinal Score: 1.0\n.\n1 passed in 43.13s\n",
+        "stderr": ""
+      },
+      "elapsed_seconds": 226.828
+    }
+  ],
+  "limitations": [
+    "Operator-reviewed SQL acceptance is distinct from autonomous Agent results.",
+    "Fixed public development subset under Windows native path adaptation; not an official Harbor score."
+  ],
+  "patch_provenance": {
+    "path": "$PROJECT\\examples\\public_fixes\\provenance.json",
+    "sha256": "7e4da7df1f6297b5e7c9f035dafdfa93162b389fdd04e48c9629f16d22b9677e",
+    "content": {
+      "dbt-fix-refund-reconciliation": {
+        "target": "models/marts/sales/rpt_return_reconciliation.sql",
+        "source_case": "refund-v41-flash-r1",
+        "source_sql_sha256": "84fac0295d3e4d242e12198bc7481ce7c264440468e4c76e949f76e4c6049ed0",
+        "patch_sha256": "249115f1c66a82cc4ce674ddd173f4db229520ad6913e30a970d2b0d7c04c73b",
+        "origin": "actual Flash candidate, reviewed without modification",
+        "reviewed": true,
+        "api_calls_for_this_patch": 0
+      },
+      "dbt-fix-division-by-zero": {
+        "target": "models/marts/customer/rpt_customer_metrics.sql",
+        "source_case": "division-v41-flash-r1",
+        "source_sql_sha256": "7a4bf42d0a3a5366be33210770b33f36bfc61aa05a28bbb485e5cf22e38dbf90",
+        "patch_sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069",
+        "origin": "actual Flash candidate, reviewed without modification",
+        "reviewed": true,
+        "api_calls_for_this_patch": 0
+      },
+      "dbt-fix-inventory-model": {
+        "target": "models/marts/inventory/rpt_product_inventory_metrics.sql",
+        "source_case": "inventory-v41-flash-r1",
+        "source_sql_sha256": "ab45cd1f843f943cb7d88b57544a42ea58b04f8a1ef2d6038a68e0db356593c5",
+        "patch_sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd",
+        "origin": "actual Flash candidate, reviewed without modification",
+        "reviewed": true,
+        "api_calls_for_this_patch": 0
+      },
+      "dbt-fix-product-metrics": {
+        "target": "models/marts/product/fct_product_metrics.sql",
+        "source_case": "product-v41-flash-r2",
+        "source_sql_sha256": "940f829a639716ef0df30510f3c81f97cdb40940f3054b35b21bee7dc208f97a",
+        "patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+        "origin": "actual Flash candidate plus operator-reviewed repair: preserve valid direct product, recover orphan through unambiguous variant mapped to an existing product",
+        "reviewed": true,
+        "api_calls_for_this_patch": 0
+      }
+    }
+  },
+  "summary": {
+    "task_count": 4,
+    "accepted": 4,
+    "not_accepted": 0,
+    "acceptance_rate": 1.0
+  },
+  "status": "completed"
+}

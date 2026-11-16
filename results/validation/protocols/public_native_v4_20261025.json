@@ -1,0 +1,22 @@
+{
+  "name": "public_native_v4_20261025",
+  "task_ids": [
+    "dbt-fix-refund-reconciliation",
+    "dbt-fix-division-by-zero",
+    "dbt-fix-inventory-model",
+    "dbt-fix-product-metrics"
+  ],
+  "mode": "verified",
+  "repeats": 1,
+  "model": "deepseek-v4-pro",
+  "thinking_enabled": true,
+  "reasoning_effort": "high",
+  "max_output_tokens": 16384,
+  "max_steps": 24,
+  "run_budget_usd": 0.6,
+  "input_rate": 1.32,
+  "output_rate": 3.96,
+  "source_sha256": "f1310b46c0b0e0dfd99da322a2c1bd8942ee415f2d0cf8024e93148810c409c6",
+  "new_tasks_selected_before_model_trials": true,
+  "hidden_feedback_to_agent": false
+}

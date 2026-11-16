@@ -1,0 +1,1077 @@
+{
+  "type": "public_contract_repair_audit",
+  "created_at": "2026-10-26T06:24:07.928140+00:00",
+  "audit": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "checks": [
+      {
+        "code": "predeclared_fixed_protocol",
+        "passed": true
+      },
+      {
+        "code": "protocol_before_saved_event_file",
+        "passed": true,
+        "detail": {
+          "protocol_created_at": "2026-10-26T06:15:57.164958+00:00",
+          "event_file_created_at": "2026-10-26T06:16:06.375158+00:00",
+          "basis": "saved protocol timestamp and local filesystem creation time"
+        }
+      },
+      {
+        "code": "one_trial_matrix",
+        "passed": true
+      },
+      {
+        "code": "assistance_explicit",
+        "passed": true
+      },
+      {
+        "code": "snapshot_archive_binding",
+        "passed": true
+      },
+      {
+        "code": "source_manifest_members",
+        "passed": true
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": ".env.example",
+          "sha256": "d82723eaee4bf6bc74245a7e28189d2a08569839a79080c11ab4da7f860cf8da"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "Dockerfile",
+          "sha256": "4594724da1da82b957cde1d3ace7f7ede5b88dc1e60b60bc178b4fd4b1f679d7"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "LICENSE",
+          "sha256": "d951a1019152c4998314e39641036f782c02782c415eb70597331b58c82a8926"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "README.md",
+          "sha256": "233fdc22b343563f8d0f54254414a73447676d0df33ad90861de039ad96d094b"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "compose.yaml",
+          "sha256": "d8ae2aedc4bd044d52c282e7fc45f10efeb30f4cddb8c169704b3ff79cd0a715"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/ACCEPTANCE.md",
+          "sha256": "e471fe0d301b4390086d8855d30d0dbca3266332d4307ba5c9f7b9080615c8a4"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/CODE_READING.md",
+          "sha256": "ccf18f0051f50ca921f2ae4ee10743257a0cb8040b41ec8f2e4491d337867884"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/COSTS.md",
+          "sha256": "302a7abdc65f2678cbdf2d5983d866f3b263406c2f6c41e4e1b8a5a582f09d5c"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/DEMO.md",
+          "sha256": "a192da470a252869b6677cb1ab2a72879d8e94d3f6333dd1ebe7c74edf33f895"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/EVALUATION_AUDIT.md",
+          "sha256": "85603e8f177e86f5ac33ad462ccd76876bd1da72676a64f9ebad40fb487e31fa"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/EVIDENCE.md",
+          "sha256": "da95c3cad210a50a974f0946d51f821876ec1ac91dc10fcd746341ae7ad9974f"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/FAILURE_ANALYSIS.md",
+          "sha256": "d64f80909d5c39d64fafb88ac61582a76b2b477083e4828ece65f2ede41427f4"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/HANDOFF.md",
+          "sha256": "884cd1967ba30126eb53911726d79d791bf591cfe7ba02dcbe5a5be159c0a11f"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/IMPROVEMENTS.md",
+          "sha256": "1543ea190196a24d0e9379e3973f109be964c6a33f84d3368bf0d4d9b5169b27"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/INTERVIEW.md",
+          "sha256": "2c669478ab58b11a05f84da812fe91fc9f8c858ef574b93f46fefeb68ce07384"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/PUBLIC_BENCHMARK.md",
+          "sha256": "864112f7115dc0299d5a45a786b991cca648a7bb0b22b9de722a5a51ecf30181"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/PUBLIC_EXPANSION.md",
+          "sha256": "8285f1cedde6c04d8ba1bd2641d3734daa9703a8e2f7ad2e2f5a3d6a357516a4"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/PUBLIC_PROJECT_GUIDE.md",
+          "sha256": "315c7d5784eda84e1a45924ddfce45660db2b8cc2569757d318e96a11e836677"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/PUBLIC_REMAINING_ISSUE.md",
+          "sha256": "73d3f0aa0e6bfe2ea1c6cb88e21e167b3ec5c7314c4020488ba75f79c7f6264d"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/PUBLIC_RUNTIME.md",
+          "sha256": "45555884613e9ec0db597cb2f55f4c52a7c7fd09ca8129032c833f0c4c84d6a9"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/RELATIONSHIP_CHECKS.md",
+          "sha256": "8720ff369cb7954917911cbff23516aa6bb1aa60ef3d8de67a04712066fa6a7c"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/RESEARCH_AGENT.md",
+          "sha256": "7f82a40f7e5fbffe3e317e0bcbeb0ed14f7e5c9f0c745c1c6f0557bd2c4feb15"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/RESEARCH_DATA.md",
+          "sha256": "1eefeb05ccbe754612d59733d34097bb64db75903f4da8f61b9eb35079e2d6e0"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/RESEARCH_PRODUCT_EVAL.md",
+          "sha256": "bf7dc25b36b2682692722069b6c6e9142e5cccd2d8bc137a727af742f9d3137d"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "docs/RESULTS.md",
+          "sha256": "b906abf6401385b00f9d6976633d9de5281421696ad604cee1756c76fa29735a"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_contracts/product/README.md",
+          "sha256": "e9f3e44a96db7cecbcbf2bcb36567a52e19ee187323db3136d2482b85ea7fed8"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_contracts/product/product_coverage.sql",
+          "sha256": "45b9dc16dd7aeef2d08ab86d5c99c6cc04f67cf14c8851727852440a46860189"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_contracts/product/sales_totals.sql",
+          "sha256": "ba7b73443236cdd1b78b41a04c55e007b612d236d2279177522835de6ddf4534"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_contracts/product/weighted_price.sql",
+          "sha256": "47bf782d96943609ca1232be937f9eededfa378d531dcb8e6e1691d6353f43c0"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_fixes/README.md",
+          "sha256": "a953705c010e96d192746339406e97ca7e3dda47a6f28341799d87fb41bd3600"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_fixes/dbt-fix-division-by-zero.sql",
+          "sha256": "de9d2d63a04bb77c49972fbcc497801a6b6149577674d956083f13735c245069"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_fixes/dbt-fix-inventory-model.sql",
+          "sha256": "4bb7da67b5aae9e7604b2e0ecb37f0395441ac7af59c581f7259c32259fef7bd"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_fixes/dbt-fix-product-metrics.sql",
+          "sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_fixes/dbt-fix-refund-reconciliation.sql",
+          "sha256": "249115f1c66a82cc4ce674ddd173f4db229520ad6913e30a970d2b0d7c04c73b"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "examples/public_fixes/provenance.json",
+          "sha256": "7e4da7df1f6297b5e7c9f035dafdfa93162b389fdd04e48c9629f16d22b9677e"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "integrations/harbor_agent.py",
+          "sha256": "6368653b117099ace63a408f9c8a206c74fa482cd88a14db7c36cd37143dfc6b"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "pyproject.toml",
+          "sha256": "c1b55782b5f61c8bf0e0ab10029dccab87b8510fb6c7a03986b58c696b3ac955"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "requirements.lock",
+          "sha256": "ddb724bb6263ca892c4d3370444502aa8674f017fe8a82e82f62804a088c6d5f"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/audit_results.py",
+          "sha256": "4769898418755df99988cdab4d430fecf75c1149a06a3a628d9e78f7c9ad36d1"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/export_public_recordings.py",
+          "sha256": "33180385a4188e056a573fa1d1eeb9dc982759f0fd0df418f827d450bc77ba90"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/export_results.py",
+          "sha256": "42ac5d25ac0f1eef8dd28eeba35dabbb496d85b5f76137acc75f0d3dd80a3543"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/export_reviewed_recordings.py",
+          "sha256": "9b5f75af4e86abc547c17ce230157382db037ed3a301b288dedf0bc400b862c6"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/fetch_public_benchmark.py",
+          "sha256": "68611de409c75d2b55865570ef71b06bbcc7e411872889c0f6511f74ac113707"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/finalize_evaluation.py",
+          "sha256": "e22341d4b59948d01dc5e52b915b610e5341f08ac112470639f364ba812e4f2e"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/freeze_source.py",
+          "sha256": "fc23eb079ed1668a12954d600b18b11dc819204af1a5abd28742ad8802a0069a"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/import_recordings.py",
+          "sha256": "daf03a6eaeca4e04d09e5dbf14259c94f519ea82973d77488cc4e7cddffed357"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/run_public_suite.py",
+          "sha256": "886e6dd7a3f2b98f81430627cf57031aa6bbdcbe27911141ceec97075ef63ddf"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "scripts/verify_public_fixes.py",
+          "sha256": "e8d4a206a2a30cd87aa484933c4c52b39f2df04b7488b4534bf5a9f4ec2de481"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/__init__.py",
+          "sha256": "2fbcedc306509267483f8e45feefb2da473514ee4ba5e468f010cc8c45c18e89"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/agent.py",
+          "sha256": "1964d8287e684fa957b928e1d0f7e037eac4eddc8d1eb0260f924404d10ebd49"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/audit.py",
+          "sha256": "f93ffdc3929d6507064278b66744839f822c3c569db42351314177e6b4b9c31f"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/cli.py",
+          "sha256": "2138844512217ab56f4fd4aee8ddd63e15ee2867f8d05da2f8515e057b351d33"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/config.py",
+          "sha256": "b57a014acb8f0741968f39a3b117825a27704af0bf75fc0fa11b1b6163386348"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/context.py",
+          "sha256": "53c4d42a4bacace14ef1caf981d9b0d5bb8988348a090598e67a4e6c7fc5002b"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/dbt_runner.py",
+          "sha256": "632f9ab551de39279616495bb3915863887cb9afd853ab29abd2790a3e004bad"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/evaluation.py",
+          "sha256": "a65b8c56b7a1c2ed696b39ac5adf089bb638fda66fe527410b5b13f659bc2d5b"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/evidence.py",
+          "sha256": "470b03e1f57903d2d736354def2b882a19c7269af702f64bdf4539cd99cf5752"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/fixtures.py",
+          "sha256": "7b3e40d3997c7f68cc9ccfc7e9b18e613f760f740bf4e808f49ba99d5f5c5cdf"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/provider.py",
+          "sha256": "65075ea64381df11dfdd3114c57d5d437fb08cbd40fa4db53251d681974877c7"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/review.py",
+          "sha256": "ff95e4c31fab714f2ce479b90928c0e3c8ca98959ef42fc12609a32a0a0a87b2"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/service.py",
+          "sha256": "fbb4ac9518a9a523346cc69ef24235fa0fff4a91cafb11308694f4e5d3bb5090"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/static/app.js",
+          "sha256": "584f1683e9c949802883508279b9306954da83a9f59193254b4d73de0d7db4aa"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/static/index.html",
+          "sha256": "ad32d01c42ee32362332935b4e119ae076d7271991a6328bfeb4653bb057e4a1"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/static/style.css",
+          "sha256": "b475f9fd212d202c114c149bf08df01bf46bad8aa2f8ce25a2392ba5a7d04aa8"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/web.py",
+          "sha256": "66be7be5fe85a80873769953abb98f434ee149224979d077687071172e87f398"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "src/datapatch/workspace.py",
+          "sha256": "295044f578dac12b3c6c843fb7851b10eeffc47a30a098f0ad802fec16c79614"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tasks/README.md",
+          "sha256": "ef8b599ffc1e3321ef101f33b22b198e55f50de78611f3da488b34b6199d2321"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_agent.py",
+          "sha256": "2e2e1242d719e96ea582f610229db18d3eb7865eb5750e769cd5b77a900ddf29"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_audit.py",
+          "sha256": "f0b5be62ef9a455b8a684f1f4b5e83e5b74dc3b3f66ac8db34a054855e1a26ea"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_context.py",
+          "sha256": "4f15d07307a67eab06318c714bf91c17b2c7972d94520936005b2c0010975c97"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_evidence.py",
+          "sha256": "1009dcf3cefdd67da17036cd8d986522436d19731823965ed05808554314d422"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_fixtures.py",
+          "sha256": "d5b64d7aea4ffd18d3eb3f678eb1fa275bb06b3d0bcd99e9fb21bf168022d750"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_persistence.py",
+          "sha256": "06401eec463ddb6cdbf76ccf83d3249155dd24214943d19b84a183e959955878"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_provider.py",
+          "sha256": "70fb78f7db131a8efdd436be9efc49d818bb0023c0e7c05a717b8b777fb48e55"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_public_adapter.py",
+          "sha256": "86e77e913b90296a23662803cbc3e831563c91f4134ef9afcc3ff125cf8d392c"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_public_fixes.py",
+          "sha256": "7b9debcb4ea4b91f16538385e93ad9982af1e0734dd5e6c22aba0464488eb119"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_public_recordings.py",
+          "sha256": "1e4230fcf2754d191dd7209cf262dc3d046d446aee554f870bf0a69b3fdd59ba"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_public_suite.py",
+          "sha256": "f0fa3af324b8e37e2cde9f9cc67553490715b50b79ed9cd87147057ffd5dbca0"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_reasoning.py",
+          "sha256": "ae127abdced6cf1d6f776fab0d9517bb61f979771e7cd377ab3fa6e31ebe7bd8"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_review.py",
+          "sha256": "fe3bb6c116e916f0deea746c45b945236e2ff198eac11ea355129ca4164fae0a"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_review_loop.py",
+          "sha256": "5578b80ca1f7f7814a4466c32a105a237d068daf311f1efeba9fae82191c58a2"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_reviewed_recordings.py",
+          "sha256": "932411189f4693a809dc23e43def008fef9e289df5d489ca26c7581caf7f3c8e"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_service.py",
+          "sha256": "6cc15e24ecbe433841e3563df097c437d48e6666990000676118903a00960f3d"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_web.py",
+          "sha256": "809850bb788cbdf4f30fa5163c94cffe60da2bbfb0b8a8d2ea2dbe4c82eb3b48"
+        }
+      },
+      {
+        "code": "frozen_file_sha256",
+        "passed": true,
+        "detail": {
+          "path": "tests/test_workspace.py",
+          "sha256": "f4926acb65704c0acb01e7b3adde2baec52a6444806893e41dcf63283116c5d3"
+        }
+      },
+      {
+        "code": "frozen_core_binding",
+        "passed": true
+      },
+      {
+        "code": "contract_manifest_transmission",
+        "passed": true
+      },
+      {
+        "code": "contract_allowlist",
+        "passed": true
+      },
+      {
+        "code": "pinned_v1_contract_bytes",
+        "passed": true,
+        "detail": {
+          "file": "product_coverage.sql",
+          "sha256": "45b9dc16dd7aeef2d08ab86d5c99c6cc04f67cf14c8851727852440a46860189"
+        }
+      },
+      {
+        "code": "pinned_v1_contract_bytes",
+        "passed": true,
+        "detail": {
+          "file": "sales_totals.sql",
+          "sha256": "ba7b73443236cdd1b78b41a04c55e007b612d236d2279177522835de6ddf4534"
+        }
+      },
+      {
+        "code": "pinned_v1_contract_bytes",
+        "passed": true,
+        "detail": {
+          "file": "weighted_price.sql",
+          "sha256": "47bf782d96943609ca1232be937f9eededfa378d531dcb8e6e1691d6353f43c0"
+        }
+      },
+      {
+        "code": "pinned_v1_contract_bytes",
+        "passed": true,
+        "detail": {
+          "file": "README.md",
+          "sha256": "e9f3e44a96db7cecbcbf2bcb36567a52e19ee187323db3136d2482b85ea7fed8"
+        }
+      },
+      {
+        "code": "instruction_only_visible_contract_append",
+        "passed": true
+      },
+      {
+        "code": "no_verifier_or_reference_in_solver_instruction",
+        "passed": true
+      },
+      {
+        "code": "failed_candidate_continuation_start",
+        "passed": true
+      },
+      {
+        "code": "prior_candidate_really_failed",
+        "passed": true
+      },
+      {
+        "code": "no_hidden_verifier_files_in_case",
+        "passed": true
+      },
+      {
+        "code": "four_real_saved_flash_responses",
+        "passed": true
+      },
+      {
+        "code": "generation_configuration",
+        "passed": true
+      },
+      {
+        "code": "response_usage_consistency",
+        "passed": true,
+        "detail": {
+          "call": 1,
+          "response_id": "435aba95-4f3c-435b-b1d6-c44dc051324a",
+          "usage": {
+            "prompt_tokens": 12767,
+            "completion_tokens": 86,
+            "total_tokens": 12853,
+            "prompt_tokens_details": {
+              "cached_tokens": 1280
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "prompt_cache_hit_tokens": 1280,
+            "prompt_cache_miss_tokens": 11487
+          }
+        }
+      },
+      {
+        "code": "response_usage_consistency",
+        "passed": true,
+        "detail": {
+          "call": 2,
+          "response_id": "f3829f75-e72f-49f1-8a8a-73059c73f4f7",
+          "usage": {
+            "prompt_tokens": 14271,
+            "completion_tokens": 115,
+            "total_tokens": 14386,
+            "prompt_tokens_details": {
+              "cached_tokens": 12800
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 6
+            },
+            "prompt_cache_hit_tokens": 12800,
+            "prompt_cache_miss_tokens": 1471
+          }
+        }
+      },
+      {
+        "code": "response_usage_consistency",
+        "passed": true,
+        "detail": {
+          "call": 3,
+          "response_id": "527328dd-2e47-448f-8ecf-4b28d4cec59e",
+          "usage": {
+            "prompt_tokens": 15006,
+            "completion_tokens": 1885,
+            "total_tokens": 16891,
+            "prompt_tokens_details": {
+              "cached_tokens": 14336
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 1539
+            },
+            "prompt_cache_hit_tokens": 14336,
+            "prompt_cache_miss_tokens": 670
+          }
+        }
+      },
+      {
+        "code": "response_usage_consistency",
+        "passed": true,
+        "detail": {
+          "call": 4,
+          "response_id": "3398ac65-dfe4-4dc8-add2-00bb8af87151",
+          "usage": {
+            "prompt_tokens": 17050,
+            "completion_tokens": 1275,
+            "total_tokens": 18325,
+            "prompt_tokens_details": {
+              "cached_tokens": 16768
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 184
+            },
+            "prompt_cache_hit_tokens": 16768,
+            "prompt_cache_miss_tokens": 282
+          }
+        }
+      },
+      {
+        "code": "usage_aggregation",
+        "passed": true
+      },
+      {
+        "code": "observed_tool_access_scope",
+        "passed": true,
+        "detail": {
+          "name": "read_file",
+          "path": "checks/README.md"
+        }
+      },
+      {
+        "code": "observed_tool_access_scope",
+        "passed": true,
+        "detail": {
+          "name": "read_file",
+          "path": "instruction.md"
+        }
+      },
+      {
+        "code": "observed_tool_access_scope",
+        "passed": true,
+        "detail": {
+          "name": "read_file",
+          "path": "checks/product_coverage.sql"
+        }
+      },
+      {
+        "code": "observed_tool_access_scope",
+        "passed": true,
+        "detail": {
+          "name": "read_file",
+          "path": "checks/sales_totals.sql"
+        }
+      },
+      {
+        "code": "observed_tool_access_scope",
+        "passed": true,
+        "detail": {
+          "name": "read_file",
+          "path": "checks/weighted_price.sql"
+        }
+      },
+      {
+        "code": "observed_tool_access_scope",
+        "passed": true,
+        "detail": {
+          "name": "query_sql",
+          "path": null
+        }
+      },
+      {
+        "code": "observed_tool_access_scope",
+        "passed": true,
+        "detail": {
+          "name": "write_model",
+          "path": "project/models/marts/product/fct_product_metrics.sql"
+        }
+      },
+      {
+        "code": "no_reference_or_hidden_access_logged",
+        "passed": true
+      },
+      {
+        "code": "actual_model_patch_written",
+        "passed": true
+      },
+      {
+        "code": "patch_matches_continuation_diff",
+        "passed": true
+      },
+      {
+        "code": "step_limit_preserved",
+        "passed": true
+      },
+      {
+        "code": "real_requested_target_build",
+        "passed": true
+      },
+      {
+        "code": "original_verifier_archive",
+        "passed": true
+      },
+      {
+        "code": "verifier_actual_byte_hashes",
+        "passed": true
+      },
+      {
+        "code": "actual_eleven_pytest_passes",
+        "passed": true
+      },
+      {
+        "code": "summary_keeps_actual_success",
+        "passed": true
+      },
+      {
+        "code": "estimated_cost_from_saved_usage",
+        "passed": true
+      },
+      {
+        "code": "combined_trial_budget",
+        "passed": true,
+        "detail": {
+          "prior_usd": "0.07626",
+          "repair_usd": "0.021761",
+          "combined_usd": "0.098021",
+          "limit_usd": ".125",
+          "repair_from_unrounded_usage_usd": "0.0217614",
+          "cost_is_estimate": true
+        }
+      },
+      {
+        "code": "historical_ninety_runs_unchanged",
+        "passed": true
+      },
+      {
+        "code": "prior_recordings_unchanged",
+        "passed": true
+      },
+      {
+        "code": "real_replay_export_and_import",
+        "passed": true,
+        "detail": {
+          "version": "v42",
+          "run_id": "2b00dac4-a0de-574a-a9ee-c2874180b528",
+          "path_normalization": "Only originating Windows/POSIX workspace prefix becomes $PROJECT; raw verifier contents otherwise equal."
+        }
+      },
+      {
+        "code": "real_replay_export_and_import",
+        "passed": true,
+        "detail": {
+          "version": "v43",
+          "run_id": "b0a054d0-8c8d-576f-9be4-f9445f271a3a",
+          "path_normalization": "Only originating Windows/POSIX workspace prefix becomes $PROJECT; raw verifier contents otherwise equal."
+        }
+      },
+      {
+        "code": "edge_read_only_replay",
+        "passed": true
+      },
+      {
+        "code": "edge_v43_assisted_label_and_evidence",
+        "passed": true
+      },
+      {
+        "code": "original_evidence_unchanged",
+        "passed": true
+      }
+    ]
+  },
+  "evidence": {
+    "protocol": "$PROJECT\\artifacts\\protocols\\v43_contract_repair_20261026.json",
+    "protocol_sha256": "b2688185bafb9c831ab2aca996769960fe6a9c1da6b0f6aaa0982ec4dcde509f",
+    "evaluation": "$PROJECT\\artifacts\\evaluations\\v43_contract_repair_20261026.json",
+    "evaluation_sha256": "aff270b1f5ddb08777d0e6e64ae3839cf5824a113c9d71359d02cc50eda38a97",
+    "source_snapshot": "$PROJECT\\artifacts\\evaluations\\v43_contract_repair_20261026_source.zip",
+    "source_snapshot_sha256": "1b9da8883bcd6b1151f467dcd26016711f44ac9f90f200c368706d68ca15414c",
+    "frozen_file_count": 85,
+    "core_source_sha256": "b413c4c287007657d5f3d2b19ae329e23b4ac941ef0bb660283fab2ebebec2cf",
+    "contract_version": "v1 (frozen trial copy; current external template is v2)",
+    "starting_candidate_sha256": "5ebd30cffd9e8ac4adb9c38276e3d03732d867f4d56f793435b2722c3dc74222",
+    "reviewed_patch_sha256": "6da36006dcfe086063b58ccf36a06f7a00c990d73d914ff0e1e3fccc8e669606",
+    "solver_instruction_sha256": "3afcc979d3424479ce8e1d4a230b0af798d4bf7d3a01e4b1bce6dee25f45114f",
+    "model_response_ids": [
+      "435aba95-4f3c-435b-b1d6-c44dc051324a",
+      "f3829f75-e72f-49f1-8a8a-73059c73f4f7",
+      "527328dd-2e47-448f-8ecf-4b28d4cec59e",
+      "3398ac65-dfe4-4dc8-add2-00bb8af87151"
+    ],
+    "usage": {
+      "prompt_tokens": 59094,
+      "completion_tokens": 3361,
+      "total_tokens": 62455
+    },
+    "repair_cost_estimate_usd": 0.021761,
+    "prior_cost_estimate_usd": 0.07626,
+    "combined_cost_estimate_usd": 0.098021,
+    "combined_limit_usd": 0.125,
+    "stop_reason": "step_limit",
+    "original_pytest_counts": {
+      "passed": 11,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "replay_ids": {
+      "v42": "2b00dac4-a0de-574a-a9ee-c2874180b528",
+      "v43": "b0a054d0-8c8d-576f-9be4-f9445f271a3a"
+    },
+    "historical_run_count": 90,
+    "current_run_count": 92,
+    "edge_artifact": "artifacts/audits/v43_replay_edge_20261026.json"
+  },
+  "limitations": [
+    "Public project-contract-assisted repair continuation from the saved failed Agent candidate; not a fresh unassisted or official Harbor benchmark trial.",
+    "The Agent reached step_limit immediately after writing the patch. Independent post-run target build and original pytest established success; no model_finished or in-loop validation is claimed.",
+    "Saved response IDs, usage and tool events were checked; native execution is not an OS sandbox.",
+    "V1 visible weighted-price contract has a subsequently discovered NULL blind spot. The trial inputs are preserved; the independent original pytest still passed 11/11. V2 template regression tests are a separate later validation."
+  ],
+  "zero_new_model_api_calls": true,
+  "read_only_evidence_verification": true
+}

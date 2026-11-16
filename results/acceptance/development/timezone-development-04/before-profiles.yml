@@ -1,0 +1,8 @@
+retail_dw_master:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: 'D:/DataPatch-work/public-expanded-dev-20261026/timezone/database/retail.duckdb'
+      schema: main
+      threads: 4

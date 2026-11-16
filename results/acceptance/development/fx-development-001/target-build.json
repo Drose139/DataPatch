@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "returncode": 0,
+  "stdout": "{\"success\": true, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 18.234,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.fact_revenue",
+      "status": "success",
+      "message": "OK"
+    }
+  ]
+}

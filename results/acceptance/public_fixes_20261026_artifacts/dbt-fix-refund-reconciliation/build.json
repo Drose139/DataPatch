@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "returncode": 0,
+  "stdout": "{\"success\": true, \"exception\": null}\n",
+  "stderr": "",
+  "elapsed_seconds": 18.812,
+  "nodes": [
+    {
+      "id": "model.retail_dw_master.rpt_return_reconciliation",
+      "status": "success",
+      "message": "OK"
+    }
+  ],
+  "process_success": true,
+  "target_model": "rpt_return_reconciliation",
+  "target_model_ids": [
+    "model.retail_dw_master.rpt_return_reconciliation"
+  ],
+  "target_model_success": true
+}

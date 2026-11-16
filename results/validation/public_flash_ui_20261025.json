@@ -1,0 +1,235 @@
+{
+  "tested_at": "2026-10-25T15:37:20.524Z",
+  "source": "Live local service; completed actual Flash round1 public runs only; no mocks",
+  "source_report": "artifacts/evaluations/v41_flash_round1_20261025.json",
+  "source_report_sha256": "91c006772a87ae670601c886fc07c62b5b8a170d9784f4a58565bb9b133359db",
+  "base_url": "http://127.0.0.1:8000",
+  "generation_requests": 0,
+  "actual_task_result": {
+    "passed": 3,
+    "trials": 4
+  },
+  "checks": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "b0f50ae7-e5f1-55c3-8cb7-4593afcdafeb",
+      "source_run_id": "refund-v41-flash-r1-verified",
+      "task_id": "dbt-fix-refund-reconciliation",
+      "title": "公开项目 · Fix Return Processing Analytics Model",
+      "model": "deepseek-flash",
+      "displayed_status": "验证通过",
+      "independently_passed": true,
+      "stop_reason": "model_finished",
+      "checks": 14,
+      "components_passed": 13,
+      "components_failed": [],
+      "pytest_counts": null,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "904f8b54-db52-5508-ae97-31b6355466aa",
+      "source_run_id": "division-v41-flash-r1-verified",
+      "task_id": "dbt-fix-division-by-zero",
+      "title": "公开项目 · Fix and Enhance Customer Metrics Model",
+      "model": "deepseek-flash",
+      "displayed_status": "验证通过",
+      "independently_passed": true,
+      "stop_reason": "step_limit",
+      "checks": 16,
+      "components_passed": 15,
+      "components_failed": [],
+      "pytest_counts": null,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "f18fa4b5-d81c-5a74-9864-4d8502b9c5b3",
+      "source_run_id": "inventory-v41-flash-r1-verified",
+      "task_id": "dbt-fix-inventory-model",
+      "title": "公开项目 · Fix and Enhance Product Inventory Metrics Model",
+      "model": "deepseek-flash",
+      "displayed_status": "验证通过",
+      "independently_passed": true,
+      "stop_reason": "model_finished",
+      "checks": 13,
+      "components_passed": 12,
+      "components_failed": [],
+      "pytest_counts": null,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "run_id": "7350ad5a-c727-5de1-a2ac-1a97239dd583",
+      "source_run_id": "product-v41-flash-r1-verified",
+      "task_id": "dbt-fix-product-metrics",
+      "title": "公开项目 · Product Performance Metrics",
+      "model": "deepseek-flash",
+      "displayed_status": "执行失败",
+      "independently_passed": false,
+      "stop_reason": null,
+      "checks": 6,
+      "components_passed": 0,
+      "components_failed": [],
+      "pytest_counts": {
+        "passed": 7,
+        "failed": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "report": "v41_flash_round1_20261025",
+      "passed": 3,
+      "trials": 4,
+      "title": "Flash 公开开发子集第 1 轮（非官方 Harbor 成绩） · v41_flash_round1_20261025",
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "b0f50ae7-e5f1-55c3-8cb7-4593afcdafeb",
+      "source_run_id": "refund-v41-flash-r1-verified",
+      "task_id": "dbt-fix-refund-reconciliation",
+      "title": "公开项目 · Fix Return Processing Analytics Model",
+      "model": "deepseek-flash",
+      "displayed_status": "验证通过",
+      "independently_passed": true,
+      "stop_reason": "model_finished",
+      "checks": 14,
+      "components_passed": 13,
+      "components_failed": [],
+      "pytest_counts": null,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "904f8b54-db52-5508-ae97-31b6355466aa",
+      "source_run_id": "division-v41-flash-r1-verified",
+      "task_id": "dbt-fix-division-by-zero",
+      "title": "公开项目 · Fix and Enhance Customer Metrics Model",
+      "model": "deepseek-flash",
+      "displayed_status": "验证通过",
+      "independently_passed": true,
+      "stop_reason": "step_limit",
+      "checks": 16,
+      "components_passed": 15,
+      "components_failed": [],
+      "pytest_counts": null,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "f18fa4b5-d81c-5a74-9864-4d8502b9c5b3",
+      "source_run_id": "inventory-v41-flash-r1-verified",
+      "task_id": "dbt-fix-inventory-model",
+      "title": "公开项目 · Fix and Enhance Product Inventory Metrics Model",
+      "model": "deepseek-flash",
+      "displayed_status": "验证通过",
+      "independently_passed": true,
+      "stop_reason": "model_finished",
+      "checks": 13,
+      "components_passed": 12,
+      "components_failed": [],
+      "pytest_counts": null,
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "run_id": "7350ad5a-c727-5de1-a2ac-1a97239dd583",
+      "source_run_id": "product-v41-flash-r1-verified",
+      "task_id": "dbt-fix-product-metrics",
+      "title": "公开项目 · Product Performance Metrics",
+      "model": "deepseek-flash",
+      "displayed_status": "执行失败",
+      "independently_passed": false,
+      "stop_reason": null,
+      "checks": 6,
+      "components_passed": 0,
+      "components_failed": [],
+      "pytest_counts": {
+        "passed": 7,
+        "failed": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "patch_rendered": true,
+      "snapshots_not_invented": true,
+      "horizontal_overflow": false,
+      "status": "passed"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "report": "v41_flash_round1_20261025",
+      "passed": 3,
+      "trials": 4,
+      "title": "Flash 公开开发子集第 1 轮（非官方 Harbor 成绩） · v41_flash_round1_20261025",
+      "status": "passed"
+    }
+  ],
+  "javascript_errors": [],
+  "console_errors": [],
+  "non_get_api_requests": [],
+  "screenshots": [
+    "docs/screenshots/public-flash.png"
+  ],
+  "status": "passed",
+  "configuration": {
+    "model": "deepseek-flash",
+    "thinking_enabled": true,
+    "max_steps": 12
+  },
+  "screenshot_source_run_id": "inventory-v41-flash-r1-verified"
+}

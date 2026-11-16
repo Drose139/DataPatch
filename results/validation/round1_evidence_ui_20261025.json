@@ -1,0 +1,68 @@
+{
+  "tested_at": "2026-10-25T13:07:04.018Z",
+  "source": "live local FastAPI service; original saved DeepSeek runs; no mocked API data",
+  "base_url": "http://127.0.0.1:8000",
+  "browser": "Microsoft Edge headless via Playwright",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1100
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "c91744f8-3379-4f9b-92ce-455ad2c7e585",
+      "task": "build_customer_ltv_holdout",
+      "row_counts": [
+        0,
+        10,
+        10
+      ],
+      "row_changes": [
+        10,
+        0,
+        0
+      ],
+      "contract_states": [
+        "未通过",
+        "通过"
+      ],
+      "status": "passed"
+    },
+    {
+      "run_id": "ec548a48-0875-45ec-a4aa-6a257e7dd467",
+      "task": "refund_reconciliation_holdout",
+      "row_counts": [
+        16,
+        21,
+        5
+      ],
+      "row_changes": [
+        5,
+        0,
+        3
+      ],
+      "contract_states": [
+        "未通过",
+        "通过"
+      ],
+      "status": "passed"
+    }
+  ],
+  "legacy_run_id": "1dccea01-364d-4d87-9a77-ab6ed5449d85",
+  "legacy_missing_evidence": "passed",
+  "mobile_task_picker": "passed",
+  "mobile_no_horizontal_overflow": "passed",
+  "javascript_errors": [],
+  "non_get_api_requests": [],
+  "screenshots": [
+    "docs/screenshots/workbench-evidence.png",
+    "docs/screenshots/workbench-evidence-details.png",
+    "docs/screenshots/workbench-evidence-mobile.png"
+  ],
+  "status": "passed"
+}

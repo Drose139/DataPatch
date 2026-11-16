@@ -1,0 +1,30 @@
+{
+  "task_id": "dbt-fix-inventory-model",
+  "mode": "native-path-adapted-upstream-verifier",
+  "official_harbor_result": false,
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-inventory-model/tests/test_outputs.py",
+  "original_sha256": "a5ce852b9507c04c4235ff8a0c6b5b37a24eda0693e19c2ad0e77355d09a5f37",
+  "adapted_sha256": "439fd651eeca2b60da220c599b6f81531d3238da58e5b35cbe6a256907c63370",
+  "path_translation_only": true,
+  "returncode": 0,
+  "reward": 1.0,
+  "components_passed": [
+    "component_1_model_compiles",
+    "component_2_no_inf_nan_values",
+    "component_3_row_count",
+    "component_4_tier_column_exists",
+    "component_5_velocity_score_exists",
+    "component_6_valid_tier_values",
+    "component_7_uses_percent_rank",
+    "component_8_distribution",
+    "component_9_critical_tier_logic",
+    "component_10_healthy_tier_logic",
+    "component_11_velocity_score_range",
+    "component_12_velocity_score_formula"
+  ],
+  "components_failed": [],
+  "grading_protocol": "component_reward_json",
+  "stdout": "CMD: dbt run -s rpt_product_inventory_metrics\nSTDOUT: \u001b[0m06:02:51  Running with dbt=1.12.6\n\u001b[0m06:02:51  Registered adapter: duckdb=1.11.0\n\u001b[0m06:02:55  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.marts\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.staging.payments\n\u001b[0m06:02:57  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m06:02:57  \n\u001b[0m06:02:57  Concurrency: 4 threads (target='dev')\n\u001b[0m06:02:57  \n\u001b[0m06:02:58  1 of 1 START sql view model main.rpt_product_inventory_metrics ................. [RUN]\n\u001b[0m06:02:58  1 of 1 OK created sql view model main.rpt_product_inventory_metrics ............ [\u001b[32mOK\u001b[0m in 0.19s]\n\u001b[0m06:02:58  \n\u001b[0m06:02:58  Finished running 1 view model in 0 hours 0 minutes and 1.84 seconds (1.84s).\n\u001b[0m06:03:00  \n\u001b[0m06:03:00  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m06:03:00  \n\u001b[0m06:03:00  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_tier_column_exists\nPASS: component_5_velocity_score_exists\nPASS: component_6_valid_tier_values\nPASS: component_7_uses_percent_rank\nPASS: component_8_distribution\nPASS: component_9_critical_tier_logic\nPASS: component_10_healthy_tier_logic\nPASS: component_11_velocity_score_range\nPASS: component_12_velocity_score_formula\n\nFinal Score: 1.0\n.\n1 passed in 24.83s\n",
+  "stderr": ""
+}

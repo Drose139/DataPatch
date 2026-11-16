@@ -1,0 +1,37 @@
+{
+  "name": "v43_contract_repair_20261026",
+  "created_at": "2026-10-26T06:15:57.164958+00:00",
+  "task_ids": [
+    "dbt-fix-product-metrics"
+  ],
+  "mode": "verified",
+  "repeats": 1,
+  "model": "deepseek-flash",
+  "max_steps": 4,
+  "run_budget_usd": 0.045,
+  "combined_budget_usd": 0.125,
+  "prior_estimated_cost_usd": 0.07626,
+  "assistance": "project_public_business_contract",
+  "starting_candidate_from": "external/native-results/product-v42-20261026-verified.json",
+  "starting_candidate_sha256": "5ebd30cffd9e8ac4adb9c38276e3d03732d867f4d56f793435b2722c3dc74222",
+  "reviewed_solution_provided_to_solver": false,
+  "hidden_tests_provided_to_solver": false,
+  "source_snapshot": {
+    "path": "$PROJECT\\artifacts\\evaluations\\v43_contract_repair_20261026_source.zip",
+    "sha256": "1b9da8883bcd6b1151f467dcd26016711f44ac9f90f200c368706d68ca15414c",
+    "core_source_sha256": "b413c4c287007657d5f3d2b19ae329e23b4ac941ef0bb660283fab2ebebec2cf",
+    "files": 85
+  },
+  "contracts": {
+    "product_coverage.sql": "45b9dc16dd7aeef2d08ab86d5c99c6cc04f67cf14c8851727852440a46860189",
+    "README.md": "e9f3e44a96db7cecbcbf2bcb36567a52e19ee187323db3136d2482b85ea7fed8",
+    "sales_totals.sql": "ba7b73443236cdd1b78b41a04c55e007b612d236d2279177522835de6ddf4534",
+    "weighted_price.sql": "47bf782d96943609ca1232be937f9eededfa378d531dcb8e6e1691d6353f43c0"
+  },
+  "automatic_retry": false,
+  "automatic_next_round": false,
+  "limitations": [
+    "A repair continuation from a failed real Agent candidate with explicit project business requirements, not a fresh unassisted public benchmark trial.",
+    "Original upstream final evaluator remains outside the workspace."
+  ]
+}

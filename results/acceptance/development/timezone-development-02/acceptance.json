@@ -1,0 +1,75 @@
+{
+  "type": "reviewed_patch_development",
+  "task_id": "dbt-fix-timezone-sales",
+  "patch_origin": "operator_reviewed",
+  "zero_model_api_calls": true,
+  "case": "D:\\DataPatch-work\\public-expanded-dev-20261026\\timezone",
+  "patch_source": "C:\\Users\\local-user\\Documents\\ChatGPT\\实习\\examples\\public_fixes\\dbt-fix-timezone-sales.sql",
+  "patch_sha256": "a43b08e153e482dab9f8525b155d6697b233c83a74ebefea04d3529d51843850",
+  "applied_patch_sha256": "a43b08e153e482dab9f8525b155d6697b233c83a74ebefea04d3529d51843850",
+  "previous_candidate_sha256": "5b1fee7dc4631cf5b2ab7c3dcab1e7358017a83e4be995c4e0e42e23a1eb551d",
+  "build": {
+    "success": false,
+    "returncode": 1,
+    "stdout": "06:33:11  2 of 4 FAIL 177 not_null_int_sales__orders_enriched_order_id ................... [FAIL 177 in 0.09s]\n06:33:11  3 of 4 FAIL 1308 unique_int_sales__orders_enriched_order_id .................... [FAIL 1308 in 0.10s]\n06:33:13  [ERROR]: in test not_null_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:33:13    Got 177 results, configured to fail if != 0\n06:33:13  [ERROR]: in test unique_int_sales__orders_enriched_order_id (models\\intermediate\\schema.yml)\n06:33:13    Got 1308 results, configured to fail if != 0\n{\"success\": false, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 18.39,
+    "nodes": [
+      {
+        "id": "model.retail_dw_master.int_sales__orders_enriched",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "test.retail_dw_master.not_null_int_sales__orders_enriched_order_id.b8d5c9c519",
+        "status": "fail",
+        "message": "Got 177 results, configured to fail if != 0"
+      },
+      {
+        "id": "test.retail_dw_master.unique_int_sales__orders_enriched_order_id.46af3607b7",
+        "status": "fail",
+        "message": "Got 1308 results, configured to fail if != 0"
+      },
+      {
+        "id": "test.retail_dw_master.relationships_fct_sales_order_id__order_id__ref_int_sales__orders_enriched_.6c7ba54305",
+        "status": "skipped",
+        "message": "None"
+      }
+    ],
+    "process_success": false,
+    "target_model": "int_sales__orders_enriched",
+    "target_model_ids": [
+      "model.retail_dw_master.int_sales__orders_enriched"
+    ],
+    "target_model_success": true
+  },
+  "raw_verifier": {
+    "task_id": "dbt-fix-timezone-sales",
+    "mode": "native-path-adapted-upstream-verifier",
+    "official_harbor_result": false,
+    "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+    "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test_outputs.py",
+    "original_sha256": "3ec550c99ecf13bf299acffeb776db07c5d899c6f50322681da7e267dde40e6f",
+    "adapted_sha256": "b6d0587d69a7362a24563783169ac6f2b2cad57f957d747346e657bad48486bb",
+    "path_translation_only": true,
+    "returncode": 1,
+    "reward": 0.0,
+    "components_passed": [],
+    "components_failed": [],
+    "grading_protocol": "pytest_exit_status",
+    "scoring_source": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-timezone-sales/tests/test.sh",
+    "scoring_source_sha256": "e204c50c64e462ccb35ae98fd6fc3067fa1f8e48dd33f39fa3314225b3f9508f",
+    "harness_execution": "native Python equivalent of pinned shell exit/count grading; test assertions unchanged",
+    "pytest_counts": {
+      "passed": 9,
+      "failed": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "pytest_returncode": 1,
+    "stdout": "============================= test session starts =============================\nplatform win32 -- Python 3.12.2, pytest-9.1.1, pluggy-1.7.0 -- C:\\Users\\local-user\\Documents\\ChatGPT\\实习\\.venv\\Scripts\\python.exe\ncachedir: .pytest_cache\nrootdir: C:\\Users\\local-user\\Documents\\ChatGPT\\实习\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1\ncollecting ... collected 10 items\n\ntest_outputs_timezone.py::test_int_sales_orders_enriched_exists PASSED   [ 10%]\ntest_outputs_timezone.py::test_int_sales_has_data PASSED                 [ 20%]\ntest_outputs_timezone.py::test_sap_timestamps_handling FAILED            [ 30%]\ntest_outputs_timezone.py::test_timezone_alignment_consistency PASSED     [ 40%]\ntest_outputs_timezone.py::test_daily_aggregation_consistency PASSED      [ 50%]\ntest_outputs_timezone.py::test_all_timestamps_have_time_component PASSED [ 60%]\ntest_outputs_timezone.py::test_source_system_distribution PASSED         [ 70%]\ntest_outputs_timezone.py::test_no_null_timestamps_for_completed_orders PASSED [ 80%]\ntest_outputs_timezone.py::test_timestamp_ordering PASSED                 [ 90%]\ntest_outputs_timezone.py::test_model_structure_preserved PASSED          [100%]\n\n================================== FAILURES ===================================\n________________________ test_sap_timestamps_handling _________________________\n\ndb_conn = (<_duckdb.DuckDBPyConnection object at 0x000001C3D8582FB0>, 'duckdb')\ntest_order_ids = {'SAP': ['001a89f9-39b2-4ebc-be6b-e1d289f696b1', '001c6e6a-415f-41ac-984e-8ce81b9d2f92', '0091b6c4-ce8f-48f4-9215-35eb...00676b84-dce8-42bd-8911-c9e2102f80ea', '00769a3f-3b9f-49a5-b8c8-5c9fc656687e', '0091b6c4-ce8f-48f4-9215-35eb9ecb1dc2']}\n\n    def test_sap_timestamps_handling(db_conn, test_order_ids):\n        \"\"\"\n        Verify SAP timestamps are adjusted relative to staging.\n        Accepts either: unchanged OR -5 hours (both are valid timezone corrections)\n        \"\"\"\n        conn, db_type = db_conn\n        parse_ts = _get_parse_timestamp_sql(db_type, 'ordered_at')\n    \n        for order_id in test_order_ids['SAP']:\n            # Get timestamp from int_sales__orders_enriched\n            enriched_ts = execute_query(conn, db_type, f\"\"\"\n                SELECT ordered_at\n                FROM main.int_sales__orders_enriched\n                WHERE order_id = '{order_id}'\n            \"\"\")\n    \n            # Get original timestamp from staging (parsed)\n            staging_ts = execute_query(conn, db_type, f\"\"\"\n                SELECT\n                    {parse_ts} as parsed_ts\n                FROM main.stg_sap__vbak\n                WHERE order_id = '{order_id}'\n            \"\"\")\n    \n            if enriched_ts and staging_ts and enriched_ts[0][0] and staging_ts[0][0]:\n                time_diff = execute_scalar(conn, db_type, f\"\"\"\n                    SELECT DATEDIFF('hour', CAST('{staging_ts[0][0]}' AS TIMESTAMP), CAST('{enriched_ts[0][0]}' AS TIMESTAMP))\n                \"\"\")\n    \n                # Accept either: SAP unchanged (0) or moved back (-5)\n>               assert int(time_diff) in [0, -5], \\\n                    f\"Order {order_id}: SAP timestamp diff is {time_diff} hours, expected 0 or -5\"\nE               AssertionError: Order 001a89f9-39b2-4ebc-be6b-e1d289f696b1: SAP timestamp diff is -8 hours, expected 0 or -5\nE               assert -8 in [0, -5]\nE                +  where -8 = int(-8)\n\ntest_outputs_timezone.py:266: AssertionError\n=========================== short test summary info ===========================\nFAILED test_outputs_timezone.py::test_sap_timestamps_handling - AssertionErro...\n======================== 1 failed, 9 passed in 34.28s =========================\n",
+    "stderr": ""
+  },
+  "accepted": false,
+  "elapsed_seconds": 59.281
+}

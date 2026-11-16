@@ -1,0 +1,2224 @@
+{
+  "run_id": "e9ed927d-921c-48ac-a521-e223afa31dde",
+  "task_id": "refund_reconciliation_holdout",
+  "task": {
+    "id": "refund_reconciliation_holdout",
+    "title": "Repair refund coverage and ratios",
+    "description": "The refund operations report omits records and contains invalid completion ratios. Repair coverage and numeric edge cases without changing source data.",
+    "category": "refund_reconciliation",
+    "split": "holdout",
+    "difficulty": "medium"
+  },
+  "mode": "verified",
+  "provider": "deepseek",
+  "status": "completed",
+  "started_at": "2026-10-25T13:15:04.038065+00:00",
+  "finished_at": "2026-10-25T13:16:31.612871+00:00",
+  "model": "deepseek-flash",
+  "execution_backend": "native_trusted",
+  "events": [
+    {
+      "seq": 1,
+      "timestamp": "2026-10-25T13:15:04.126437+00:00",
+      "type": "status",
+      "content": "初始化独立任务数据并构建初始模型"
+    },
+    {
+      "seq": 2,
+      "timestamp": "2026-10-25T13:15:26.506096+00:00",
+      "type": "status",
+      "content": "Agent 开始执行工单",
+      "result": {
+        "initial_build_success": true,
+        "initial_checks": {
+          "passed": false,
+          "available": true,
+          "checks": [
+            {
+              "name": "coverage_and_finite_ratios",
+              "passed": false,
+              "violations": [
+                [
+                  "HO000R0"
+                ],
+                [
+                  "HO020R0"
+                ],
+                [
+                  "HO040R0"
+                ],
+                [
+                  "HO008R0"
+                ],
+                [
+                  "HO017R0"
+                ],
+                [
+                  "HO026R0"
+                ],
+                [
+                  "HO035R0"
+                ],
+                [
+                  "HO044R0"
+                ]
+              ],
+              "columns": [
+                "refund_id"
+              ]
+            },
+            {
+              "name": "output_key",
+              "passed": true,
+              "violations": [],
+              "columns": [
+                "refund_id"
+              ]
+            }
+          ],
+          "note": "Visible business contracts only. Empty means no additional contracts, not proof of data correctness. This does not expose the independent final evaluator."
+        }
+      }
+    },
+    {
+      "seq": 3,
+      "timestamp": "2026-10-25T13:15:30.617752+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "模型请求工具执行",
+      "usage": {
+        "prompt_tokens": 1645,
+        "completion_tokens": 114,
+        "total_tokens": 1759,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        },
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 621
+      },
+      "response_id": "b9eda71a-99a6-4cd9-b982-15a8830e9802",
+      "latency_seconds": 4.062,
+      "metrics": {
+        "model_calls": 1,
+        "tool_calls": 0,
+        "prompt_tokens": 1645,
+        "completion_tokens": 114,
+        "total_tokens": 1759,
+        "estimated_cost_usd": 0.0006303
+      }
+    },
+    {
+      "seq": 4,
+      "timestamp": "2026-10-25T13:15:30.622760+00:00",
+      "type": "tool",
+      "name": "read_file",
+      "step": 1,
+      "arguments": {
+        "path": "models/marts/refund_reconciliation.sql"
+      },
+      "result": {
+        "path": "models/marts/refund_reconciliation.sql",
+        "content": "{{ config(materialized='table') }}\nselect r.refund_id, r.order_id, r.requested_cents, r.paid_cents,\n       r.paid_cents::double / r.requested_cents as completion_ratio\nfrom {{ ref('refunds') }} r join {{ ref('orders') }} o using(order_id)\nwhere o.status = 'completed'\n"
+      },
+      "elapsed_seconds": 0.0,
+      "metrics": {
+        "model_calls": 1,
+        "tool_calls": 1,
+        "prompt_tokens": 1645,
+        "completion_tokens": 114,
+        "total_tokens": 1759,
+        "estimated_cost_usd": 0.0006303
+      }
+    },
+    {
+      "seq": 5,
+      "timestamp": "2026-10-25T13:15:30.628756+00:00",
+      "type": "tool",
+      "name": "read_file",
+      "step": 1,
+      "arguments": {
+        "path": "checks/coverage_and_finite_ratios.sql"
+      },
+      "result": {
+        "path": "checks/coverage_and_finite_ratios.sql",
+        "content": "select refund_id from {{ ref('refund_reconciliation') }}\nwhere completion_ratio is null or not isfinite(completion_ratio)\nunion all\nselect r.refund_id from {{ ref('refunds') }} r\nleft join {{ ref('refund_reconciliation') }} x using(refund_id) where x.refund_id is null\n"
+      },
+      "elapsed_seconds": 0.0,
+      "metrics": {
+        "model_calls": 1,
+        "tool_calls": 2,
+        "prompt_tokens": 1645,
+        "completion_tokens": 114,
+        "total_tokens": 1759,
+        "estimated_cost_usd": 0.0006303
+      }
+    },
+    {
+      "seq": 6,
+      "timestamp": "2026-10-25T13:15:30.633755+00:00",
+      "type": "tool",
+      "name": "read_file",
+      "step": 1,
+      "arguments": {
+        "path": "checks/output_key.sql"
+      },
+      "result": {
+        "path": "checks/output_key.sql",
+        "content": "select refund_id from {{ ref('refund_reconciliation') }} group by refund_id having count(*) <> 1 or refund_id is null\n"
+      },
+      "elapsed_seconds": 0.0,
+      "metrics": {
+        "model_calls": 1,
+        "tool_calls": 3,
+        "prompt_tokens": 1645,
+        "completion_tokens": 114,
+        "total_tokens": 1759,
+        "estimated_cost_usd": 0.0006303
+      }
+    },
+    {
+      "seq": 7,
+      "timestamp": "2026-10-25T13:15:34.606078+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "模型请求工具执行",
+      "usage": {
+        "prompt_tokens": 2028,
+        "completion_tokens": 109,
+        "total_tokens": 2137,
+        "prompt_tokens_details": {
+          "cached_tokens": 1664
+        },
+        "prompt_cache_hit_tokens": 1664,
+        "prompt_cache_miss_tokens": 364
+      },
+      "response_id": "869e684b-2d92-4da5-8b1d-ed1955a53dbc",
+      "latency_seconds": 3.968,
+      "metrics": {
+        "model_calls": 2,
+        "tool_calls": 3,
+        "prompt_tokens": 3673,
+        "completion_tokens": 223,
+        "total_tokens": 3896,
+        "estimated_cost_usd": 0.0013695
+      }
+    },
+    {
+      "seq": 8,
+      "timestamp": "2026-10-25T13:15:34.636067+00:00",
+      "type": "tool",
+      "name": "query_sql",
+      "step": 2,
+      "arguments": {
+        "sql": "select * from refunds limit 20"
+      },
+      "result": {
+        "columns": [
+          "refund_id",
+          "order_id",
+          "requested_cents",
+          "paid_cents",
+          "status"
+        ],
+        "rows": [
+          [
+            "HO000R0",
+            "HO000",
+            0,
+            0,
+            "pending"
+          ],
+          [
+            "HO004R0",
+            "HO004",
+            648,
+            648,
+            "paid"
+          ],
+          [
+            "HO008R0",
+            "HO008",
+            21322,
+            0,
+            "pending"
+          ],
+          [
+            "HO012R0",
+            "HO012",
+            3898,
+            3898,
+            "paid"
+          ],
+          [
+            "HO012R1",
+            "HO012",
+            1559,
+            1559,
+            "paid"
+          ],
+          [
+            "HO016R0",
+            "HO016",
+            1247,
+            0,
+            "pending"
+          ],
+          [
+            "HO017R0",
+            "HO017",
+            21572,
+            21572,
+            "paid"
+          ],
+          [
+            "HO020R0",
+            "HO020",
+            0,
+            0,
+            "pending"
+          ],
+          [
+            "HO024R0",
+            "HO024",
+            198,
+            0,
+            "pending"
+          ],
+          [
+            "HO024R1",
+            "HO024",
+            79,
+            79,
+            "paid"
+          ],
+          [
+            "HO026R0",
+            "HO026",
+            5484,
+            5484,
+            "paid"
+          ],
+          [
+            "HO028R0",
+            "HO028",
+            1398,
+            1398,
+            "paid"
+          ],
+          [
+            "HO032R0",
+            "HO032",
+            2060,
+            0,
+            "pending"
+          ],
+          [
+            "HO035R0",
+            "HO035",
+            14585,
+            14585,
+            "paid"
+          ],
+          [
+            "HO036R0",
+            "HO036",
+            2599,
+            2599,
+            "paid"
+          ],
+          [
+            "HO036R1",
+            "HO036",
+            1039,
+            1039,
+            "paid"
+          ],
+          [
+            "HO040R0",
+            "HO040",
+            0,
+            0,
+            "pending"
+          ],
+          [
+            "HO044R0",
+            "HO044",
+            22572,
+            22572,
+            "paid"
+          ],
+          [
+            "HO048R0",
+            "HO048",
+            249,
+            0,
+            "pending"
+          ],
+          [
+            "HO048R1",
+            "HO048",
+            99,
+            99,
+            "paid"
+          ]
+        ],
+        "truncated": false,
+        "elapsed_seconds": 0.032
+      },
+      "elapsed_seconds": 0.032,
+      "metrics": {
+        "model_calls": 2,
+        "tool_calls": 4,
+        "prompt_tokens": 3673,
+        "completion_tokens": 223,
+        "total_tokens": 3896,
+        "estimated_cost_usd": 0.0013695
+      }
+    },
+    {
+      "seq": 9,
+      "timestamp": "2026-10-25T13:15:34.667608+00:00",
+      "type": "tool",
+      "name": "query_sql",
+      "step": 2,
+      "arguments": {
+        "sql": "select count(*), count(distinct refund_id), count(distinct order_id), sum(case when requested_cents<=0 then 1 else 0 end) from refunds"
+      },
+      "result": {
+        "columns": [
+          "count_star()",
+          "count(DISTINCT refund_id)",
+          "count(DISTINCT order_id)",
+          "sum(CASE  WHEN ((requested_cents <= 0)) THEN (1) ELSE 0 END)"
+        ],
+        "rows": [
+          [
+            21,
+            21,
+            17,
+            3
+          ]
+        ],
+        "truncated": false,
+        "elapsed_seconds": 0.031
+      },
+      "elapsed_seconds": 0.031,
+      "metrics": {
+        "model_calls": 2,
+        "tool_calls": 5,
+        "prompt_tokens": 3673,
+        "completion_tokens": 223,
+        "total_tokens": 3896,
+        "estimated_cost_usd": 0.0013695
+      }
+    },
+    {
+      "seq": 10,
+      "timestamp": "2026-10-25T13:15:38.657382+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "模型请求工具执行",
+      "usage": {
+        "prompt_tokens": 2688,
+        "completion_tokens": 76,
+        "total_tokens": 2764,
+        "prompt_tokens_details": {
+          "cached_tokens": 2048
+        },
+        "prompt_cache_hit_tokens": 2048,
+        "prompt_cache_miss_tokens": 640
+      },
+      "response_id": "18bdd00f-d7e0-45ee-be36-870dced3e5ef",
+      "latency_seconds": 3.984,
+      "metrics": {
+        "model_calls": 3,
+        "tool_calls": 5,
+        "prompt_tokens": 6361,
+        "completion_tokens": 299,
+        "total_tokens": 6660,
+        "estimated_cost_usd": 0.0022671
+      }
+    },
+    {
+      "seq": 11,
+      "timestamp": "2026-10-25T13:15:38.687910+00:00",
+      "type": "tool",
+      "name": "query_sql",
+      "step": 3,
+      "arguments": {
+        "sql": "select r.*, o.status from refunds r left join orders o using(order_id) where o.order_id is null or o.status<>'completed' or r.requested_cents<=0"
+      },
+      "result": {
+        "columns": [
+          "refund_id",
+          "order_id",
+          "requested_cents",
+          "paid_cents",
+          "status",
+          "status"
+        ],
+        "rows": [
+          [
+            "HO000R0",
+            "HO000",
+            0,
+            0,
+            "pending",
+            "completed"
+          ],
+          [
+            "HO008R0",
+            "HO008",
+            21322,
+            0,
+            "pending",
+            "cancelled"
+          ],
+          [
+            "HO017R0",
+            "HO017",
+            21572,
+            21572,
+            "paid",
+            "cancelled"
+          ],
+          [
+            "HO020R0",
+            "HO020",
+            0,
+            0,
+            "pending",
+            "completed"
+          ],
+          [
+            "HO026R0",
+            "HO026",
+            5484,
+            5484,
+            "paid",
+            "cancelled"
+          ],
+          [
+            "HO035R0",
+            "HO035",
+            14585,
+            14585,
+            "paid",
+            "cancelled"
+          ],
+          [
+            "HO040R0",
+            "HO040",
+            0,
+            0,
+            "pending",
+            "completed"
+          ],
+          [
+            "HO044R0",
+            "HO044",
+            22572,
+            22572,
+            "paid",
+            "cancelled"
+          ]
+        ],
+        "truncated": false,
+        "elapsed_seconds": 0.031
+      },
+      "elapsed_seconds": 0.031,
+      "metrics": {
+        "model_calls": 3,
+        "tool_calls": 6,
+        "prompt_tokens": 6361,
+        "completion_tokens": 299,
+        "total_tokens": 6660,
+        "estimated_cost_usd": 0.0022671
+      }
+    },
+    {
+      "seq": 12,
+      "timestamp": "2026-10-25T13:15:42.558134+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "模型请求工具执行",
+      "usage": {
+        "prompt_tokens": 3022,
+        "completion_tokens": 145,
+        "total_tokens": 3167,
+        "prompt_tokens_details": {
+          "cached_tokens": 2560
+        },
+        "prompt_cache_hit_tokens": 2560,
+        "prompt_cache_miss_tokens": 462
+      },
+      "response_id": "8f5c1a55-23e3-44db-87c1-cfd90e930c9e",
+      "latency_seconds": 3.875,
+      "metrics": {
+        "model_calls": 4,
+        "tool_calls": 6,
+        "prompt_tokens": 9383,
+        "completion_tokens": 444,
+        "total_tokens": 9827,
+        "estimated_cost_usd": 0.0033477000000000003
+      }
+    },
+    {
+      "seq": 13,
+      "timestamp": "2026-10-25T13:15:42.564843+00:00",
+      "type": "tool",
+      "name": "write_model",
+      "step": 4,
+      "arguments": {
+        "path": "models/marts/refund_reconciliation.sql",
+        "content": "{{ config(materialized='table') }}\nselect r.refund_id,\n       r.order_id,\n       r.requested_cents,\n       r.paid_cents,\n       case when r.requested_cents > 0\n            then r.paid_cents::double / r.requested_cents\n            else 0.0\n       end as completion_ratio\nfrom {{ ref('refunds') }} r\n"
+      },
+      "result": {
+        "written": "models/marts/refund_reconciliation.sql",
+        "characters": 298
+      },
+      "elapsed_seconds": 0.0,
+      "metrics": {
+        "model_calls": 4,
+        "tool_calls": 7,
+        "prompt_tokens": 9383,
+        "completion_tokens": 444,
+        "total_tokens": 9827,
+        "estimated_cost_usd": 0.0033477000000000003
+      }
+    },
+    {
+      "seq": 14,
+      "timestamp": "2026-10-25T13:15:46.022489+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "模型请求工具执行",
+      "usage": {
+        "prompt_tokens": 3199,
+        "completion_tokens": 38,
+        "total_tokens": 3237,
+        "prompt_tokens_details": {
+          "cached_tokens": 2944
+        },
+        "prompt_cache_hit_tokens": 2944,
+        "prompt_cache_miss_tokens": 255
+      },
+      "response_id": "2a51aedb-dd48-4999-ad66-9d8573a5257b",
+      "latency_seconds": 3.438,
+      "metrics": {
+        "model_calls": 5,
+        "tool_calls": 7,
+        "prompt_tokens": 12582,
+        "completion_tokens": 482,
+        "total_tokens": 13064,
+        "estimated_cost_usd": 0.004353
+      }
+    },
+    {
+      "seq": 15,
+      "timestamp": "2026-10-25T13:15:56.664620+00:00",
+      "type": "tool",
+      "name": "run_dbt",
+      "step": 5,
+      "arguments": {
+        "command": "build"
+      },
+      "result": {
+        "success": true,
+        "returncode": 0,
+        "stdout": "{\"success\": true, \"exception\": null}\n",
+        "stderr": "",
+        "elapsed_seconds": 10.61,
+        "nodes": [
+          {
+            "id": "seed.datapatch_task.customers",
+            "status": "success",
+            "message": "INSERT 20"
+          },
+          {
+            "id": "seed.datapatch_task.order_events",
+            "status": "success",
+            "message": "INSERT 117"
+          },
+          {
+            "id": "seed.datapatch_task.order_items",
+            "status": "success",
+            "message": "INSERT 105"
+          },
+          {
+            "id": "seed.datapatch_task.orders",
+            "status": "success",
+            "message": "INSERT 53"
+          },
+          {
+            "id": "seed.datapatch_task.payments",
+            "status": "success",
+            "message": "INSERT 107"
+          },
+          {
+            "id": "seed.datapatch_task.refunds",
+            "status": "success",
+            "message": "INSERT 21"
+          },
+          {
+            "id": "model.datapatch_task.refund_reconciliation",
+            "status": "success",
+            "message": "OK"
+          },
+          {
+            "id": "test.datapatch_task.coverage_and_finite_ratios",
+            "status": "pass",
+            "message": "None"
+          },
+          {
+            "id": "test.datapatch_task.output_key",
+            "status": "pass",
+            "message": "None"
+          }
+        ]
+      },
+      "elapsed_seconds": 10.641,
+      "metrics": {
+        "model_calls": 5,
+        "tool_calls": 8,
+        "prompt_tokens": 12582,
+        "completion_tokens": 482,
+        "total_tokens": 13064,
+        "estimated_cost_usd": 0.004353
+      }
+    },
+    {
+      "seq": 16,
+      "timestamp": "2026-10-25T13:16:00.552182+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "模型请求工具执行",
+      "usage": {
+        "prompt_tokens": 3537,
+        "completion_tokens": 61,
+        "total_tokens": 3598,
+        "prompt_tokens_details": {
+          "cached_tokens": 3200
+        },
+        "prompt_cache_hit_tokens": 3200,
+        "prompt_cache_miss_tokens": 337
+      },
+      "response_id": "75ebb2cc-3270-4b47-916b-15c4afd762c0",
+      "latency_seconds": 3.875,
+      "metrics": {
+        "model_calls": 6,
+        "tool_calls": 8,
+        "prompt_tokens": 16119,
+        "completion_tokens": 543,
+        "total_tokens": 16662,
+        "estimated_cost_usd": 0.0054873000000000005
+      }
+    },
+    {
+      "seq": 17,
+      "timestamp": "2026-10-25T13:16:00.619146+00:00",
+      "type": "tool",
+      "name": "check_contracts",
+      "step": 6,
+      "arguments": {},
+      "result": {
+        "passed": true,
+        "available": true,
+        "checks": [
+          {
+            "name": "coverage_and_finite_ratios",
+            "passed": true,
+            "violations": [],
+            "columns": [
+              "refund_id"
+            ]
+          },
+          {
+            "name": "output_key",
+            "passed": true,
+            "violations": [],
+            "columns": [
+              "refund_id"
+            ]
+          }
+        ],
+        "note": "Visible business contracts only. Empty means no additional contracts, not proof of data correctness. This does not expose the independent final evaluator."
+      },
+      "elapsed_seconds": 0.063,
+      "metrics": {
+        "model_calls": 6,
+        "tool_calls": 9,
+        "prompt_tokens": 16119,
+        "completion_tokens": 543,
+        "total_tokens": 16662,
+        "estimated_cost_usd": 0.0054873000000000005
+      }
+    },
+    {
+      "seq": 18,
+      "timestamp": "2026-10-25T13:16:00.648138+00:00",
+      "type": "tool",
+      "name": "query_sql",
+      "step": 6,
+      "arguments": {
+        "sql": "select * from refund_reconciliation order by refund_id"
+      },
+      "result": {
+        "columns": [
+          "refund_id",
+          "order_id",
+          "requested_cents",
+          "paid_cents",
+          "completion_ratio"
+        ],
+        "rows": [
+          [
+            "HO000R0",
+            "HO000",
+            0,
+            0,
+            0.0
+          ],
+          [
+            "HO004R0",
+            "HO004",
+            648,
+            648,
+            1.0
+          ],
+          [
+            "HO008R0",
+            "HO008",
+            21322,
+            0,
+            0.0
+          ],
+          [
+            "HO012R0",
+            "HO012",
+            3898,
+            3898,
+            1.0
+          ],
+          [
+            "HO012R1",
+            "HO012",
+            1559,
+            1559,
+            1.0
+          ],
+          [
+            "HO016R0",
+            "HO016",
+            1247,
+            0,
+            0.0
+          ],
+          [
+            "HO017R0",
+            "HO017",
+            21572,
+            21572,
+            1.0
+          ],
+          [
+            "HO020R0",
+            "HO020",
+            0,
+            0,
+            0.0
+          ],
+          [
+            "HO024R0",
+            "HO024",
+            198,
+            0,
+            0.0
+          ],
+          [
+            "HO024R1",
+            "HO024",
+            79,
+            79,
+            1.0
+          ],
+          [
+            "HO026R0",
+            "HO026",
+            5484,
+            5484,
+            1.0
+          ],
+          [
+            "HO028R0",
+            "HO028",
+            1398,
+            1398,
+            1.0
+          ],
+          [
+            "HO032R0",
+            "HO032",
+            2060,
+            0,
+            0.0
+          ],
+          [
+            "HO035R0",
+            "HO035",
+            14585,
+            14585,
+            1.0
+          ],
+          [
+            "HO036R0",
+            "HO036",
+            2599,
+            2599,
+            1.0
+          ],
+          [
+            "HO036R1",
+            "HO036",
+            1039,
+            1039,
+            1.0
+          ],
+          [
+            "HO040R0",
+            "HO040",
+            0,
+            0,
+            0.0
+          ],
+          [
+            "HO044R0",
+            "HO044",
+            22572,
+            22572,
+            1.0
+          ],
+          [
+            "HO048R0",
+            "HO048",
+            249,
+            0,
+            0.0
+          ],
+          [
+            "HO048R1",
+            "HO048",
+            99,
+            99,
+            1.0
+          ],
+          [
+            "HO052R0",
+            "HO052",
+            750,
+            750,
+            1.0
+          ]
+        ],
+        "truncated": false,
+        "elapsed_seconds": 0.031
+      },
+      "elapsed_seconds": 0.031,
+      "metrics": {
+        "model_calls": 6,
+        "tool_calls": 10,
+        "prompt_tokens": 16119,
+        "completion_tokens": 543,
+        "total_tokens": 16662,
+        "estimated_cost_usd": 0.0054873000000000005
+      }
+    },
+    {
+      "seq": 19,
+      "timestamp": "2026-10-25T13:16:06.440541+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "已完成修复。\n\n**原因**\n1. 覆盖缺失：原模型 `join orders ... where o.status = 'completed'` 把关联到已取消订单（cancelled）的退款全部过滤掉了（如 HO008R0、HO017R0、HO026R0、HO035R0、HO044R0）。\n2. 数值异常：`paid_cents / requested_cents` 在 `requested_cents = 0` 时产生 NaN/Inf（如 HO000R0、HO020R0、HO040R0），违反“比率必须有限”的约定。\n\n**改动**（仅 `models/marts/refund_reconciliation.sql`）\n- 去掉对 `orders` 的内连接与状态过滤，直接以 `refunds` 为唯一来源，保证每个源退款恰好一行（refund_id 唯一，无重复放大）。\n- 比率改为 `case when requested_cents > 0 then paid_cents::double / requested_cents else 0.0 end`，金额保持整数原值，列顺序与契约一致。\n\n**验证**\n- `dbt build` 成功：seed 全部加载，模型物化成功，`coverage_and_finite_ratios`、`output_key` 两个测试均通过。\n- `check_contracts` 通过，无违规行。\n- 抽查输出：21 行 = 源退款 21 条；零金额退款比率为 0.0；已取消订单的退款已包含且比率正常（如 HO017R0 = 1.0）。\n\n**局限**\n- 仅验证了可见不变量与人工抽查，未与独立 Python 参考实现比对；若参考实现对“已取消订单退款”或“paid > requested”等情形另有业务规则（如截断到 1.0），当前实现未做额外处理（契约未要求）。",
+      "usage": {
+        "prompt_tokens": 4234,
+        "completion_tokens": 401,
+        "total_tokens": 4635,
+        "prompt_tokens_details": {
+          "cached_tokens": 3584
+        },
+        "prompt_cache_hit_tokens": 3584,
+        "prompt_cache_miss_tokens": 650
+      },
+      "response_id": "5da42e4e-c768-4a8c-9eb9-99aebe905f3b",
+      "latency_seconds": 5.781,
+      "metrics": {
+        "model_calls": 7,
+        "tool_calls": 10,
+        "prompt_tokens": 20353,
+        "completion_tokens": 944,
+        "total_tokens": 21297,
+        "estimated_cost_usd": 0.007238700000000001
+      }
+    },
+    {
+      "seq": 20,
+      "timestamp": "2026-10-25T13:16:17.036286+00:00",
+      "type": "validation",
+      "name": "handoff_gate",
+      "result": {
+        "build": {
+          "success": true,
+          "returncode": 0,
+          "stdout": "{\"success\": true, \"exception\": null}\n",
+          "stderr": "",
+          "elapsed_seconds": 10.484,
+          "nodes": [
+            {
+              "id": "seed.datapatch_task.customers",
+              "status": "success",
+              "message": "INSERT 20"
+            },
+            {
+              "id": "seed.datapatch_task.order_events",
+              "status": "success",
+              "message": "INSERT 117"
+            },
+            {
+              "id": "seed.datapatch_task.order_items",
+              "status": "success",
+              "message": "INSERT 105"
+            },
+            {
+              "id": "seed.datapatch_task.orders",
+              "status": "success",
+              "message": "INSERT 53"
+            },
+            {
+              "id": "seed.datapatch_task.payments",
+              "status": "success",
+              "message": "INSERT 107"
+            },
+            {
+              "id": "seed.datapatch_task.refunds",
+              "status": "success",
+              "message": "INSERT 21"
+            },
+            {
+              "id": "model.datapatch_task.refund_reconciliation",
+              "status": "success",
+              "message": "OK"
+            },
+            {
+              "id": "test.datapatch_task.coverage_and_finite_ratios",
+              "status": "pass",
+              "message": "None"
+            },
+            {
+              "id": "test.datapatch_task.output_key",
+              "status": "pass",
+              "message": "None"
+            }
+          ]
+        },
+        "contracts": {
+          "passed": true,
+          "available": true,
+          "checks": [
+            {
+              "name": "coverage_and_finite_ratios",
+              "passed": true,
+              "violations": [],
+              "columns": [
+                "refund_id"
+              ]
+            },
+            {
+              "name": "output_key",
+              "passed": true,
+              "violations": [],
+              "columns": [
+                "refund_id"
+              ]
+            }
+          ],
+          "note": "Visible business contracts only. Empty means no additional contracts, not proof of data correctness. This does not expose the independent final evaluator."
+        }
+      }
+    },
+    {
+      "seq": 21,
+      "timestamp": "2026-10-25T13:16:20.791800+00:00",
+      "type": "model",
+      "name": "deepseek-flash",
+      "content": "{\"verdict\":\"approve\",\"summary\":\"The patch removes the inner join to orders and the status='completed' filter, which is authorized by the README requirement for exactly one row per source refund including cancelled orders. It also replaces the unconditional division with a CASE that returns 0.0 when requested_cents <= 0, satisfying the ratio contract and avoiding division-by-zero/non-finite ratios. Column order and integer amounts are preserved. No concrete semantic concerns found.\",\"findings\":[]}",
+      "usage": {
+        "prompt_tokens": 1184,
+        "completion_tokens": 102,
+        "total_tokens": 1286,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1184
+      },
+      "response_id": "742bc8e4-9ecf-49c1-b3e8-8fb7774f3fdb",
+      "latency_seconds": 3.75,
+      "metrics": {
+        "model_calls": 8,
+        "tool_calls": 12,
+        "prompt_tokens": 21537,
+        "completion_tokens": 1046,
+        "total_tokens": 22583,
+        "estimated_cost_usd": 0.007716300000000001,
+        "handoff_gates": 1,
+        "review_calls": 1
+      }
+    },
+    {
+      "seq": 22,
+      "timestamp": "2026-10-25T13:16:20.799196+00:00",
+      "type": "review",
+      "name": "candidate_semantic_review",
+      "result": {
+        "verdict": "approve",
+        "summary": "The patch removes the inner join to orders and the status='completed' filter, which is authorized by the README requirement for exactly one row per source refund including cancelled orders. It also replaces the unconditional division with a CASE that returns 0.0 when requested_cents <= 0, satisfying the ratio contract and avoiding division-by-zero/non-finite ratios. Column order and integer amounts are preserved. No concrete semantic concerns found.",
+        "findings": [],
+        "candidate_sha256": "c88349e8e198e10b663e3beadebbc0151658dfe81549ec736d8f82a5f0eef12e",
+        "context_truncated": false,
+        "advisory_only": true,
+        "hidden_feedback_used": false,
+        "patch_changed_since_review": false
+      },
+      "metrics": {
+        "model_calls": 8,
+        "tool_calls": 12,
+        "prompt_tokens": 21537,
+        "completion_tokens": 1046,
+        "total_tokens": 22583,
+        "estimated_cost_usd": 0.007716300000000001,
+        "handoff_gates": 1,
+        "review_calls": 1
+      }
+    },
+    {
+      "seq": 23,
+      "timestamp": "2026-10-25T13:16:20.806202+00:00",
+      "type": "final",
+      "content": "已完成修复。\n\n**原因**\n1. 覆盖缺失：原模型 `join orders ... where o.status = 'completed'` 把关联到已取消订单（cancelled）的退款全部过滤掉了（如 HO008R0、HO017R0、HO026R0、HO035R0、HO044R0）。\n2. 数值异常：`paid_cents / requested_cents` 在 `requested_cents = 0` 时产生 NaN/Inf（如 HO000R0、HO020R0、HO040R0），违反“比率必须有限”的约定。\n\n**改动**（仅 `models/marts/refund_reconciliation.sql`）\n- 去掉对 `orders` 的内连接与状态过滤，直接以 `refunds` 为唯一来源，保证每个源退款恰好一行（refund_id 唯一，无重复放大）。\n- 比率改为 `case when requested_cents > 0 then paid_cents::double / requested_cents else 0.0 end`，金额保持整数原值，列顺序与契约一致。\n\n**验证**\n- `dbt build` 成功：seed 全部加载，模型物化成功，`coverage_and_finite_ratios`、`output_key` 两个测试均通过。\n- `check_contracts` 通过，无违规行。\n- 抽查输出：21 行 = 源退款 21 条；零金额退款比率为 0.0；已取消订单的退款已包含且比率正常（如 HO017R0 = 1.0）。\n\n**局限**\n- 仅验证了可见不变量与人工抽查，未与独立 Python 参考实现比对；若参考实现对“已取消订单退款”或“paid > requested”等情形另有业务规则（如截断到 1.0），当前实现未做额外处理（契约未要求）。",
+      "stop_reason": "model_finished",
+      "metrics": {
+        "model_calls": 8,
+        "tool_calls": 12,
+        "prompt_tokens": 21537,
+        "completion_tokens": 1046,
+        "total_tokens": 22583,
+        "estimated_cost_usd": 0.007716,
+        "handoff_gates": 1,
+        "review_calls": 1,
+        "elapsed_seconds": 54.296
+      }
+    },
+    {
+      "seq": 24,
+      "timestamp": "2026-10-25T13:16:31.551863+00:00",
+      "type": "status",
+      "content": "Agent 已停止，开始独立最终验收（不会回传模型）"
+    },
+    {
+      "seq": 25,
+      "timestamp": "2026-10-25T13:16:31.603861+00:00",
+      "type": "validation",
+      "name": "independent_final_evaluator",
+      "result": {
+        "passed": true,
+        "checks": [
+          {
+            "name": "final_build_success",
+            "passed": true,
+            "expected": true,
+            "actual": true
+          },
+          {
+            "name": "source_integrity",
+            "passed": true,
+            "expected": "original immutable source CSVs",
+            "actual": "unchanged"
+          },
+          {
+            "name": "output_columns",
+            "passed": true,
+            "expected": [
+              "refund_id",
+              "order_id",
+              "requested_cents",
+              "paid_cents",
+              "completion_ratio"
+            ],
+            "actual": [
+              "refund_id",
+              "order_id",
+              "requested_cents",
+              "paid_cents",
+              "completion_ratio"
+            ]
+          },
+          {
+            "name": "row_count",
+            "passed": true,
+            "expected": 21,
+            "actual": 21
+          },
+          {
+            "name": "all_row_values",
+            "passed": true,
+            "expected": "Python oracle, every row",
+            "actual": "all rows match"
+          }
+        ],
+        "summary": "All independent checks passed"
+      }
+    }
+  ],
+  "metrics": {
+    "model_calls": 8,
+    "tool_calls": 12,
+    "prompt_tokens": 21537,
+    "completion_tokens": 1046,
+    "total_tokens": 22583,
+    "estimated_cost_usd": 0.007716,
+    "handoff_gates": 1,
+    "review_calls": 1,
+    "elapsed_seconds": 87.515
+  },
+  "diff": "--- a/models/marts/refund_reconciliation.sql\n+++ b/models/marts/refund_reconciliation.sql\n@@ -1,5 +1,10 @@\n {{ config(materialized='table') }}\n-select r.refund_id, r.order_id, r.requested_cents, r.paid_cents,\n-       r.paid_cents::double / r.requested_cents as completion_ratio\n-from {{ ref('refunds') }} r join {{ ref('orders') }} o using(order_id)\n-where o.status = 'completed'\n+select r.refund_id,\n+       r.order_id,\n+       r.requested_cents,\n+       r.paid_cents,\n+       case when r.requested_cents > 0\n+            then r.paid_cents::double / r.requested_cents\n+            else 0.0\n+       end as completion_ratio\n+from {{ ref('refunds') }} r\n",
+  "checks": [
+    {
+      "name": "final_build_success",
+      "passed": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "name": "source_integrity",
+      "passed": true,
+      "expected": "original immutable source CSVs",
+      "actual": "unchanged"
+    },
+    {
+      "name": "output_columns",
+      "passed": true,
+      "expected": [
+        "refund_id",
+        "order_id",
+        "requested_cents",
+        "paid_cents",
+        "completion_ratio"
+      ],
+      "actual": [
+        "refund_id",
+        "order_id",
+        "requested_cents",
+        "paid_cents",
+        "completion_ratio"
+      ]
+    },
+    {
+      "name": "row_count",
+      "passed": true,
+      "expected": 21,
+      "actual": 21
+    },
+    {
+      "name": "all_row_values",
+      "passed": true,
+      "expected": "Python oracle, every row",
+      "actual": "all rows match"
+    }
+  ],
+  "verification": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "final_build_success",
+        "passed": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "name": "source_integrity",
+        "passed": true,
+        "expected": "original immutable source CSVs",
+        "actual": "unchanged"
+      },
+      {
+        "name": "output_columns",
+        "passed": true,
+        "expected": [
+          "refund_id",
+          "order_id",
+          "requested_cents",
+          "paid_cents",
+          "completion_ratio"
+        ],
+        "actual": [
+          "refund_id",
+          "order_id",
+          "requested_cents",
+          "paid_cents",
+          "completion_ratio"
+        ]
+      },
+      {
+        "name": "row_count",
+        "passed": true,
+        "expected": 21,
+        "actual": 21
+      },
+      {
+        "name": "all_row_values",
+        "passed": true,
+        "expected": "Python oracle, every row",
+        "actual": "all rows match"
+      }
+    ],
+    "summary": "All independent checks passed"
+  },
+  "final_answer": "已完成修复。\n\n**原因**\n1. 覆盖缺失：原模型 `join orders ... where o.status = 'completed'` 把关联到已取消订单（cancelled）的退款全部过滤掉了（如 HO008R0、HO017R0、HO026R0、HO035R0、HO044R0）。\n2. 数值异常：`paid_cents / requested_cents` 在 `requested_cents = 0` 时产生 NaN/Inf（如 HO000R0、HO020R0、HO040R0），违反“比率必须有限”的约定。\n\n**改动**（仅 `models/marts/refund_reconciliation.sql`）\n- 去掉对 `orders` 的内连接与状态过滤，直接以 `refunds` 为唯一来源，保证每个源退款恰好一行（refund_id 唯一，无重复放大）。\n- 比率改为 `case when requested_cents > 0 then paid_cents::double / requested_cents else 0.0 end`，金额保持整数原值，列顺序与契约一致。\n\n**验证**\n- `dbt build` 成功：seed 全部加载，模型物化成功，`coverage_and_finite_ratios`、`output_key` 两个测试均通过。\n- `check_contracts` 通过，无违规行。\n- 抽查输出：21 行 = 源退款 21 条；零金额退款比率为 0.0；已取消订单的退款已包含且比率正常（如 HO017R0 = 1.0）。\n\n**局限**\n- 仅验证了可见不变量与人工抽查，未与独立 Python 参考实现比对；若参考实现对“已取消订单退款”或“paid > requested”等情形另有业务规则（如截断到 1.0），当前实现未做额外处理（契约未要求）。",
+  "max_steps": 16,
+  "workspace": "$PROJECT\\artifacts\\runs\\e9ed927d-921c-48ac-a521-e223afa31dde\\workspace",
+  "task_metadata": {
+    "id": "refund_reconciliation_holdout",
+    "title": "Repair refund coverage and ratios",
+    "description": "The refund operations report omits records and contains invalid completion ratios. Repair coverage and numeric edge cases without changing source data.",
+    "category": "refund_reconciliation",
+    "split": "holdout",
+    "difficulty": "medium",
+    "metadata": {
+      "id": "refund_reconciliation_holdout",
+      "title": "Repair refund coverage and ratios",
+      "description": "The refund operations report omits records and contains invalid completion ratios. Repair coverage and numeric edge cases without changing source data.",
+      "category": "refund_reconciliation",
+      "split": "holdout",
+      "difficulty": "medium"
+    },
+    "output_table": "refund_reconciliation",
+    "key_columns": [
+      "refund_id"
+    ],
+    "database_path": "$PROJECT\\artifacts\\runs\\e9ed927d-921c-48ac-a521-e223afa31dde\\workspace\\warehouse.duckdb",
+    "expected_columns": [
+      "refund_id",
+      "order_id",
+      "requested_cents",
+      "paid_cents",
+      "completion_ratio"
+    ]
+  },
+  "initial_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 10.312,
+    "nodes": [
+      {
+        "id": "model.datapatch_task.refund_reconciliation",
+        "status": "success",
+        "message": "OK"
+      }
+    ]
+  },
+  "initial_checks": {
+    "passed": false,
+    "available": true,
+    "checks": [
+      {
+        "name": "coverage_and_finite_ratios",
+        "passed": false,
+        "violations": [
+          [
+            "HO000R0"
+          ],
+          [
+            "HO020R0"
+          ],
+          [
+            "HO040R0"
+          ],
+          [
+            "HO008R0"
+          ],
+          [
+            "HO017R0"
+          ],
+          [
+            "HO026R0"
+          ],
+          [
+            "HO035R0"
+          ],
+          [
+            "HO044R0"
+          ]
+        ],
+        "columns": [
+          "refund_id"
+        ]
+      },
+      {
+        "name": "output_key",
+        "passed": true,
+        "violations": [],
+        "columns": [
+          "refund_id"
+        ]
+      }
+    ],
+    "note": "Visible business contracts only. Empty means no additional contracts, not proof of data correctness. This does not expose the independent final evaluator."
+  },
+  "stop_reason": "model_finished",
+  "visible_validation": {
+    "passed": true,
+    "available": true,
+    "checks": [
+      {
+        "name": "coverage_and_finite_ratios",
+        "passed": true,
+        "violations": [],
+        "columns": [
+          "refund_id"
+        ]
+      },
+      {
+        "name": "output_key",
+        "passed": true,
+        "violations": [],
+        "columns": [
+          "refund_id"
+        ]
+      }
+    ],
+    "note": "Visible business contracts only. Empty means no additional contracts, not proof of data correctness. This does not expose the independent final evaluator."
+  },
+  "candidate_review": {
+    "verdict": "approve",
+    "summary": "The patch removes the inner join to orders and the status='completed' filter, which is authorized by the README requirement for exactly one row per source refund including cancelled orders. It also replaces the unconditional division with a CASE that returns 0.0 when requested_cents <= 0, satisfying the ratio contract and avoiding division-by-zero/non-finite ratios. Column order and integer amounts are preserved. No concrete semantic concerns found.",
+    "findings": [],
+    "candidate_sha256": "c88349e8e198e10b663e3beadebbc0151658dfe81549ec736d8f82a5f0eef12e",
+    "context_truncated": false,
+    "advisory_only": true,
+    "hidden_feedback_used": false,
+    "patch_changed_since_review": false
+  },
+  "agent_revision": "v3.1-contract-grounded-review-delivery-stage",
+  "final_build": {
+    "success": true,
+    "returncode": 0,
+    "stdout": "{\"success\": true, \"exception\": null}\n",
+    "stderr": "",
+    "elapsed_seconds": 10.594,
+    "nodes": [
+      {
+        "id": "seed.datapatch_task.customers",
+        "status": "success",
+        "message": "INSERT 20"
+      },
+      {
+        "id": "seed.datapatch_task.order_events",
+        "status": "success",
+        "message": "INSERT 117"
+      },
+      {
+        "id": "seed.datapatch_task.order_items",
+        "status": "success",
+        "message": "INSERT 105"
+      },
+      {
+        "id": "seed.datapatch_task.orders",
+        "status": "success",
+        "message": "INSERT 53"
+      },
+      {
+        "id": "seed.datapatch_task.payments",
+        "status": "success",
+        "message": "INSERT 107"
+      },
+      {
+        "id": "seed.datapatch_task.refunds",
+        "status": "success",
+        "message": "INSERT 21"
+      },
+      {
+        "id": "model.datapatch_task.refund_reconciliation",
+        "status": "success",
+        "message": "OK"
+      },
+      {
+        "id": "test.datapatch_task.coverage_and_finite_ratios",
+        "status": "pass",
+        "message": "None"
+      },
+      {
+        "id": "test.datapatch_task.output_key",
+        "status": "pass",
+        "message": "None"
+      }
+    ]
+  },
+  "data_evidence": {
+    "before": {
+      "table": "refund_reconciliation",
+      "available": true,
+      "error": null,
+      "schema": [
+        {
+          "name": "refund_id",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "order_id",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "requested_cents",
+          "type": "INTEGER"
+        },
+        {
+          "name": "paid_cents",
+          "type": "INTEGER"
+        },
+        {
+          "name": "completion_ratio",
+          "type": "DOUBLE"
+        }
+      ],
+      "row_count": 16,
+      "key_columns": [
+        "refund_id"
+      ],
+      "key_valid": true,
+      "key_validation": {
+        "status": "valid",
+        "null_key_rows": 0,
+        "duplicate_key_groups": 0,
+        "duplicate_key_rows": 0
+      },
+      "rows": [
+        {
+          "refund_id": "HO000R0",
+          "order_id": "HO000",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": "NaN"
+        },
+        {
+          "refund_id": "HO004R0",
+          "order_id": "HO004",
+          "requested_cents": 648,
+          "paid_cents": 648,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO012R0",
+          "order_id": "HO012",
+          "requested_cents": 3898,
+          "paid_cents": 3898,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO012R1",
+          "order_id": "HO012",
+          "requested_cents": 1559,
+          "paid_cents": 1559,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO016R0",
+          "order_id": "HO016",
+          "requested_cents": 1247,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO020R0",
+          "order_id": "HO020",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": "NaN"
+        },
+        {
+          "refund_id": "HO024R0",
+          "order_id": "HO024",
+          "requested_cents": 198,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO024R1",
+          "order_id": "HO024",
+          "requested_cents": 79,
+          "paid_cents": 79,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO028R0",
+          "order_id": "HO028",
+          "requested_cents": 1398,
+          "paid_cents": 1398,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO032R0",
+          "order_id": "HO032",
+          "requested_cents": 2060,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO036R0",
+          "order_id": "HO036",
+          "requested_cents": 2599,
+          "paid_cents": 2599,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO036R1",
+          "order_id": "HO036",
+          "requested_cents": 1039,
+          "paid_cents": 1039,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO040R0",
+          "order_id": "HO040",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": "NaN"
+        },
+        {
+          "refund_id": "HO048R0",
+          "order_id": "HO048",
+          "requested_cents": 249,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO048R1",
+          "order_id": "HO048",
+          "requested_cents": 99,
+          "paid_cents": 99,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO052R0",
+          "order_id": "HO052",
+          "requested_cents": 750,
+          "paid_cents": 750,
+          "completion_ratio": 1.0
+        }
+      ],
+      "sample_rows": [
+        {
+          "refund_id": "HO000R0",
+          "order_id": "HO000",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": "NaN"
+        },
+        {
+          "refund_id": "HO004R0",
+          "order_id": "HO004",
+          "requested_cents": 648,
+          "paid_cents": 648,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO012R0",
+          "order_id": "HO012",
+          "requested_cents": 3898,
+          "paid_cents": 3898,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO012R1",
+          "order_id": "HO012",
+          "requested_cents": 1559,
+          "paid_cents": 1559,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO016R0",
+          "order_id": "HO016",
+          "requested_cents": 1247,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO020R0",
+          "order_id": "HO020",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": "NaN"
+        },
+        {
+          "refund_id": "HO024R0",
+          "order_id": "HO024",
+          "requested_cents": 198,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO024R1",
+          "order_id": "HO024",
+          "requested_cents": 79,
+          "paid_cents": 79,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO028R0",
+          "order_id": "HO028",
+          "requested_cents": 1398,
+          "paid_cents": 1398,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO032R0",
+          "order_id": "HO032",
+          "requested_cents": 2060,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        }
+      ],
+      "truncated": false,
+      "column_stats": {
+        "refund_id": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "order_id": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "requested_cents": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "paid_cents": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "completion_ratio": {
+          "null_count": 0,
+          "nonfinite_count": 3
+        }
+      },
+      "column_stats_truncated": false,
+      "captured_at": "2026-10-25T13:15:26.387366+00:00",
+      "row_limit": 5000
+    },
+    "after": {
+      "table": "refund_reconciliation",
+      "available": true,
+      "error": null,
+      "schema": [
+        {
+          "name": "refund_id",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "order_id",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "requested_cents",
+          "type": "INTEGER"
+        },
+        {
+          "name": "paid_cents",
+          "type": "INTEGER"
+        },
+        {
+          "name": "completion_ratio",
+          "type": "DOUBLE"
+        }
+      ],
+      "row_count": 21,
+      "key_columns": [
+        "refund_id"
+      ],
+      "key_valid": true,
+      "key_validation": {
+        "status": "valid",
+        "null_key_rows": 0,
+        "duplicate_key_groups": 0,
+        "duplicate_key_rows": 0
+      },
+      "rows": [
+        {
+          "refund_id": "HO000R0",
+          "order_id": "HO000",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO004R0",
+          "order_id": "HO004",
+          "requested_cents": 648,
+          "paid_cents": 648,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO008R0",
+          "order_id": "HO008",
+          "requested_cents": 21322,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO012R0",
+          "order_id": "HO012",
+          "requested_cents": 3898,
+          "paid_cents": 3898,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO012R1",
+          "order_id": "HO012",
+          "requested_cents": 1559,
+          "paid_cents": 1559,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO016R0",
+          "order_id": "HO016",
+          "requested_cents": 1247,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO017R0",
+          "order_id": "HO017",
+          "requested_cents": 21572,
+          "paid_cents": 21572,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO020R0",
+          "order_id": "HO020",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO024R0",
+          "order_id": "HO024",
+          "requested_cents": 198,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO024R1",
+          "order_id": "HO024",
+          "requested_cents": 79,
+          "paid_cents": 79,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO026R0",
+          "order_id": "HO026",
+          "requested_cents": 5484,
+          "paid_cents": 5484,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO028R0",
+          "order_id": "HO028",
+          "requested_cents": 1398,
+          "paid_cents": 1398,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO032R0",
+          "order_id": "HO032",
+          "requested_cents": 2060,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO035R0",
+          "order_id": "HO035",
+          "requested_cents": 14585,
+          "paid_cents": 14585,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO036R0",
+          "order_id": "HO036",
+          "requested_cents": 2599,
+          "paid_cents": 2599,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO036R1",
+          "order_id": "HO036",
+          "requested_cents": 1039,
+          "paid_cents": 1039,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO040R0",
+          "order_id": "HO040",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO044R0",
+          "order_id": "HO044",
+          "requested_cents": 22572,
+          "paid_cents": 22572,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO048R0",
+          "order_id": "HO048",
+          "requested_cents": 249,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO048R1",
+          "order_id": "HO048",
+          "requested_cents": 99,
+          "paid_cents": 99,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO052R0",
+          "order_id": "HO052",
+          "requested_cents": 750,
+          "paid_cents": 750,
+          "completion_ratio": 1.0
+        }
+      ],
+      "sample_rows": [
+        {
+          "refund_id": "HO000R0",
+          "order_id": "HO000",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO004R0",
+          "order_id": "HO004",
+          "requested_cents": 648,
+          "paid_cents": 648,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO008R0",
+          "order_id": "HO008",
+          "requested_cents": 21322,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO012R0",
+          "order_id": "HO012",
+          "requested_cents": 3898,
+          "paid_cents": 3898,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO012R1",
+          "order_id": "HO012",
+          "requested_cents": 1559,
+          "paid_cents": 1559,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO016R0",
+          "order_id": "HO016",
+          "requested_cents": 1247,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO017R0",
+          "order_id": "HO017",
+          "requested_cents": 21572,
+          "paid_cents": 21572,
+          "completion_ratio": 1.0
+        },
+        {
+          "refund_id": "HO020R0",
+          "order_id": "HO020",
+          "requested_cents": 0,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO024R0",
+          "order_id": "HO024",
+          "requested_cents": 198,
+          "paid_cents": 0,
+          "completion_ratio": 0.0
+        },
+        {
+          "refund_id": "HO024R1",
+          "order_id": "HO024",
+          "requested_cents": 79,
+          "paid_cents": 79,
+          "completion_ratio": 1.0
+        }
+      ],
+      "truncated": false,
+      "column_stats": {
+        "refund_id": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "order_id": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "requested_cents": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "paid_cents": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        },
+        "completion_ratio": {
+          "null_count": 0,
+          "nonfinite_count": 0
+        }
+      },
+      "column_stats_truncated": false,
+      "captured_at": "2026-10-25T13:16:31.438871+00:00",
+      "row_limit": 5000
+    },
+    "comparison": {
+      "status": "complete",
+      "schema": {
+        "added": [],
+        "removed": [],
+        "type_changed": [],
+        "comparable": true
+      },
+      "counts": {
+        "before": 16,
+        "after": 21,
+        "delta": 5
+      },
+      "keyed_diff": {
+        "supported": true,
+        "reason": "complete snapshots with a declared unique non-null key",
+        "keys": [
+          "refund_id"
+        ],
+        "added_count": 5,
+        "removed_count": 0,
+        "changed_count": 3,
+        "unchanged_count": 13,
+        "samples": {
+          "added": [
+            {
+              "refund_id": "HO008R0",
+              "order_id": "HO008",
+              "requested_cents": 21322,
+              "paid_cents": 0,
+              "completion_ratio": 0.0
+            },
+            {
+              "refund_id": "HO017R0",
+              "order_id": "HO017",
+              "requested_cents": 21572,
+              "paid_cents": 21572,
+              "completion_ratio": 1.0
+            },
+            {
+              "refund_id": "HO026R0",
+              "order_id": "HO026",
+              "requested_cents": 5484,
+              "paid_cents": 5484,
+              "completion_ratio": 1.0
+            },
+            {
+              "refund_id": "HO035R0",
+              "order_id": "HO035",
+              "requested_cents": 14585,
+              "paid_cents": 14585,
+              "completion_ratio": 1.0
+            },
+            {
+              "refund_id": "HO044R0",
+              "order_id": "HO044",
+              "requested_cents": 22572,
+              "paid_cents": 22572,
+              "completion_ratio": 1.0
+            }
+          ],
+          "removed": [],
+          "changed": [
+            {
+              "key": {
+                "refund_id": "HO000R0"
+              },
+              "before": {
+                "refund_id": "HO000R0",
+                "order_id": "HO000",
+                "requested_cents": 0,
+                "paid_cents": 0,
+                "completion_ratio": "NaN"
+              },
+              "after": {
+                "refund_id": "HO000R0",
+                "order_id": "HO000",
+                "requested_cents": 0,
+                "paid_cents": 0,
+                "completion_ratio": 0.0
+              },
+              "changed_columns": [
+                "completion_ratio"
+              ]
+            },
+            {
+              "key": {
+                "refund_id": "HO020R0"
+              },
+              "before": {
+                "refund_id": "HO020R0",
+                "order_id": "HO020",
+                "requested_cents": 0,
+                "paid_cents": 0,
+                "completion_ratio": "NaN"
+              },
+              "after": {
+                "refund_id": "HO020R0",
+                "order_id": "HO020",
+                "requested_cents": 0,
+                "paid_cents": 0,
+                "completion_ratio": 0.0
+              },
+              "changed_columns": [
+                "completion_ratio"
+              ]
+            },
+            {
+              "key": {
+                "refund_id": "HO040R0"
+              },
+              "before": {
+                "refund_id": "HO040R0",
+                "order_id": "HO040",
+                "requested_cents": 0,
+                "paid_cents": 0,
+                "completion_ratio": "NaN"
+              },
+              "after": {
+                "refund_id": "HO040R0",
+                "order_id": "HO040",
+                "requested_cents": 0,
+                "paid_cents": 0,
+                "completion_ratio": 0.0
+              },
+              "changed_columns": [
+                "completion_ratio"
+              ]
+            }
+          ]
+        },
+        "compared_columns": [
+          "order_id",
+          "requested_cents",
+          "paid_cents",
+          "completion_ratio"
+        ]
+      },
+      "notes": [
+        "Data differences describe impact and do not prove business correctness. Build freshness must be checked separately.",
+        "Changed rows compare only common columns with identical types; added/removed/type-changed columns are reported in schema separately. Values are not rounded."
+      ]
+    },
+    "initial_build_success": true,
+    "final_build_success": true,
+    "contracts_before": {
+      "passed": false,
+      "available": true,
+      "checks": [
+        {
+          "name": "coverage_and_finite_ratios",
+          "passed": false,
+          "violations": [
+            [
+              "HO000R0"
+            ],
+            [
+              "HO020R0"
+            ],
+            [
+              "HO040R0"
+            ],
+            [
+              "HO008R0"
+            ],
+            [
+              "HO017R0"
+            ],
+            [
+              "HO026R0"
+            ],
+            [
+              "HO035R0"
+            ],
+            [
+              "HO044R0"
+            ]
+          ],
+          "columns": [
+            "refund_id"
+          ]
+        },
+        {
+          "name": "output_key",
+          "passed": true,
+          "violations": [],
+          "columns": [
+            "refund_id"
+          ]
+        }
+      ],
+      "note": "Visible business contracts only. Empty means no additional contracts, not proof of data correctness. This does not expose the independent final evaluator."
+    },
+    "contracts_after": {
+      "passed": true,
+      "available": true,
+      "checks": [
+        {
+          "name": "coverage_and_finite_ratios",
+          "passed": true,
+          "violations": [],
+          "columns": [
+            "refund_id"
+          ]
+        },
+        {
+          "name": "output_key",
+          "passed": true,
+          "violations": [],
+          "columns": [
+            "refund_id"
+          ]
+        }
+      ],
+      "note": "Visible business contracts only. Empty means no additional contracts, not proof of data correctness. This does not expose the independent final evaluator."
+    },
+    "note": "Observed data changes are evidence, not a correctness score. A failed build can leave stale tables."
+  },
+  "repeat": 0,
+  "recording_source": "actual DeepSeek API run; archived recording, not a new live execution"
+}

@@ -1,0 +1,31 @@
+{
+  "task_id": "dbt-fix-refund-reconciliation",
+  "mode": "native-path-adapted-upstream-verifier",
+  "official_harbor_result": false,
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "source_url": "https://raw.githubusercontent.com/Snowflake-Labs/data-eng-bench/a3278ad102829a6084dde086244a0ef665a8011c/tasks/dbt-fix-refund-reconciliation/tests/test_outputs.py",
+  "original_sha256": "071dc4cf774ddd7c603eaa03744b3133f1dee664cf3425b3d5991724bdbf7502",
+  "adapted_sha256": "9c0e191334d8cb6d1fbdbef3469e79b8d146bde1fefe70e03ed9e99b8d9b7700",
+  "path_translation_only": true,
+  "returncode": 0,
+  "reward": 1.0,
+  "components_passed": [
+    "component_1_model_compiles",
+    "component_2_no_inf_nan_values",
+    "component_3_row_count",
+    "component_4_required_columns",
+    "component_5_valid_tier_values",
+    "component_6_uses_window_function",
+    "component_7_tier_distribution",
+    "component_8_waterfall_tier_logic",
+    "component_9_refund_completion_rate_formula",
+    "component_10_no_inf_nan_all_numeric_columns",
+    "component_11_tier_boundary_testing",
+    "component_12_days_non_negative",
+    "component_13_total_processing_days_consistency"
+  ],
+  "components_failed": [],
+  "grading_protocol": "component_reward_json",
+  "stdout": "CMD: dbt deps\nSTDOUT: \u001b[0m05:57:56  Running with dbt=1.12.6\n\u001b[0m05:57:59  Installing dbt-labs/dbt_utils\n\u001b[0m05:58:02  Installed from version 1.3.3\n\u001b[0m05:58:02  Updated version available: 1.4.1\n\u001b[0m05:58:02  \n\u001b[0m05:58:02  Updates available for packages: ['dbt-labs/dbt_utils']                 \nUpdate your versions in packages.yml, then run dbt deps\n\nCMD: dbt run -s rpt_return_reconciliation\nSTDOUT: \u001b[0m05:58:09  Running with dbt=1.12.6\n\u001b[0m05:58:10  Registered adapter: duckdb=1.11.0\n\u001b[0m05:58:13  [\u001b[33mWARNING\u001b[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.\nThere are 10 unused configuration paths:\n- models.retail_warehouse.staging.sfdc\n- models.retail_warehouse.staging.wms\n- models.retail_warehouse.staging.sap\n- models.retail_warehouse.staging.legacy\n- models.retail_warehouse.staging\n- models.retail_warehouse.staging.ga\n- models.retail_warehouse.intermediate\n- models.retail_warehouse.staging.pos\n- models.retail_warehouse.staging.payments\n- models.retail_warehouse.marts\n\u001b[0m05:58:15  Found 2333 models, 7 snapshots, 60 analyses, 10 seeds, 814 data tests, 1348 sources, 667 macros\n\u001b[0m05:58:15  \n\u001b[0m05:58:15  Concurrency: 4 threads (target='dev')\n\u001b[0m05:58:15  \n\u001b[0m05:58:17  1 of 1 START sql table model main.rpt_return_reconciliation .................... [RUN]\n\u001b[0m05:58:17  1 of 1 OK created sql table model main.rpt_return_reconciliation ............... [\u001b[32mOK\u001b[0m in 0.22s]\n\u001b[0m05:58:17  \n\u001b[0m05:58:17  Finished running 1 table model in 0 hours 0 minutes and 1.82 seconds (1.82s).\n\u001b[0m05:58:19  \n\u001b[0m05:58:19  \u001b[32mCompleted successfully\u001b[0m\n\u001b[0m05:58:19  \n\u001b[0m05:58:19  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1\n\nPASS: component_1_model_compiles\nPASS: component_2_no_inf_nan_values\nPASS: component_3_row_count\nPASS: component_4_required_columns\nPASS: component_5_valid_tier_values\nPASS: component_6_uses_window_function\nPASS: component_7_tier_distribution\nPASS: component_8_waterfall_tier_logic\nPASS: component_9_refund_completion_rate_formula\nPASS: component_10_no_inf_nan_all_numeric_columns\nPASS: component_11_tier_boundary_testing\nPASS: component_12_days_non_negative\nPASS: component_13_total_processing_days_consistency\n\nFinal Score: 1.0\n.\n1 passed in 37.66s\n",
+  "stderr": ""
+}

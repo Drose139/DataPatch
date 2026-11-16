@@ -1,0 +1,9 @@
+{
+  "task_id": "dbt-exchange-rate-settlement-date",
+  "patch_origin": "operator_reviewed",
+  "model_api_calls": 0,
+  "initial_sql_sha256": "6037e4b363a3f7ab7666549153576ee6ed6c64f06750f5c7cbaa47c9d03445f9",
+  "patch_sha256": "3624c039a7824bef85cb6a37c485b7d06c7469c52f4b857d94bc47312308b469",
+  "case": "D:\\DataPatch-work\\public-expanded-dev-20261026\\fx",
+  "source": "pinned public ticket and input models, no verifier inspected before candidate"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "v42_relationship_product_20261026",
+  "created_at": "2026-10-26T05:57:08.596540+00:00",
+  "client_date": "2026-10-26",
+  "task_ids": [
+    "dbt-fix-product-metrics"
+  ],
+  "mode": "verified",
+  "repeats": 1,
+  "model": "deepseek-flash",
+  "thinking_enabled": true,
+  "reasoning_effort": "high",
+  "max_steps": 12,
+  "max_output_tokens": 8192,
+  "budget_usd": 0.125,
+  "source_sha256": "13a729eefb5907437bda7dfdc215c44fb73593e2a59c6eef730b9e1f3c2775ba",
+  "source_snapshot": "artifacts\\evaluations\\v42_relationship_product_20261026_source.zip",
+  "source_snapshot_sha256": "af38069532a347fc0d721f6e737ce1f0a4fe3e082aa27621256797f4043e8072",
+  "original_inputs": true,
+  "reviewed_patch_exposed_to_solver": false,
+  "hidden_feedback_to_agent": false,
+  "automatic_retries": false,
+  "purpose": "One targeted acceptance after user requested completion; not a mode comparison or repeated search."
+}

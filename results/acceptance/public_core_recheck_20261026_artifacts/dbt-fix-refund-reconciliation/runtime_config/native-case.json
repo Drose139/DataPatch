@@ -1,0 +1,28 @@
+{
+  "task_id": "dbt-fix-refund-reconciliation",
+  "upstream_commit": "a3278ad102829a6084dde086244a0ef665a8011c",
+  "mode": "native-adapted-public-development-case",
+  "project_dir": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\project",
+  "database_path": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\database\\retail.duckdb",
+  "model": "models/marts/sales/rpt_return_reconciliation.sql",
+  "initialized": true,
+  "task_type": "fix-model",
+  "initialization_selectors": [
+    "rpt_return_reconciliation"
+  ],
+  "bug_overlay": "environment/data/rpt_return_reconciliation.sql",
+  "base_build": "selected model and ancestors",
+  "runtime": {
+    "python": "3.12.2",
+    "platform": "win32",
+    "duckdb": "1.5.6",
+    "dbt-core": "1.12.6",
+    "dbt-duckdb": "1.11.0"
+  },
+  "path_translations": {
+    "/app/dbt_models_duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\project",
+    "/app/database/retail.duckdb": "D:\\DataPatch-work\\public-core-acceptance-20261026\\refund\\database\\retail.duckdb"
+  },
+  "official_harbor_result": false,
+  "hidden_verifier_used_by_agent": false
+}
