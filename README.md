@@ -4,9 +4,9 @@ DataPatch 用 DeepSeek 修复能够执行却算错结果的 dbt SQL。输入一�
 
 典型故障包括多表关联放大金额、订单状态过滤遗漏退款，以及 UTC 和业务时区的日界偏移。
 
-![36 秒退款工单真实回放，展示原 SQL、只读查询、补丁、数据对比和独立验收](docs/screenshots/refund-reconciliation-demo.gif)
+![退款对账工作台回放（35 秒）](docs/screenshots/refund-reconciliation-demo.gif)
 
-退款对账工单的 36 秒真实回放。[本次运行记录](examples/recorded_runs/42fdb20f-0177-4f84-a529-f29b5b6803da.json)
+[原始运行记录](examples/recorded_runs/42fdb20f-0177-4f84-a529-f29b5b6803da.json)
 
 ## 实现
 
